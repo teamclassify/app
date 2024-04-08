@@ -1,8 +1,36 @@
-# React + Vite
+# App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Installation
 
-Currently, two official plugins are available:
+1. Clone the repo
+```
+git clone https://github.com/byandrev/tomatozen
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Install the dependencies
+```
+npm install
+```
+
+## Run
+
+```
+npm run dev
+```
+
+## Work
+
+- Fork this repository and clone your copy to your local machine.
+- Create a new branch for your contribution: `git branch branch-name`.
+- Make the necessary changes to the code.
+- Ensure your changes follow our code style guidelines.
+- Commit your changes: `git commit -m 'Description of the changes'`.
+- Push your changes to your remote repository: git `push origin branch-name`.
+- Open a pull request on our main repository, describing the changes made and providing any additional context.
+
+## Branchs
+
+- main: App deployed 💀
+- featues/{feature_name}: New features in the app ✨
+- bugs/{bug_name}: Bug name and description 🐛
+
