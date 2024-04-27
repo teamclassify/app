@@ -8,5 +8,10 @@ export default defineConfig({
     alias: {
       '@src': '/src'
     }
+  },
+  server: {
+    watch: {
+      usePolling: true
+    }
   }
 })
