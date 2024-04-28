@@ -1,0 +1,128 @@
+import { createContext, useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'wouter'
+
+import { auth } from '../config/firebase'
+import { login } from '../services/api/Auth'
+import {
+  logoutUser,
+  signInGoogle
+} from '../services/firebase/AuthService'
+import { formatEmail } from '../utils/formatUser'
+
+export const UserContext = createContext()
+
+export default function UserProvider ({ children }) {
+  const [location, setLocation] = useLocation()
+  const [loggedIn, setLoggedIn] = useState()
+  const [accessToken, setAccessToken] = useState()
+  const [token, setToken] = useState(null)
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  const loginWithGoogle = async () => {
+    setLoading(true)
+
+    return signInGoogle().then((res) => {
+      if (res.status !== 200) {
+        setLocation('/')
+      }
+
+      setLoading(false)
+      return res
+    })
+  }
+
+  const logout = async () => {
+    setLoading(true)
+
+    return logoutUser()
+      .then((res) => {
+        if (res.status === 200) {
+          setUser(null)
+          setLocation('/')
+          setLoading(false)
+          setToken(null)
+          setAccessToken(undefined)
+          setLoggedIn(undefined)
+
+          // reload page
+          window.location.reload()
+        }
+
+        return res
+      })
+      .finally(() => setLoading(false))
+  }
+
+  /*
+   * on login update or create user in firestore database
+   */
+  const handleLogin = async (userInfo) => {
+    const response = await login(userInfo)
+
+    if (!response.error) {
+      if (location === '/') setLocation('/home')
+      setUser(response.data)
+    } else setUser(null)
+  }
+
+  useEffect(() => {
+    // firebase auth
+    const unsuscribeStateChanged = auth.onAuthStateChanged(
+      async (user) => {
+        if (user) {
+          const userInfo = {
+            email: user.email,
+            uid: user.uid,
+            name:
+              user.displayName && user.displayName?.length > 0
+                ? user.displayName
+                : formatEmail(user.email || ''),
+            photo: user.photoURL || ''
+          }
+
+          const token = await user.getIdToken(true)
+
+          setAccessToken(token)
+          setUser(userInfo)
+          setLoggedIn(true)
+        } else {
+          setLoading(false)
+          setLoggedIn(false)
+        }
+      }
+    )
+
+    return () => {
+      unsuscribeStateChanged()
+    }
+  }, [])
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (accessToken && user) {
+        // await handleLogin(user)
+        setToken(accessToken)
+      }
+      setLoading(false)
+    }
+
+    if (loggedIn !== undefined) fetchUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loggedIn, accessToken])
+
+  const value = useMemo(() => {
+    return {
+      token,
+      user,
+      handleLogin,
+      loginWithGoogle,
+      logout,
+      loading
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, user, loading])
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
+}
