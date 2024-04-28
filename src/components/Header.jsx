@@ -4,7 +4,7 @@ import UserAvatar from './UserAvatar'
 
 function Header () {
   return (
-    <Box as="header" px={8} py={2}>
+    <Box as="header" py={2} mx='auto' w='90%' maxW='container.xl'>
       <Flex justifyContent='space-between'>
         <Heading as='h1' size='md'>App</Heading>
 

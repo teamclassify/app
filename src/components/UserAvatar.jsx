@@ -23,8 +23,10 @@ function UserAvatar () {
                   </Flex>
                 </MenuButton>
 
-                <MenuList p={0} fontSize="sm">
-                  <MenuItem onClick={logout}>Cerrar sesion</MenuItem>
+                <MenuList p={0} fontSize="sm" overflow='hidden'>
+                  <MenuItem onClick={logout} bg='primary.400' color='white'>
+                    Cerrar sesion
+                  </MenuItem>
                 </MenuList>
               </Menu>
             </>
