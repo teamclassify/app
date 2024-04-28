@@ -4,13 +4,15 @@
 
 1. Clone the repo
 ```
-git clone https://github.com/byandrev/tomatozen
+git clone https://github.com/teamclassify/app
 ```
 
 2. Install the dependencies
 ```
 npm install
 ```
+
+3. Create env variables
 
 ## Run
 
