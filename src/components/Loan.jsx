@@ -1,12 +1,12 @@
-import { Card, CardHeader, CardBody, CardFooter, Text, Heading, Box } from '@chakra-ui/react'
+import { Card, CardBody, Text, Heading, Box } from '@chakra-ui/react'
 
-function Loan(){
-  const {title, status} = 'Not Set'
-  const date = '12-31-2077'
+function Loan () {
+  /* const { title, status } = 'Not Set'
+  const date = '12-31-2077' */
 
-  return(<>
+  return (<>
     <Card boxShadow='md'>
-  <CardBody display='flex' outline='2px'> 
+  <CardBody display='flex' outline='2px'>
   <Box>
         <Heading size='xs' textTransform='uppercase'>
           SA 404

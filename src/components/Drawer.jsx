@@ -1,20 +1,34 @@
-import { Button, Drawer, useDisclosure, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, Input,} from '@chakra-ui/react'
+import {
+  Button,
+  Drawer,
+  useDisclosure,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton
+} from '@chakra-ui/react'
+
 import React from 'react'
 
 function DrawerForm () {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = React.useRef()
-  return (<>
-    <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>Menu Principal</Button>
-    <Drawer
-      isOpen={isOpen}
-      placement='left'
-      onClose={onClose}
-      finalFocusRef={btnRef}
+  return (
+    <>
+      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+        Menu Principal
+      </Button>
+      <Drawer
+        isOpen={isOpen}
+        placement="left"
+        onClose={onClose}
+        finalFocusRef={btnRef}
       >
-        <DrawerOverlay/>
+        <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton/>
+          <DrawerCloseButton />
           <DrawerHeader>Menu Principal</DrawerHeader>
 
           <DrawerBody>
@@ -22,13 +36,13 @@ function DrawerForm () {
           </DrawerBody>
 
           <DrawerFooter>
-            <Button variant='outline' mr={3} onClick={onClose}>
+            <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
           </DrawerFooter>
         </DrawerContent>
-    </Drawer>
-  </>
+      </Drawer>
+    </>
   )
 }
 

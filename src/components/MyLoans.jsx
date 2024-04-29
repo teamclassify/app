@@ -1,8 +1,8 @@
-import { Heading, Box, SimpleGrid, Button, Text } from '@chakra-ui/react'
+import { Heading, Box, SimpleGrid, Button } from '@chakra-ui/react'
 import Loan from './Loan'
 
-function MyLoans(){
-  return(<>
+function MyLoans () {
+  return (<>
     <Box display='flex' flexDirection='column' mt='3rem' w='100%'>
       <Box w='100%' display='flex' justifyContent='space-between'>
       <Heading fontSize='1.5rem'>Mis Prestamos</Heading>
