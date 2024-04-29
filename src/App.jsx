@@ -6,22 +6,17 @@ import LoginPage from './pages/Login'
 import ErrorPage from './pages/NotFound'
 
 import Header from './components/Header'
+// const image = './img/background-red.jpg'
 
 function App () {
   return (
     <>
-      <Header />
+     <Header />
 
-      <Box
-        mx='auto'
-        mt='2rem'
-        w='90%'
-        maxW='container.xl'
-      >
+      <Box mx='auto' mt='2rem' w='90%' maxW='container.xl'>
         <Switch>
           <Route component={HomePage} path="/" />
           <Route component={LoginPage} path="/login" />
-
           <Route component={ErrorPage} path="/:rest*" />
         </Switch>
       </Box>
