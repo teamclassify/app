@@ -22,6 +22,10 @@ const overrides = {
   global: () => ({
     html: {
       scrollBehavior: 'smooth'
+    },
+    body: {
+      backgroundColor: 'rgb(236 236 236)',
+      minHeight: '100vh'
     }
   })
 }
