@@ -3,7 +3,7 @@ import img from '@src/assets/img/logoUFPS.png'
 const LogoUFPS = () => {
   return (
     <>
-      <img src={img} width='30%'/>
+      <img src={img} width='40%'/>
     </>
   )
 }

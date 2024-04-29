@@ -12,11 +12,12 @@ function App () {
   return (
     <>
      <Header />
-     <Box mx='auto' mt='2rem' w='90%' maxW='container.xl'>
+
+      <Box mx='auto' mt='2rem' w='90%' maxW='container.xl'>
         <Switch>
-            <Route component={HomePage} path="/" />
-            <Route component={LoginPage} path="/login" />
-            <Route component={ErrorPage} path="/:rest*" />
+          <Route component={HomePage} path="/" />
+          <Route component={LoginPage} path="/login" />
+          <Route component={ErrorPage} path="/:rest*" />
         </Switch>
       </Box>
     </>

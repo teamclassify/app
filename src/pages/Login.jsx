@@ -1,24 +1,23 @@
-import { Center, Text } from '@chakra-ui/react'
+import { Text, Box, Image } from '@chakra-ui/react'
 import LogoUFPS from '../components/Logos/LogoUFPS'
 import LoginGoogle from '../components/ButtonGoogle'
 
 function Login () {
   return (
     <>
-      <Center>
-        <Center
-          mx="auto"
-          w="100%"
-          maxW="container.xl"
-          flexDir="column"
-          h="90vh"
-        >
-          <Center
+      <Box>
+        <Image src='/assets/background-red.jpg' pos="absolute" top={0} left={0} right={0} bottom={0} zIndex={-1} w="full" h="100vh" />
+      </Box>
+
+      <Box h="calc(100vh - 150px)" display="grid" placeItems="center" >
+          <Box
+            py={10}
             display="flex"
             flexDir="column"
-            h="50vh"
+            alignItems="center"
+            justifyContent="center"
             w="50%"
-            bgColor="#D9D9D9"
+            bgColor="white"
             color="white"
             borderRadius="10px"
           >
@@ -27,14 +26,12 @@ function Login () {
               fontSize="4xl"
               color="#222222"
               textAlign="center"
-              margin="30px"
+              margin="10px"
             >
-              Bienvenido al Prestamo de Salas
             </Text>
             <LoginGoogle />
-          </Center>
-        </Center>
-      </Center>
+          </Box>
+      </Box>
     </>
   )
 }
