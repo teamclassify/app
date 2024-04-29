@@ -21,7 +21,7 @@ function App () {
         <Switch>
           <Route component={HomePage} path="/" />
           <Route component={LoginPage} path="/login" />
-          <Route component={UserPage} path="/user" />
+          <Route component={UserPage} path="/home" />
           <Route component={ErrorPage} path="/:rest*" />
         </Switch>
       </Box>
