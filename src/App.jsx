@@ -3,6 +3,7 @@ import { Box } from '@chakra-ui/react'
 
 import HomePage from './pages/Home'
 import LoginPage from './pages/Login'
+import UserPage from './pages/User'
 import ErrorPage from './pages/NotFound'
 
 import Header from './components/Header'
@@ -11,7 +12,6 @@ function App () {
   return (
     <>
       <Header />
-
       <Box
         mx='auto'
         mt='2rem'
@@ -21,7 +21,7 @@ function App () {
         <Switch>
           <Route component={HomePage} path="/" />
           <Route component={LoginPage} path="/login" />
-
+          <Route component={UserPage} path="/user" />
           <Route component={ErrorPage} path="/:rest*" />
         </Switch>
       </Box>
