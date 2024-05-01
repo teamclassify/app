@@ -1,9 +1,10 @@
+import { ChakraProvider } from '@chakra-ui/react'
+import '@/styles/animate.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { ChakraProvider } from '@chakra-ui/react'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import App from './App.jsx'
 import './index.css'
-import { QueryClient, QueryClientProvider } from 'react-query'
 
 import UserProvider from './context/UserContext'
 import theme from './theme'
