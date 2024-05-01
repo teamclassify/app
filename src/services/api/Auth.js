@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { URL, handleAxiosError } from '.'
 
-import { auth } from '@src/config/firebase'
+import { auth } from '@/config/firebase'
 
 async function getToken () {
   const t = (await auth.currentUser?.getIdToken()) || null
