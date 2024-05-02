@@ -5,16 +5,22 @@ import HomePage from './pages/Home'
 import LoginPage from './pages/Login'
 import UserPage from './pages/User'
 import ErrorPage from './pages/NotFound'
+import Header from './components/Header'
+// const image = './img/background-red.jpg'
 
 function App () {
   return (
     <>
-      <Switch>
-        <Route component={HomePage} path="/" />
-        <Route component={LoginPage} path="/login" />
-        <Route component={UserPage} path="/home" />
-        <Route component={ErrorPage} path="/:rest*" />
+     <Header />
+
+      <Box mx='auto' mt='2rem' w='90%' maxW='container.xl'>
+        <Switch>
+          <Route component={HomePage} path="/" />
+          <Route component={UserPage} path='/home'/>
+          <Route component={LoginPage} path="/login" />
+          <Route component={ErrorPage} path="/:rest*" />
       </Switch>
+      </Box>
     </>
   )
 }
