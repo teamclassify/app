@@ -4,6 +4,7 @@ import HomePage from './pages/Home'
 import LoginPage from './pages/Login'
 import UserPage from './pages/User'
 import ErrorPage from './pages/NotFound'
+import BuildingsPage from './pages/buildings'
 
 function App () {
   return (
@@ -12,6 +13,7 @@ function App () {
         <Route component={HomePage} path="/" />
         <Route component={LoginPage} path="/login" />
         <Route component={UserPage} path="/home" />
+        <Route component={BuildingsPage} path="/edificios" />
         <Route component={ErrorPage} path="/:rest*" />
       </Switch>
     </>
