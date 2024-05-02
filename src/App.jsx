@@ -14,7 +14,7 @@ function App () {
         <Route component={HomePage} path="/" />
         <Route component={LoginPage} path="/login" />
         <Route component={UserPage} path="/home" />
-        <Route component={UpdatePage} path="/update" />
+        <Route component={UpdatePage} path="/upload" />
         <Route component={BuildingsPage} path="/edificios" />
         <Route component={ErrorPage} path="/:rest*" />
       </Switch>
