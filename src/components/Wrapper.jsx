@@ -21,7 +21,7 @@ function Wrapper ({ children }) {
           </Center>
             )
           : (
-          <Box mt={4}>{children}</Box>
+          <Box mt={0}>{children}</Box>
             )}
       </Box>
     </Grid>
