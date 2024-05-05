@@ -11,7 +11,7 @@ function Login () {
     <>
       <Box>
         <Image
-          src="/assets/background-red.jpg"
+          src="/assets/auditorio.jpg"
           pos="absolute"
           top={0}
           left={0}
