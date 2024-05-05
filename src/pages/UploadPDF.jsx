@@ -8,131 +8,191 @@ import {
   Heading,
   Input,
   Stack,
-  Text
+  Text,
+  useToast
 } from '@chakra-ui/react'
-import { DownloadIcon } from '@chakra-ui/icons'
-import { motion, useAnimation } from 'framer-motion'
+import { DownloadIcon, CheckIcon } from '@chakra-ui/icons'
+import { motion } from 'framer-motion'
 import Wrapper from '../components/Wrapper'
+import UploadService from '../services/api/UploadService'
+import { useMutation } from 'react-query'
 
 export default function App () {
-  const [fileName, setFileName] = useState('')
+  const [file, setFile] = useState()
+  const [fileName, setFileName] = useState()
 
-  const controls = useAnimation()
-  const startAnimation = () => controls.start('hover')
-  const stopAnimation = () => controls.stop()
+  const toast = useToast()
+
+  const startAnimation = () => {
+    document.getElementById('uploadDocument').style.backgroundColor = '#8ACDFF'
+  }
+  const stopAnimation = () => {
+    document.getElementById('uploadDocument').style.backgroundColor = 'white'
+  }
+
+  const { mutate } = useMutation((file) => {
+    const promise = UploadService.create(file)
+    toast.promise(promise, {
+      success: { title: 'Archivo subido' },
+      error: { title: 'Error al subir el archivo' },
+      loading: { title: 'Cargando archivo' }
+    })
+    return promise
+  })
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0]
-    setFileName(file.name)
-    /*
-    if (file) {
-      const formData = new FormData()
-      formData.append('file', file)
-
-      try {
-        const response = fetch('https://classify-api.vercel.app/api', {
-          method: 'POST',
-          body: formData
-        })
-
-        if (response.ok) {
-          console.log('Archivo subido exitosamente')
-        } else {
-          console.error('Error al subir el archivo')
-        }
-      } catch (error) {
-        console.error('Error durante la subida', error)
-      }
+    const title = ['Listo', 'Error']
+    const description = [
+      'Su archivo ha sido cargado exitosamente',
+      'Solo se permite archivos pdf'
+    ]
+    const status = ['success', 'error']
+    let index = 0
+    if (file.type !== 'application/pdf') {
+      index += 1
+      setFile(null)
+      setFileName('')
+      document.getElementById('uploadDocument').style.backgroundColor = 'white'
+    } else {
+      setFile(file)
+      setFileName(file.name)
+      document.getElementById('uploadDocument').style.backgroundColor = '#DDE8E3'
     }
-    */
+    toast({
+      title: title[index],
+      description: description[index],
+      status: status[index],
+      duration: 9000,
+      isClosable: true
+    })
+  }
+
+  const handleSubmit = () => {
+    if (file) {
+      mutate(file)
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Vuelve a subir el archivo pdf',
+        status: 'error',
+        duration: 9000,
+        isClosable: true
+      })
+    }
   }
 
   return (
     <Wrapper>
-      <Box>
-        <Heading as="h2" size="xl" noOfLines={1} p="20px 0px">
-          Cargar Horario
-        </Heading>
-        <AspectRatio maxW="800px" ratio={16 / 8}>
-          <Box
-            bgColor="white"
-            borderColor="gray.300"
-            borderStyle="dashed"
-            borderWidth="2px"
-            rounded="md"
-            shadow="sm"
-            role="group"
-            transition="all 150ms ease-in-out"
-            _hover={{
-              shadow: 'md'
-            }}
-            as={motion.div}
-            initial="rest"
-            animate="rest"
-            whileHover="hover"
-          >
-            <Box position="relative" height="100%" width="100%">
-              <Box
-                position="absolute"
-                height="100%"
-                width="100%"
-                display="flex"
-                flexDirection="column"
-              >
-                <Stack
+      <Box display="flex" flexDir="row" gap={4}>
+        <Box w="100%">
+          <Heading as="h2" size="md" noOfLines={1} p="20px 0px">
+            Cargar horario
+          </Heading>
+          <AspectRatio maxW="800px" ratio={16 / 8}>
+            <Box
+              id="uploadDocument"
+              bgColor="white"
+              borderColor="gray.300"
+              borderStyle="dashed"
+              borderWidth="2px"
+              rounded="md"
+              shadow="sm"
+              role="group"
+              transition="all 150ms ease-in-out"
+              _hover={{
+                shadow: 'md'
+              }}
+              as={motion.div}
+              initial="rest"
+              animate="rest"
+              whileHover="hover"
+            >
+              <Box position="relative" height="100%" width="100%">
+                <Box
+                  position="absolute"
                   height="100%"
                   width="100%"
                   display="flex"
-                  alignItems="center"
-                  justify="center"
-                  spacing="4"
+                  flexDirection="column"
                 >
-                  <Box height="16" width="16" position="relative">
-                    <DownloadIcon w="100%" h="100%" />
-                  </Box>
-                  <Stack p="2" textAlign="center" spacing="1">
-                    <Heading fontSize="lg" color="gray.700" fontWeight="bold">
-                      Arrastra y suelta el archivo
-                    </Heading>
-                    <Text fontWeight="light">o click para seleccionar</Text>
+                  <Stack
+                    height="100%"
+                    width="100%"
+                    display="flex"
+                    alignItems="center"
+                    justify="center"
+                    spacing="4"
+                  >
+                    <Box display='flex' height="100%" width="100%" textAlign='center' alignItems='center' justifyContent='center' position="relative">
+                      {file
+                        ? (
+                        <Box>
+                          <CheckIcon h="16" w="16" />
+                          <Text fontSize="md" color="gray.700" fontWeight="bold">
+                            Su archivo ha sido cargado
+                          </Text>
+                        </Box>
+                          )
+                        : (
+                        <Box>
+                        <DownloadIcon h="16" w="16" />
+                        <Stack p="2" textAlign="center" spacing="1">
+                          <Heading fontSize="lg" color="gray.700" fontWeight="bold">
+                            Arrastra y suelta el archivo
+                          </Heading>
+                          <Text fontWeight="light">
+                            o click para seleccionar
+                          </Text>
+                        </Stack>
+                        </Box>
+                          )}
+                    </Box>
                   </Stack>
-                </Stack>
+                </Box>
+                <Input
+                  id="document"
+                  type="file"
+                  height="100%"
+                  width="100%"
+                  position="absolute"
+                  top="0"
+                  left="0"
+                  opacity="0"
+                  aria-hidden="true"
+                  accept="pdf/*"
+                  onDragEnter={startAnimation}
+                  onDragLeave={stopAnimation}
+                  onChange={handleFileUpload}
+                />
               </Box>
-              <Input
-                id="document"
-                type="file"
-                height="100%"
-                width="100%"
-                position="absolute"
-                top="0"
-                left="0"
-                opacity="0"
-                aria-hidden="true"
-                accept="pdf/*"
-                onDragEnter={startAnimation}
-                onDragLeave={stopAnimation}
-                onChange={handleFileUpload}
-              />
             </Box>
-          </Box>
-        </AspectRatio>
-        <Heading as="h2" size="xl" noOfLines={1} p="20px 0px">
-          Archivo subido
-        </Heading>
-        {fileName && (
-          <>
-            <Card>
-              <CardBody>
-                <Text>{fileName}</Text>
-              </CardBody>
-            </Card>
-          </>
-        )}
-        <Box display="flex" justifyContent="flex-end" p={4}>
-          <Button colorScheme="primary" size="sm">
-            Confirmar
-          </Button>
+          </AspectRatio>
         </Box>
+        <Box w="100%" margin="0 8px">
+          <Heading as="h2" size="md" noOfLines={1} p="20px 0px">
+            Archivo subido
+          </Heading>
+          {fileName && (
+            <>
+              <Card>
+                <CardBody
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Text>{fileName}</Text>
+                  <CheckIcon color="green" />
+                </CardBody>
+              </Card>
+            </>
+          )}
+        </Box>
+      </Box>
+      <Box display="flex" justifyContent="flex-end" p={4}>
+        <Button colorScheme="primary" size="sm" onClick={handleSubmit}>
+          Confirmar
+        </Button>
       </Box>
     </Wrapper>
   )
