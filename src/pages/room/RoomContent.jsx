@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 
 import Schedule from '@/components/Schedule'
 import RoomsService from '@/services/api/RoomsService'
+import RoomNotFound from './RoomNotFound'
 
 function RoomContent ({ id }) {
   const { data, isLoading } = useQuery(['room', id], () =>
@@ -15,7 +16,7 @@ function RoomContent ({ id }) {
   }
 
   if (!isLoading && !data) {
-    return <span>No se encuentra la sala</span>
+    return <RoomNotFound />
   }
 
   return (
