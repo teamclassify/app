@@ -5,10 +5,11 @@ import { getToken } from './Auth'
 async function create (file) {
   const formData = new FormData()
   formData.append('file', file)
+
   try {
     const token = await getToken()
     const res = await axios({
-      url: `${URL}/upload `,
+      url: `${URL}/files/upload `,
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
