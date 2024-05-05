@@ -20,6 +20,7 @@ function Login () {
           zIndex={-1}
           w="full"
           h="100vh"
+          objectFit='cover'
         />
       </Box>
 
