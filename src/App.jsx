@@ -1,9 +1,10 @@
 import { Route, Switch } from 'wouter'
 
 import HomePage from './pages/Home'
+import LoanPage from './pages/Loan'
 import LoginPage from './pages/Login'
-import UserPage from './pages/User'
 import ErrorPage from './pages/NotFound'
+import UserPage from './pages/User'
 import UpdatePage from './pages/UploadPDF'
 import BuildingsPage from './pages/buildings'
 
@@ -16,6 +17,7 @@ function App () {
         <Route component={UserPage} path="/home" />
         <Route component={UpdatePage} path="/upload" />
         <Route component={BuildingsPage} path="/edificios" />
+        <Route component={LoanPage} path='/prestamos'/>
         <Route component={ErrorPage} path="/:rest*" />
       </Switch>
     </>

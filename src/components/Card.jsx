@@ -1,10 +1,10 @@
-import { Card, Text, CardBody, Badge } from '@chakra-ui/react'
+import { Card, CardBody } from '@chakra-ui/react'
 
-function Carda () {
+function Carda ({ children }) {
   return (<>
-  <Card my={8} w='36%'>
+  <Card my={6} display="inline-block">
   <CardBody>
-    <Text><Badge>Tú PRESTAMO puede estar</Badge>: <Badge colorScheme='yellow'>EN ESPERA</Badge> <Badge colorScheme='green'>APROBADO</Badge> <Badge colorScheme='red'>RECHAZADO</Badge></Text>
+    {children}
   </CardBody>
 </Card>
   </>)
