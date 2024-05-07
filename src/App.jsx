@@ -6,6 +6,7 @@ import UserPage from './pages/User'
 import ErrorPage from './pages/NotFound'
 import UpdatePage from './pages/UploadPDF'
 import BuildingsPage from './pages/buildings'
+import RoomsPage from './pages/rooms'
 
 function App () {
   return (
@@ -16,6 +17,7 @@ function App () {
         <Route component={UserPage} path="/home" />
         <Route component={UpdatePage} path="/upload" />
         <Route component={BuildingsPage} path="/edificios" />
+        <Route component={RoomsPage} path="/salas" />
         <Route component={ErrorPage} path="/:rest*" />
       </Switch>
     </>
