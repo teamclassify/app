@@ -4,8 +4,9 @@ import HomePage from './pages/Home'
 import LoanPage from './pages/Loan'
 import LoginPage from './pages/Login'
 import ErrorPage from './pages/NotFound'
-import BuildingsPage from './pages/buildings'
 import UserPage from './pages/User'
+import UpdatePage from './pages/UploadPDF'
+import BuildingsPage from './pages/buildings'
 
 function App () {
   return (
@@ -14,6 +15,8 @@ function App () {
         <Route component={HomePage} path="/" />
         <Route component={LoginPage} path="/login" />
         <Route component={UserPage} path="/home" />
+        <Route component={LoanPage} path="/prestamo"/>
+        <Route component={UpdatePage} path="/upload" />
         <Route component={BuildingsPage} path="/edificios" />
         <Route component={LoanPage} path='/prestamos'/>
         <Route component={ErrorPage} path="/:rest*" />

@@ -11,7 +11,7 @@ function Login () {
     <>
       <Box>
         <Image
-          src="/assets/background-red.jpg"
+          src="/assets/auditorio.jpg"
           pos="absolute"
           top={0}
           left={0}
@@ -20,6 +20,7 @@ function Login () {
           zIndex={-1}
           w="full"
           h="100vh"
+          objectFit='cover'
         />
       </Box>
 
