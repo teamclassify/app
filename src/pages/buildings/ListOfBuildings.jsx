@@ -1,15 +1,15 @@
-import { Center, Grid, Spinner, useDisclosure, useToast } from '@chakra-ui/react'
+import { Alert, AlertTitle, Center, Grid, Spinner, useDisclosure, useToast } from '@chakra-ui/react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
 import BuildingsService from '@/services/api/BuildingsService'
+import { useState } from 'react'
 import BuildingItem from './BuildingItem'
 import ModalEditBuilding from './ModalEditBuilding'
-import { useState } from 'react'
 
 function ListOfBuildings () {
   const [currentBuilding, setCurrentBuilding] = useState({ id: 0, name: '' })
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { isLoading, data: buildings } = useQuery('buildings', BuildingsService.getAll)
+  const { isLoading, data } = useQuery('buildings', BuildingsService.getAll)
 
   const queryClient = useQueryClient()
   const toast = useToast()
@@ -39,6 +39,22 @@ function ListOfBuildings () {
     onOpen()
   }
 
+  if (!isLoading && data.error) {
+    return (
+      <Alert status="error">
+        <AlertTitle>Error al obtener los edificios</AlertTitle>
+      </Alert>
+    )
+  }
+
+  if (!isLoading && !data) {
+    return (
+      <Alert status="info">
+        <AlertTitle>No existen edificios</AlertTitle>
+      </Alert>
+    )
+  }
+
   return (
     <Grid>
       <ModalEditBuilding currentBuilding={currentBuilding} isOpen={isOpen} onClose={onClose} />
@@ -51,7 +67,7 @@ function ListOfBuildings () {
           )
         : (
         <>
-          {buildings.map((building) => (
+          {data && data.map((building) => (
             <BuildingItem
               key={building.id}
               id={building.id}
