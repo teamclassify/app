@@ -7,7 +7,7 @@ function ButtonGoogle () {
   return (
     <>
     <Box>
-        <Button onClick={loginWithGoogle} colorSheme='google' leftIcon={<FcGoogle />} border='1px solid #D9D9D9' borderRadius="10px" >
+        <Button onClick={loginWithGoogle} leftIcon={<FcGoogle />} border='1px solid #D9D9D9' borderRadius="10px" >
           Continuar con Google
         </Button>
       </Box>

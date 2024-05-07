@@ -1,4 +1,4 @@
-import img from '@src/assets/img/logoUFPS.png'
+import img from '@/assets/img/logoUFPS.png'
 
 const LogoUFPS = () => {
   return (
