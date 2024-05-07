@@ -8,7 +8,6 @@ import { FaComputer } from 'react-icons/fa6'
 import { GrSchedule } from 'react-icons/gr'
 import { IoIosSettings } from 'react-icons/io'
 import { IoPersonSharp } from 'react-icons/io5'
-import { MdDashboard } from 'react-icons/md'
 import { RiLogoutBoxLine } from 'react-icons/ri'
 import UserPic from './UserPic'
 
@@ -26,8 +25,7 @@ function DrawerForm () {
             <UserPic/>
             </Box>
           <Button colorScheme='red' bg='transparent' gap={2}><IoPersonSharp size='13px'color='white' /><Link href='/home'><Heading as='h1' size='sl' py={2}>Inicio</Heading></Link></Button>
-          <Button colorScheme='red' bg='transparent' gap={2}><GrSchedule size='13px'color='white' /><Link href=''> <Heading as='h1' size='sl' color='white' py={2}>Horario</Heading></Link></Button>
-          <Button colorScheme='red' bg='transparent' gap={2}><MdDashboard size='13px'color='white' /><Link href=''><Heading as='h1' size='sl' color='white' py={2}>Dashboard</Heading></Link></Button>
+          <Button colorScheme='red' bg='transparent' gap={2}><GrSchedule size='13px'color='white' /><Link href='/horario'> <Heading as='h1' size='sl' color='white' py={2}>Horario</Heading></Link></Button>
           <Button colorScheme='red' bg='transparent' gap={2}><FaComputer size='13px'color='white' /><Link href='/prestamos'><Heading as='h1' size='sl' color='white' py={2}>Prestamos</Heading></Link></Button>
          </Box>
          <Box>

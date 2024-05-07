@@ -31,6 +31,7 @@ function Room () {
               currentBuilding={currentBuilding}
               setCurrentBuilding={setCurrentBuilding}
             />
+            <SelectRooms/>
           </Flex>
 
           <Flex alignItems="center" gap={2} bg='white' px={2} py={1} rounded='md'>

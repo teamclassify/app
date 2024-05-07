@@ -1,6 +1,5 @@
 import { LinkBox, LinkOverlay, Box, Heading, Text } from '@chakra-ui/react'
 import { FaDoorOpen } from 'react-icons/fa'
-import { IoIosMore } from 'react-icons/io'
 import { Link } from 'wouter'
 
 function Loan () {
@@ -21,7 +20,6 @@ function Loan () {
           <LinkOverlay as={Link} href="">
           <Box display='flex' flexDirection='row' justifyContent='space-between'>
             <FaDoorOpen size="50px" color="white" ></FaDoorOpen>
-            <IoIosMore size='25px' color='white'/>
             </Box>
             <Box display='flex' flexDirection='column' mt={2} alignItems='start'>
             <Heading fontWeight='bold' size="md" my="2" fontFamily="sans-serif" color='white'>SA414</Heading>
