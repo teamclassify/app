@@ -15,7 +15,6 @@ function App () {
         <Route component={HomePage} path="/" />
         <Route component={LoginPage} path="/login" />
         <Route component={UserPage} path="/home" />
-        <Route component={LoanPage} path="/prestamo"/>
         <Route component={UpdatePage} path="/upload" />
         <Route component={BuildingsPage} path="/edificios" />
         <Route component={LoanPage} path='/prestamos'/>
