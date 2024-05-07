@@ -43,12 +43,12 @@ function SelectRooms (
         <Select
           size={size}
           rounded="md"
-          isDisabled={!data || !currentRoom}
-          value={currentRoom}
           onChange={handleSelect}
+          isDisabled={!data}
+          value={currentRoom || ''}
           placeholder="Seleccionar sala"
         >
-          {(data && currentRoom) &&
+          {data &&
             data.map((room) => (
               <option key={room.id} value={room.id}>
                 {room.nombre}

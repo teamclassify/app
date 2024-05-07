@@ -48,7 +48,7 @@ function SelectBuildings ({ size, currentBuilding, setCurrentBuilding } = { size
           <Select
             size={size}
             rounded="md"
-            value={currentBuilding}
+            value={currentBuilding || ''}
             onChange={handleSelect}
             placeholder="Seleccionar edificio"
           >
