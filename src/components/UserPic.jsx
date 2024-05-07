@@ -1,4 +1,4 @@
-import { Avatar, Flex, Spinner } from '@chakra-ui/react'
+import { Avatar, Flex, Heading, Spinner } from '@chakra-ui/react'
 import { Link } from 'wouter'
 
 import useUser from '../hooks/useUser'
@@ -14,8 +14,9 @@ function UserAvatar () {
         {
           user
             ? <>
-                  <Flex alignItems="center">
-                    <Avatar src={user.photo} size='2xl' />
+                  <Flex alignItems="center" flexDirection='column'>
+                    <Avatar src={user.photo} size='xl' />
+                    <Heading pt={2} as='h1' fontSize='13px' textAlign='center' color='white'>{user.name}</Heading>
                   </Flex>
             </>
             : <Link href='/login'>Iniciar sesion</Link>
