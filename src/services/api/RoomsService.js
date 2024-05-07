@@ -21,6 +21,27 @@ async function getAll () {
   }
 }
 
+async function getById (id) {
+  if (!id) return
+
+  try {
+    const token = await getToken()
+
+    const res = await axios({
+      url: `${URL}/salas/${id}`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 async function getAllByBuilding (id) {
   if (!id) return
 
@@ -43,6 +64,8 @@ async function getAllByBuilding (id) {
 }
 
 async function update (id, data) {
+  if (!id) return
+
   try {
     const token = await getToken()
 
@@ -83,6 +106,8 @@ async function create (data) {
 }
 
 async function remove (id) {
+  if (!id) return
+
   try {
     const token = await getToken()
 
@@ -102,7 +127,7 @@ async function remove (id) {
 }
 
 const RoomsService = {
-  getAll, getAllByBuilding, update, create, remove
+  getAll, getById, getAllByBuilding, update, create, remove
 }
 
 export default RoomsService
