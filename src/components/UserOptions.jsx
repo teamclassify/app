@@ -6,6 +6,7 @@ import {
   SimpleGrid
 } from '@chakra-ui/react'
 import { IoIosAddCircle } from 'react-icons/io'
+import { Link } from 'wouter'
 
 function userOptions () {
   return (
@@ -25,7 +26,7 @@ function userOptions () {
           <IoIosAddCircle size="50px" color="white" />
         </Box>
         <Heading size="md" my="2" fontFamily="sans-serif">
-          <LinkOverlay href="/prestamos" fontSize="1rem" color='white'>
+          <LinkOverlay as={Link} href="/prestamos" fontSize="1rem" color='white'>
             Solicitar Prestamo
           </LinkOverlay>
         </Heading>
