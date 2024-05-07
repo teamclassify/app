@@ -21,6 +21,25 @@ async function getAll () {
   }
 }
 
+async function getById (id) {
+  try {
+    const token = await getToken()
+
+    const res = await axios({
+      url: `${URL}/salas/${id}`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 async function getAllByBuilding (id) {
   if (!id) return
 
@@ -102,7 +121,7 @@ async function remove (id) {
 }
 
 const RoomsService = {
-  getAll, getAllByBuilding, update, create, remove
+  getAll, getById, getAllByBuilding, update, create, remove
 }
 
 export default RoomsService
