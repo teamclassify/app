@@ -19,6 +19,7 @@ function Wrapper ({ children }) {
           <Center minH="90vh">
             <Spinner size="xl" />
           </Center>
+
             )
           : (
           <Box mt={4}>{children}</Box>
