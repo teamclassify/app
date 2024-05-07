@@ -19,6 +19,7 @@ function App () {
         <Route component={UserPage} path="/home" />
         <Route component={UpdatePage} path="/upload" />
         <Route component={BuildingsPage} path="/edificios" />
+        <Route component={RoomPage} path="/horario" />
         <Route component={RoomPage} path="/horario/:id" />
         <Route component={RoomsPage} path="/salas" />
         <Route component={LoanPage} path='/prestamos'/>

@@ -1,5 +1,4 @@
-import { Flex, Heading, Spinner } from '@chakra-ui/react'
-import { FaBuilding } from 'react-icons/fa6'
+import { Box, Spinner } from '@chakra-ui/react'
 import { useQuery } from 'react-query'
 
 import Schedule from '@/components/Schedule'
@@ -22,24 +21,9 @@ function RoomContent ({ id }) {
   return (
     <>
       {data && (
-        <>
-          <Flex
-            p={2}
-            mb={4}
-            gap={2}
-            bg="white"
-            rounded="md"
-            alignItems="center"
-          >
-            <FaBuilding />
-
-            <Heading as="h2" size="md">
-              {data.nombre}
-            </Heading>
-          </Flex>
-
+        <Box className='animate__fadeIn'>
           <Schedule roomId={data.id} />
-        </>
+        </Box>
       )}
     </>
   )

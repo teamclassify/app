@@ -22,6 +22,8 @@ async function getAll () {
 }
 
 async function getById (id) {
+  if (!id) return
+
   try {
     const token = await getToken()
 
@@ -62,6 +64,8 @@ async function getAllByBuilding (id) {
 }
 
 async function update (id, data) {
+  if (!id) return
+
   try {
     const token = await getToken()
 
@@ -102,6 +106,8 @@ async function create (data) {
 }
 
 async function remove (id) {
+  if (!id) return
+
   try {
     const token = await getToken()
 
