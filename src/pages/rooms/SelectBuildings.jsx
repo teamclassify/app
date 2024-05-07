@@ -9,7 +9,7 @@ import { useQuery } from 'react-query'
 
 import BuildingsService from '@/services/api/BuildingsService'
 
-function SelectBuildings ({ currentBuilding, setCurrentBuilding }) {
+function SelectBuildings ({ size, currentBuilding, setCurrentBuilding } = { size: 'md' }) {
   const { data, isLoading } = useQuery('buildings', BuildingsService.getAll)
 
   const handleSelect = (e) => {
@@ -46,7 +46,7 @@ function SelectBuildings ({ currentBuilding, setCurrentBuilding }) {
           alignItems="center"
         >
           <Select
-            size="md"
+            size={size}
             rounded="md"
             value={currentBuilding}
             onChange={handleSelect}
