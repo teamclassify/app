@@ -66,6 +66,8 @@ export default function UserProvider ({ children }) {
     } else setUser(null)
   }
 
+  console.log(token)
+
   useEffect(() => {
     // firebase auth
     const unsuscribeStateChanged = auth.onAuthStateChanged(
