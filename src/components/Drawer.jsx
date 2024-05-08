@@ -16,18 +16,18 @@ function DrawerForm () {
     <Box
       p={4}
       minH="100vh"
-      display="flex"
       bg="rgb(196 38 38)"
       alignItems="start"
       flexDirection="column"
       justifyContent="space-between"
+      display={{ base: 'none', md: 'flex' }}
     >
       <Box>
         <Box display="flex" justifyContent="center" mb={6}>
           <UserPic />
         </Box>
 
-        <Divider mb={4} borderColor='primary.400' borderWidth={1} />
+        <Divider mb={4} borderColor="primary.400" borderWidth={1} />
 
         <Button
           gap={2}
