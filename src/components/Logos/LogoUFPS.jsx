@@ -1,9 +1,9 @@
 import img from '@/assets/img/logoUFPS.png'
 
-const LogoUFPS = () => {
+const LogoUFPS = ({ width }) => {
   return (
     <>
-      <img src={img} width='40%'/>
+      <img src={img} width={width}/>
     </>
   )
 }
