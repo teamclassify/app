@@ -1,4 +1,4 @@
-import { Box, Spinner } from '@chakra-ui/react'
+import { Alert, AlertIcon, AlertTitle, Box, Spinner } from '@chakra-ui/react'
 import moment from 'moment'
 import { useState } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
@@ -13,7 +13,7 @@ const localizer = momentLocalizer(moment)
 function Schedule ({ roomId }) {
   const [currentDate, setCurrentDate] = useState(new Date())
 
-  const { data, isLoading } = useQuery(['schedule', roomId], () =>
+  const { data, isLoading, isError } = useQuery(['schedule', roomId], () =>
     EventsService.getAllByRoom(roomId)
   )
 
@@ -21,17 +21,35 @@ function Schedule ({ roomId }) {
     return <Spinner />
   }
 
+  if (!isLoading && isError) {
+    return <span>Error al obtener el horario</span>
+  }
+
+  if (!isLoading && !Array.isArray(data)) {
+    return (
+      <Alert rounded='md'>
+        <AlertIcon />
+        <AlertTitle>No se logro obtener el horario</AlertTitle>
+      </Alert>
+    )
+  }
+
   return (
     <Box bg="white" p={2} rounded="md">
       {data && (
         <Calendar
-          onRangeChange={range => setCurrentDate(range[0])}
+          onRangeChange={(range) => setCurrentDate(range[0])}
           defaultDate={currentDate}
           localizer={localizer}
           events={data.map((event) => {
             return {
               title: event.nombre,
-              ...convertDateRoom(currentDate, event.dia, event.hora_inicio, event.hora_fin)
+              ...convertDateRoom(
+                currentDate,
+                event.dia,
+                event.hora_inicio,
+                event.hora_fin
+              )
             }
           })}
           startAccessor="start"
