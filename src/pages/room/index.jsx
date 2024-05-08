@@ -10,6 +10,8 @@ import SelectRooms from '../rooms/SelectRooms'
 import RoomContent from './RoomContent'
 import RoomNotFound from './RoomNotFound'
 
+// TODO: show room info (cantity, computers)
+
 function Room () {
   const [currentBuilding, setCurrentBuilding] = useState(null)
   const [, setLocation] = useLocation()

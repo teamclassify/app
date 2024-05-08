@@ -7,7 +7,7 @@ import Wrapper from '../components/Wrapper'
 function User () {
   return (
     <Wrapper>
-      <Box px={8}>
+      <Box>
         <Heading fontSize='1.2rem' fontFamily='sans-serif'></Heading>
         <UserOptions></UserOptions>
         <Carda>

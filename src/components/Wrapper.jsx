@@ -8,10 +8,10 @@ function Wrapper ({ children }) {
   const { loading } = useUser()
 
   return (
-    <Grid gridTemplateColumns={{ base: '1fr', md: '0.14fr 1fr' }}>
+    <Grid h='100vh' gridTemplateColumns={{ base: '1fr', md: '0.2fr 1fr' }}>
       <DrawerMenu />
 
-      <Box px={4}>
+      <Box px={4} overflowY='auto'>
         <Header />
 
         {loading
