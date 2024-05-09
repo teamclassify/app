@@ -1,10 +1,10 @@
-import Wrapper from '../components/Wrapper'
 import Loans from '../components/LoanForm'
+import Wrapper from '../components/Wrapper'
 
 function Loan () {
   return (
     <Wrapper>
-      <Loans></Loans>
+      <Loans />
     </Wrapper>
   )
 }

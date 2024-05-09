@@ -1,12 +1,19 @@
 import {
-  Input,
   Button,
-  Flex,
-  Heading,
   Checkbox,
-  Stack,
+  Flex,
+  FormControl,
+  FormLabel,
   Grid,
-  GridItem
+  GridItem,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Stack,
+  Textarea,
+  VStack
 } from '@chakra-ui/react'
 
 import { useState } from 'react'
@@ -21,70 +28,82 @@ function MyLoans () {
   return (
     <>
       <Grid
-        templateAreas={`"nav main"
-                  "nav main"`}
-        gridTemplateRows={'1fr'}
-        gridTemplateColumns={'0.7fr'}
+        minH='calc(100vh - 110px)'
         gap="4"
-        color="blackAlpha.700"
         fontWeight="bold"
-        mx={7}
+        color="blackAlpha.700"
+        gridTemplateColumns={{ base: '1fr', md: '1.5fr 1fr' }}
       >
-        <GridItem pl="2" area={'nav'} bg={'white'} p={2} rounded={5}>
-          <Schedule roomId={currentRoom} />
+        <GridItem bg={'white'} p={2} rounded={5}>
+          {!currentBuilding
+            ? (
+            <p>Selecciona un edificio para ver sus salas</p>
+              )
+            : (
+            <>
+              {!currentRoom
+                ? (
+                <p>Selecciona una sala para ver su disponibilidad</p>
+                  )
+                : (
+                <Schedule roomId={currentRoom} />
+                  )}
+            </>
+              )}
         </GridItem>
 
-        <GridItem pl="2" area={'main'} bg={'white'} p={2} rounded={5}>
-          <Flex flexDirection="column" gap={4}>
-            <Flex flexDirection={'column'} gap={2}>
-              <Heading fontSize="1.2rem" fontFamily="sans-serif">
-                Edificio
-              </Heading>
+        <GridItem maxH='calc(100vh - 110px)' bg={'white'} p={4} rounded={5} overflowY='auto'>
+          <VStack spacing={4}>
+            <FormControl>
+              <FormLabel>Edificio</FormLabel>
               <SelectBuildings
-                size="sm"
                 currentBuilding={currentBuilding}
                 setCurrentBuilding={setCurrentBuilding}
               />
-            </Flex>
-            <Flex flexDirection="column" gap={4}>
-              <Flex flexDirection={'column'} gap={2}>
-                <Heading fontSize="1.2rem" fontFamily="sans-serif">
-                  Sala
-                </Heading>
-                <SelectRooms
-                  size="sm"
-                  currentRoom={currentRoom}
-                  building={currentBuilding}
-                  handleChange={setCurrentRoom}
-                />
-              </Flex>
-              <Flex flexDirection={'column'} gap={2}>
-              <Heading fontSize="1.2rem" fontFamily="sans-serif">
-                  Personas
-                </Heading>
-              <Input placeholder='¿Cuantas personas asistiran?' />
-              </Flex>
-              <Flex flexDirection={'column'} gap={2}>
-                <Heading fontSize="1.2rem" fontFamily="sans-serif">
-                  Recursos
-                </Heading>
-                <Stack spacing={5} direction="row">
-                  <Checkbox colorScheme="green" defaultChecked>
-                    Videobeam
-                  </Checkbox>
-                  <Checkbox colorScheme="green" defaultChecked>
-                    Marcador
-                  </Checkbox>
-                </Stack>
-              </Flex>
-            </Flex>
-          </Flex>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Sala</FormLabel>
+              <SelectRooms
+                currentRoom={currentRoom}
+                building={currentBuilding}
+                handleChange={setCurrentRoom}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Personas</FormLabel>
+
+              <NumberInput>
+                <NumberInputField placeholder="¿Cuantas personas asistiran?" />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Recursos</FormLabel>
+
+              <Stack spacing={5} direction="row">
+                <Checkbox colorScheme="green">Videobeam</Checkbox>
+
+                <Checkbox colorScheme="green">Marcador</Checkbox>
+              </Stack>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Razón de el préstamo</FormLabel>
+              <Textarea placeholder='...' />
+            </FormControl>
+          </VStack>
         </GridItem>
       </Grid>
 
-      <Button mx={7} my={5} colorScheme="blue" width="10%">
-        Confirmar
-      </Button>
+      <Flex mt={4} justifyContent="end">
+        <Button colorScheme="primary">Confirmar</Button>
+      </Flex>
     </>
   )
 }
