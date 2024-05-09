@@ -101,7 +101,7 @@ function DrawerForm () {
         >
           <RiLogoutBoxLine size="13px" color="white" />
           <Heading as="h1" size="sl" color="white" py={2}>
-            Logout
+            Cerrar sesión
           </Heading>
         </Button>
       </Box>
