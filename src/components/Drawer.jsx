@@ -1,7 +1,6 @@
 import { Box, Button, Divider, Heading } from '@chakra-ui/react'
 import { FaComputer } from 'react-icons/fa6'
 import { GrSchedule } from 'react-icons/gr'
-import { IoIosSettings } from 'react-icons/io'
 import { IoPersonSharp } from 'react-icons/io5'
 import { RiLogoutBoxLine } from 'react-icons/ri'
 import { Link } from 'wouter'
@@ -27,7 +26,7 @@ function DrawerForm () {
           <UserPic />
         </Box>
 
-        <Divider mb={4} borderColor="primary.400" borderWidth={1} />
+        {user && <Divider mb={4} borderColor="primary.400" borderWidth={1} />}
 
         <Button
           gap={2}
@@ -93,7 +92,7 @@ function DrawerForm () {
       </Box>
 
       <Box>
-        <Button
+        {/* <Button
           gap={2}
           w="full"
           bg="transparent"
@@ -106,21 +105,23 @@ function DrawerForm () {
               Ajustes
             </Heading>
           </Link>
-        </Button>
+        </Button> */}
 
-        <Button
-          gap={2}
-          w="full"
-          onClick={logout}
-          bg="transparent"
-          colorScheme="red"
-          justifyContent="start"
-        >
-          <RiLogoutBoxLine size="13px" color="white" />
-          <Heading as="h1" size="sl" color="white" py={2}>
-            Cerrar sesión
-          </Heading>
-        </Button>
+        {user && (
+          <Button
+            gap={2}
+            w="full"
+            onClick={logout}
+            bg="transparent"
+            colorScheme="red"
+            justifyContent="start"
+          >
+            <RiLogoutBoxLine size="13px" color="white" />
+            <Heading as="h1" size="sl" color="white" py={2}>
+              Cerrar sesión
+            </Heading>
+          </Button>
+        )}
       </Box>
     </Box>
   )
