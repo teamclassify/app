@@ -1,17 +1,18 @@
+import { ArrowBackIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
-  Image,
-  Spinner,
   FormControl,
   FormLabel,
+  IconButton,
+  Image,
   Input,
-  IconButton
+  Spinner
 } from '@chakra-ui/react'
-import { ArrowBackIcon } from '@chakra-ui/icons'
+import { Link } from 'wouter'
+
 import LogoUFPS from '../components/Logos/LogoUFPS'
 import useUser from '../hooks/useUser'
-import { Link } from 'wouter'
 
 function Login () {
   const { loading } = useUser()
@@ -75,22 +76,23 @@ function Login () {
               alignItems="center"
               justifyContent="center"
             >
-              <LogoUFPS width={'30%'}/>
-              <FormControl
-                display="flex"
-                justifyContent="center"
-                flexDir="column"
-                w="50%"
-                m={5}
-              >
-                <FormLabel color="black">Dirección de correo</FormLabel>
-                <Input type="email" color="black" w="100%" />
-                <FormLabel color="black">Contraseña</FormLabel>
-                <Input type="password" color="black" w="100%" />
-              </FormControl>
-              <Button colorScheme="primary" as={Link} href="/home">
-                Ingresar
-              </Button>
+              <LogoUFPS width={'30%'} />
+
+              <Box w="90%" maxW="sm" my={4}>
+                <FormControl mb={2}>
+                  <FormLabel color="black">Dirección de correo</FormLabel>
+                  <Input type="email" color="black" w="100%" />
+                </FormControl>
+
+                <FormControl mb={4}>
+                  <FormLabel color="black">Contraseña</FormLabel>
+                  <Input type="password" color="black" w="100%" />
+                </FormControl>
+
+                <Button colorScheme="primary" as={Link} href="/home" w="full">
+                  Ingresar
+                </Button>
+              </Box>
             </Box>
           </Box>
             )}
