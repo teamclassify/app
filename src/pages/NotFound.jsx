@@ -6,7 +6,12 @@ import Wrapper from '@/components/Wrapper'
 function NotFound () {
   return (
     <Wrapper>
-      <Center flexDir="column" gap={8} h="calc(100vh - 50px)">
+      <Center
+        gap={8}
+        flexDir="column"
+        h="calc(100vh - 50px)"
+        className="animate__fadeIn"
+      >
         <Image src="/assets/not-found.svg" w="100%" maxW="250px" />
 
         <Box textAlign="center">
