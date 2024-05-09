@@ -6,8 +6,9 @@ import Wrapper from '@/components/Wrapper'
 function NotFound () {
   return (
     <Wrapper>
-      <Center flexDir="column" gap={8}>
-        <Image src="/assets/not-found.svg" w="100%" maxW="300px" />
+      <Center flexDir="column" gap={8} h="calc(100vh - 50px)">
+        <Image src="/assets/not-found.svg" w="100%" maxW="250px" />
+
         <Box textAlign="center">
           <Heading as="h2" size="lg" mb={2}>
             Página no encontrada
@@ -18,13 +19,7 @@ function NotFound () {
             aplicación
           </Text>
 
-          <Button
-            as={Link}
-            href="/"
-            size="sm"
-            variant="outline"
-            colorScheme="primary"
-          >
+          <Button as={Link} href="/" size="sm" colorScheme="primary">
             Volver al Inicio
           </Button>
         </Box>
