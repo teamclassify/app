@@ -2,10 +2,11 @@ import { Box, useDisclosure } from '@chakra-ui/react'
 import { useLocation } from 'wouter'
 
 import Wrapper from '@/components/Wrapper'
+import useUser from '../../hooks/useUser'
+import NotAuth from '../NotAuth'
 import Header from './Header'
 import ListOfBuildings from './ListOfBuildings'
 import ModalNewBuilding from './ModalNewBuilding'
-import useUser from '../../hooks/useUser'
 
 function Buildings () {
   const [, setLocation] = useLocation()
@@ -13,6 +14,10 @@ function Buildings () {
   const { user, loading } = useUser()
 
   if (!loading && !user) setLocation('/')
+
+  if (!loading && user && !user.roles.includes('admin')) {
+    return <NotAuth />
+  }
 
   return (
     <Wrapper>
