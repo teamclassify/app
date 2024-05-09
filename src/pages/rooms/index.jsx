@@ -4,6 +4,7 @@ import { useLocation } from 'wouter'
 
 import Wrapper from '@/components/Wrapper'
 import useUser from '@/hooks/useUser'
+import NotAuth from '../NotAuth'
 import Header from './Header'
 import ListOfRooms from './ListOfRooms'
 import ModalNewRoom from './ModalNewRoom'
@@ -15,6 +16,10 @@ function Rooms () {
   const [currentBuilding, setCurrentBuilding] = useState(null)
 
   if (!loading && !user) setLocation('/')
+
+  if (!loading && user && !user.roles.includes('admin')) {
+    return <NotAuth />
+  }
 
   return (
     <Wrapper>
