@@ -4,13 +4,10 @@ import { getToken } from './Auth'
 
 async function getAll () {
   try {
-    const token = await getToken()
-
     const res = await axios({
       url: `${URL}/eventos`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
@@ -23,13 +20,10 @@ async function getAll () {
 
 async function getAllByRoom (roomId) {
   try {
-    const token = await getToken()
-
     const res = await axios({
       url: `${URL}/eventos/sala/${roomId}`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
@@ -42,13 +36,10 @@ async function getAllByRoom (roomId) {
 
 async function getById (id) {
   try {
-    const token = await getToken()
-
     const res = await axios({
       url: `${URL}/eventos/${id}`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })

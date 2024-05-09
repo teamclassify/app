@@ -4,13 +4,10 @@ import { getToken } from './Auth'
 
 async function getAll () {
   try {
-    const token = await getToken()
-
     const res = await axios({
       url: `${URL}/salas`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
@@ -25,13 +22,10 @@ async function getById (id) {
   if (!id) return
 
   try {
-    const token = await getToken()
-
     const res = await axios({
       url: `${URL}/salas/${id}`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
@@ -46,13 +40,10 @@ async function getAllByBuilding (id) {
   if (!id) return
 
   try {
-    const token = await getToken()
-
     const res = await axios({
       url: `${URL}/salas/building/${id}`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
@@ -127,7 +118,12 @@ async function remove (id) {
 }
 
 const RoomsService = {
-  getAll, getById, getAllByBuilding, update, create, remove
+  getAll,
+  getById,
+  getAllByBuilding,
+  update,
+  create,
+  remove
 }
 
 export default RoomsService
