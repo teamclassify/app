@@ -64,7 +64,8 @@ export default function UserProvider ({ children }) {
         name: response.data.nombre,
         email: response.data.correo,
         uid: response.data.id,
-        codigo: response.data.codigo
+        codigo: response.data.codigo,
+        roles: response.data.roles
       })
     } else setUser(null)
   }
@@ -82,7 +83,9 @@ export default function UserProvider ({ children }) {
             user.displayName && user.displayName?.length > 0
               ? user.displayName
               : formatEmail(user.email || ''),
-          photo: user.photoURL || ''
+          photo: user.photoURL || '',
+          roles: [],
+          codigo: ''
         }
 
         const token = await user.getIdToken(true)

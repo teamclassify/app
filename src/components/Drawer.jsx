@@ -10,7 +10,7 @@ import useUser from '../hooks/useUser'
 import UserPic from './UserPic'
 
 function DrawerForm () {
-  const { logout } = useUser()
+  const { user, logout } = useUser()
 
   return (
     <Box
@@ -32,47 +32,64 @@ function DrawerForm () {
         <Button
           gap={2}
           w="full"
+          as={Link}
+          href="/home"
           bg="transparent"
           colorScheme="red"
           justifyContent="start"
         >
           <IoPersonSharp size="13px" color="white" />
-          <Link href="/home">
-            <Heading as="h1" size="sl" py={2}>
-              Inicio
-            </Heading>
-          </Link>
+          <Heading as="h1" size="sl" py={2}>
+            Inicio
+          </Heading>
         </Button>
 
         <Button
           gap={2}
           w="full"
+          as={Link}
+          href="/horario"
           bg="transparent"
           colorScheme="red"
           justifyContent="start"
         >
           <GrSchedule size="13px" color="white" />
-          <Link href="/horario">
-            <Heading as="h1" size="sl" color="white" py={2}>
-              Horario
-            </Heading>
-          </Link>
+          <Heading as="h1" size="sl" color="white" py={2}>
+            Horario
+          </Heading>
         </Button>
 
         <Button
           gap={2}
           w="full"
+          as={Link}
+          href="/prestamos"
           bg="transparent"
           colorScheme="red"
           justifyContent="start"
         >
           <FaComputer size="13px" color="white" />
-          <Link href="/prestamos">
-            <Heading as="h1" size="sl" color="white" py={2}>
-              Prestamos
-            </Heading>
-          </Link>
+          <Heading as="h1" size="sl" color="white" py={2}>
+            Prestamos
+          </Heading>
         </Button>
+
+        {user && user.roles && user.roles.includes('admin') && (
+          <Button
+            gap={2}
+            w="full"
+            as={Link}
+            href="/upload"
+            bg="transparent"
+            colorScheme="red"
+            justifyContent="start"
+          >
+            <FaComputer size="13px" color="white" />
+            <Heading as="h1" size="sl" color="white" py={2}>
+              Subir horario
+            </Heading>
+          </Button>
+        )}
       </Box>
 
       <Box>
