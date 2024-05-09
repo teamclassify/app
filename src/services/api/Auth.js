@@ -18,7 +18,7 @@ async function login (user) {
     if (!token) throw new Error('Token not found')
 
     const res = await axios({
-      url: `${URL}/auth`,
+      url: `${URL}/auth/login`,
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
