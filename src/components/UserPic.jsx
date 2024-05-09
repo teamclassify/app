@@ -12,16 +12,18 @@ function UserAvatar () {
         <Spinner />
           )
         : (
-        <Box w='full' px={2}>
+        <Box w="full" px={2}>
           {user && (
             <>
-              <Flex gap={2} alignItems='center'>
+              <Flex gap={2} alignItems="center">
                 <Avatar src={user.photo} size="md" />
                 <Heading
                   as="h1"
                   color="white"
                   fontSize="sm"
-                  textAlign="center"
+                  style={{
+                    textWrap: 'balance'
+                  }}
                 >
                   {user.name}
                 </Heading>
