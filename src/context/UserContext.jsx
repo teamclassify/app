@@ -3,10 +3,7 @@ import { useLocation } from 'wouter'
 
 import { auth } from '../config/firebase'
 import { login } from '../services/api/Auth'
-import {
-  logoutUser,
-  signInGoogle
-} from '../services/firebase/AuthService'
+import { logoutUser, signInGoogle } from '../services/firebase/AuthService'
 import { formatEmail } from '../utils/formatUser'
 
 export const UserContext = createContext()
@@ -62,7 +59,13 @@ export default function UserProvider ({ children }) {
 
     if (!response.error) {
       if (location === '/') setLocation('/home')
-      setUser(response.data)
+      setUser({
+        ...user,
+        name: response.data.nombre,
+        email: response.data.correo,
+        uid: response.data.id,
+        codigo: response.data.codigo
+      })
     } else setUser(null)
   }
 
@@ -70,30 +73,28 @@ export default function UserProvider ({ children }) {
 
   useEffect(() => {
     // firebase auth
-    const unsuscribeStateChanged = auth.onAuthStateChanged(
-      async (user) => {
-        if (user) {
-          const userInfo = {
-            email: user.email,
-            uid: user.uid,
-            name:
-              user.displayName && user.displayName?.length > 0
-                ? user.displayName
-                : formatEmail(user.email || ''),
-            photo: user.photoURL || ''
-          }
-
-          const token = await user.getIdToken(true)
-
-          setAccessToken(token)
-          setUser(userInfo)
-          setLoggedIn(true)
-        } else {
-          setLoading(false)
-          setLoggedIn(false)
+    const unsuscribeStateChanged = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const userInfo = {
+          email: user.email,
+          uid: user.uid,
+          name:
+            user.displayName && user.displayName?.length > 0
+              ? user.displayName
+              : formatEmail(user.email || ''),
+          photo: user.photoURL || ''
         }
+
+        const token = await user.getIdToken(true)
+
+        setAccessToken(token)
+        setUser(userInfo)
+        setLoggedIn(true)
+      } else {
+        setLoading(false)
+        setLoggedIn(false)
       }
-    )
+    })
 
     return () => {
       unsuscribeStateChanged()
@@ -103,7 +104,11 @@ export default function UserProvider ({ children }) {
   useEffect(() => {
     const fetchUser = async () => {
       if (accessToken && user) {
-        // await handleLogin(user)
+        await handleLogin({
+          nombre: user.name,
+          correo: user.email
+        })
+
         setToken(accessToken)
       }
       setLoading(false)
