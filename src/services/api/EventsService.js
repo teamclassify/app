@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { URL, handleAxiosError } from '.'
-import { getToken } from './Auth'
 
 async function getAll () {
   try {
