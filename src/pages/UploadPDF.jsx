@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { CheckIcon, DownloadIcon } from '@chakra-ui/icons'
 import {
   AspectRatio,
   Box,
@@ -11,13 +11,18 @@ import {
   Text,
   useToast
 } from '@chakra-ui/react'
-import { DownloadIcon, CheckIcon } from '@chakra-ui/icons'
 import { motion } from 'framer-motion'
-import Wrapper from '../components/Wrapper'
-import UploadService from '../services/api/UploadService'
+import { useState } from 'react'
 import { useMutation } from 'react-query'
 
+import Wrapper from '../components/Wrapper'
+import useUser from '../hooks/useUser'
+import UploadService from '../services/api/UploadService'
+import NotAuth from './NotAuth'
+
 export default function App () {
+  const { user, loading } = useUser()
+
   const [file, setFile] = useState()
   const [fileName, setFileName] = useState()
 
@@ -57,7 +62,8 @@ export default function App () {
     } else {
       setFile(file)
       setFileName(file.name)
-      document.getElementById('uploadDocument').style.backgroundColor = '#DDE8E3'
+      document.getElementById('uploadDocument').style.backgroundColor =
+        '#DDE8E3'
     }
     toast({
       title: title[index],
@@ -80,6 +86,10 @@ export default function App () {
         isClosable: true
       })
     }
+  }
+
+  if (!loading && user && !user.roles.includes('admin')) {
+    return <NotAuth />
   }
 
   return (
@@ -124,27 +134,43 @@ export default function App () {
                     justify="center"
                     spacing="4"
                   >
-                    <Box display='flex' height="100%" width="100%" textAlign='center' alignItems='center' justifyContent='center' position="relative">
+                    <Box
+                      display="flex"
+                      height="100%"
+                      width="100%"
+                      textAlign="center"
+                      alignItems="center"
+                      justifyContent="center"
+                      position="relative"
+                    >
                       {file
                         ? (
                         <Box>
                           <CheckIcon h="16" w="16" />
-                          <Text fontSize="md" color="gray.700" fontWeight="bold">
+                          <Text
+                            fontSize="md"
+                            color="gray.700"
+                            fontWeight="bold"
+                          >
                             Su archivo ha sido cargado
                           </Text>
                         </Box>
                           )
                         : (
                         <Box>
-                        <DownloadIcon h="16" w="16" />
-                        <Stack p="2" textAlign="center" spacing="1">
-                          <Heading fontSize="lg" color="gray.700" fontWeight="bold">
-                            Arrastra y suelta el archivo
-                          </Heading>
-                          <Text fontWeight="light">
-                            o click para seleccionar
-                          </Text>
-                        </Stack>
+                          <DownloadIcon h="16" w="16" />
+                          <Stack p="2" textAlign="center" spacing="1">
+                            <Heading
+                              fontSize="lg"
+                              color="gray.700"
+                              fontWeight="bold"
+                            >
+                              Arrastra y suelta el archivo
+                            </Heading>
+                            <Text fontWeight="light">
+                              o click para seleccionar
+                            </Text>
+                          </Stack>
                         </Box>
                           )}
                     </Box>
