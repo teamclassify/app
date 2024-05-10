@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { CheckIcon, DownloadIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
@@ -9,13 +9,18 @@ import {
   Text,
   useToast
 } from '@chakra-ui/react'
-import { DownloadIcon, CheckIcon } from '@chakra-ui/icons'
 import { motion } from 'framer-motion'
-import Wrapper from '../components/Wrapper'
-import UploadService from '../services/api/UploadService'
+import { useState } from 'react'
 import { useMutation } from 'react-query'
 
+import Wrapper from '../components/Wrapper'
+import useUser from '../hooks/useUser'
+import UploadService from '../services/api/UploadService'
+import NotAuth from './NotAuth'
+
 export default function App () {
+  const { user, loading } = useUser()
+
   const [file, setFile] = useState()
   const [fileName, setFileName] = useState()
 
@@ -81,6 +86,10 @@ export default function App () {
         isClosable: true
       })
     }
+  }
+
+  if (!loading && user && !user.roles.includes('admin')) {
+    return <NotAuth />
   }
 
   return (

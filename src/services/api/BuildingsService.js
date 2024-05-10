@@ -4,13 +4,10 @@ import { getToken } from './Auth'
 
 async function getAll () {
   try {
-    const token = await getToken()
-
     const res = await axios({
       url: `${URL}/edificios`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
