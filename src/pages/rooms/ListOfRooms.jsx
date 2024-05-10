@@ -69,7 +69,6 @@ function ListOfRooms ({ currentBuilding }) {
           {rooms &&
             rooms.map((room) => (
               <RoomItem
-                id={room.id}
                 key={room.id}
                 name={room.nombre}
                 handleDelete={handleDelete}

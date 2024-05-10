@@ -1,5 +1,5 @@
-import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
-import Loan from './Loan'
+import { Box, Heading } from '@chakra-ui/react'
+import ListOfLoans from './ListOfLoans'
 
 function MyLoans () {
   return (
@@ -15,11 +15,7 @@ function MyLoans () {
             Prestamos Recientes
           </Heading>
         </Box>
-        <SimpleGrid display="flex" flexDirection="row" spacing="4" mt="10px">
-          <Loan Room='SA 414' Date="9/5/2024" State={1}/>
-          <Loan Room='SB 404' Date="7/5/2024" State={0}/>
-          <Loan Room='SA 402' Date="19/5/2024" State={-1}/>
-        </SimpleGrid>
+        <ListOfLoans/>
       </Box>
     </>
   )
