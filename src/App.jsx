@@ -19,12 +19,12 @@ function App () {
         <Route component={LoginPage} path="/login" />
         <Route component={LoginUserPage} path="/login-super-user" />
         <Route component={UserPage} path="/home" />
-        <Route component={UpdatePage} path="/upload" />
+        <Route component={UpdatePage} path="/subir-horarios" />
         <Route component={BuildingsPage} path="/edificios" />
         <Route component={RoomPage} path="/horario" />
         <Route component={RoomPage} path="/horario/:id" />
         <Route component={RoomsPage} path="/salas" />
-        <Route component={LoanPage} path='/prestamos'/>
+        <Route component={LoanPage} path='/nuevo-prestamo'/>
         <Route component={ErrorPage} path="/:rest*" />
       </Switch>
     </>

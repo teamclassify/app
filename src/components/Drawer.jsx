@@ -2,6 +2,7 @@ import { Box, Button, Divider, Heading } from '@chakra-ui/react'
 import { FaComputer } from 'react-icons/fa6'
 import { GrSchedule } from 'react-icons/gr'
 import { IoPersonSharp } from 'react-icons/io5'
+import { MdLibraryAdd } from 'react-icons/md'
 import { RiLogoutBoxLine } from 'react-icons/ri'
 import { Link } from 'wouter'
 
@@ -62,32 +63,49 @@ function DrawerForm () {
           gap={2}
           w="full"
           as={Link}
-          href="/prestamos"
+          href="/nuevo-prestamo"
           bg="transparent"
           colorScheme="red"
           justifyContent="start"
         >
-          <FaComputer size="13px" color="white" />
+          <MdLibraryAdd size="13px" color="white" />
           <Heading as="h1" size="sl" color="white" py={2}>
-            Prestamos
+            Pedir prestamo
           </Heading>
         </Button>
 
         {user && user.roles && user.roles.includes('admin') && (
-          <Button
-            gap={2}
-            w="full"
-            as={Link}
-            href="/upload"
-            bg="transparent"
-            colorScheme="red"
-            justifyContent="start"
-          >
-            <FaComputer size="13px" color="white" />
-            <Heading as="h1" size="sl" color="white" py={2}>
-              Subir horario
-            </Heading>
-          </Button>
+          <>
+            <Button
+              gap={2}
+              w="full"
+              as={Link}
+              href="/prestamos"
+              bg="transparent"
+              colorScheme="red"
+              justifyContent="start"
+            >
+              <FaComputer size="13px" color="white" />
+              <Heading as="h1" size="sl" color="white" py={2}>
+                Prestamos
+              </Heading>
+            </Button>
+
+            <Button
+              gap={2}
+              w="full"
+              as={Link}
+              href="/subir-horarios"
+              bg="transparent"
+              colorScheme="red"
+              justifyContent="start"
+            >
+              <FaComputer size="13px" color="white" />
+              <Heading as="h1" size="sl" color="white" py={2}>
+                Subir horario
+              </Heading>
+            </Button>
+          </>
         )}
       </Box>
 
