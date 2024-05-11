@@ -117,7 +117,7 @@ export default function UploadRooms () {
         </Alert>
       )}
 
-      <Box display="flex" flexDir="row" gap={4}>
+      <Box display={{ base: 'block', lg: 'flex' }} flexDir="row" gap={4}>
         <Box w="100%">
           <Heading as="h2" size="md" noOfLines={1} p="20px 0px">
             Cargar salas
