@@ -26,7 +26,7 @@ function userOptions () {
           <IoIosAddCircle size="50px" color="white" />
         </Box>
         <Heading size="md" my="2" fontFamily="sans-serif">
-          <LinkOverlay as={Link} href="/prestamos" fontSize="1rem" color='white'>
+          <LinkOverlay as={Link} href="/nuevo-prestamo" fontSize="1rem" color='white'>
             Solicitar Prestamo
           </LinkOverlay>
         </Heading>
