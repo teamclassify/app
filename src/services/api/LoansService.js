@@ -3,11 +3,14 @@ import { URL, handleAxiosError } from '.'
 import { getToken } from './Auth'
 
 async function getAll () {
+  const token = await getToken()
+
   try {
     const res = await axios({
       url: `${URL}/prestamos`,
       method: 'GET',
       headers: {
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
@@ -78,7 +81,10 @@ async function remove (id) {
 }
 
 const LoansService = {
-  getAll, update, create, remove
+  getAll,
+  update,
+  create,
+  remove
 }
 
 export default LoansService

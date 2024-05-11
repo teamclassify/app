@@ -1,6 +1,5 @@
 import { Box, Button, Divider, Heading } from '@chakra-ui/react'
 import { FaBuilding, FaComputer } from 'react-icons/fa6'
-import { GrSchedule } from 'react-icons/gr'
 import { IoIosSettings } from 'react-icons/io'
 import { IoPersonSharp } from 'react-icons/io5'
 import { MdLibraryAdd } from 'react-icons/md'
@@ -12,7 +11,7 @@ import useUser from '../hooks/useUser'
 import UserPic from './UserPic'
 
 function DrawerForm () {
-  const { logout } = useUser()
+  const { user, logout } = useUser()
 
   return (
     <Box
