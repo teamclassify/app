@@ -95,6 +95,21 @@ function DrawerForm () {
               gap={2}
               w="full"
               as={Link}
+              href="/subir-salas"
+              bg="transparent"
+              colorScheme="red"
+              justifyContent="start"
+            >
+              <FaComputer size="13px" color="white" />
+              <Heading as="h1" size="sl" color="white" py={2}>
+                Subir salas
+              </Heading>
+            </Button>
+
+            <Button
+              gap={2}
+              w="full"
+              as={Link}
               href="/subir-horarios"
               bg="transparent"
               colorScheme="red"

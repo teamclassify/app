@@ -24,7 +24,7 @@ import useUser from '../hooks/useUser'
 import UploadService from '../services/api/UploadService'
 import NotAuth from './NotAuth'
 
-export default function App () {
+export default function UploadSchedule () {
   const { user, loading } = useUser()
 
   const [file, setFile] = useState()
@@ -40,7 +40,7 @@ export default function App () {
   }
 
   const { data, mutate, isLoading } = useMutation((file) => {
-    const promise = UploadService.create(file)
+    const promise = UploadService.uploadSchedule(file)
     toast.promise(promise, {
       success: { title: 'Archivo subido' },
       error: { title: 'Error al subir el archivo' },
@@ -110,8 +110,8 @@ export default function App () {
           <Box>
             <AlertTitle>{data.data.message}</AlertTitle>
             <AlertDescription>
-              El archivo ha sido cargado exitosamente y se ha empezado a procesar,
-              este proceso puede tardar unos minutos.
+              El archivo ha sido cargado exitosamente y se ha empezado a
+              procesar, este proceso puede tardar unos minutos.
             </AlertDescription>
           </Box>
         </Alert>
