@@ -1,5 +1,9 @@
 import { CheckIcon, DownloadIcon } from '@chakra-ui/icons'
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   AspectRatio,
   Box,
   Button,
@@ -35,7 +39,7 @@ export default function App () {
     document.getElementById('uploadDocument').style.backgroundColor = 'white'
   }
 
-  const { mutate } = useMutation((file) => {
+  const { data, mutate, isLoading } = useMutation((file) => {
     const promise = UploadService.create(file)
     toast.promise(promise, {
       success: { title: 'Archivo subido' },
@@ -50,11 +54,17 @@ export default function App () {
     const title = ['Listo', 'Error']
     const description = [
       'Su archivo ha sido cargado exitosamente',
-      'Solo se permite archivos pdf'
+      'Solo se permite archivos excel'
     ]
     const status = ['success', 'error']
     let index = 0
-    if (file.type !== 'application/pdf') {
+    if (
+      !file.type.includes('text/csv') &&
+      !file.type.includes(
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      ) &&
+      !file.type.includes('application/vnd.ms-excel')
+    ) {
       index += 1
       setFile(null)
       setFileName('')
@@ -80,7 +90,7 @@ export default function App () {
     } else {
       toast({
         title: 'Error',
-        description: 'Vuelve a subir el archivo pdf',
+        description: 'Vuelve a subir el archivo excel',
         status: 'error',
         duration: 9000,
         isClosable: true
@@ -94,6 +104,19 @@ export default function App () {
 
   return (
     <Wrapper>
+      {data && data.data && data.data.message && (
+        <Alert rounded="md" status="success" variant="solid">
+          <AlertIcon />
+          <Box>
+            <AlertTitle>{data.data.message}</AlertTitle>
+            <AlertDescription>
+              El archivo ha sido cargado exitosamente y se ha empezado a procesar,
+              este proceso puede tardar unos minutos.
+            </AlertDescription>
+          </Box>
+        </Alert>
+      )}
+
       <Box display="flex" flexDir="row" gap={4}>
         <Box w="100%">
           <Heading as="h2" size="md" noOfLines={1} p="20px 0px">
@@ -186,7 +209,7 @@ export default function App () {
                   left="0"
                   opacity="0"
                   aria-hidden="true"
-                  accept="pdf/*"
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                   onDragEnter={startAnimation}
                   onDragLeave={stopAnimation}
                   onChange={handleFileUpload}
@@ -216,7 +239,13 @@ export default function App () {
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" p={4}>
-        <Button colorScheme="primary" size="sm" onClick={handleSubmit}>
+        <Button
+          size="sm"
+          colorScheme="primary"
+          onClick={handleSubmit}
+          isDisabled={isLoading}
+          isLoading={isLoading}
+        >
           Confirmar
         </Button>
       </Box>

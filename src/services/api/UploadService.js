@@ -9,7 +9,7 @@ async function create (file) {
   try {
     const token = await getToken()
     const res = await axios({
-      url: `${URL}/files/upload `,
+      url: `${URL}/files/upload/clases `,
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
