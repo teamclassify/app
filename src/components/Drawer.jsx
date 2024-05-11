@@ -1,9 +1,10 @@
 import { Box, Button, Divider, Heading } from '@chakra-ui/react'
-import { FaComputer } from 'react-icons/fa6'
+import { FaBuilding, FaComputer } from 'react-icons/fa6'
 import { GrSchedule } from 'react-icons/gr'
 import { IoPersonSharp } from 'react-icons/io5'
 import { MdLibraryAdd } from 'react-icons/md'
 import { RiLogoutBoxLine } from 'react-icons/ri'
+import { TbBuildingArch } from 'react-icons/tb'
 import { Link } from 'wouter'
 
 import useUser from '../hooks/useUser'
@@ -76,6 +77,10 @@ function DrawerForm () {
 
         {user && user.roles && user.roles.includes('admin') && (
           <>
+            {user && (
+              <Divider my={4} borderColor="primary.400" borderWidth={1} />
+            )}
+
             <Button
               gap={2}
               w="full"
@@ -118,6 +123,36 @@ function DrawerForm () {
               <FaComputer size="13px" color="white" />
               <Heading as="h1" size="sl" color="white" py={2}>
                 Subir horario
+              </Heading>
+            </Button>
+
+            <Button
+              gap={2}
+              w="full"
+              as={Link}
+              href="/edificios"
+              bg="transparent"
+              colorScheme="red"
+              justifyContent="start"
+            >
+              <FaBuilding size="13px" color="white" />
+              <Heading as="h1" size="sl" color="white" py={2}>
+                Edificios
+              </Heading>
+            </Button>
+
+            <Button
+              gap={2}
+              w="full"
+              as={Link}
+              href="/salas"
+              bg="transparent"
+              colorScheme="red"
+              justifyContent="start"
+            >
+              <TbBuildingArch size="13px" color="white" />
+              <Heading as="h1" size="sl" color="white" py={2}>
+                Salas
               </Heading>
             </Button>
           </>
