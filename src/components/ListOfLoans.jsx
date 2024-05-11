@@ -1,4 +1,10 @@
-import { Alert, AlertTitle, Center, SimpleGrid, Spinner } from '@chakra-ui/react'
+import {
+  Alert,
+  AlertTitle,
+  Center,
+  SimpleGrid,
+  Spinner
+} from '@chakra-ui/react'
 import { useQuery } from 'react-query'
 
 import LoansService from '@/services/api/LoansService'
@@ -9,15 +15,15 @@ function ListOfLoans () {
 
   if (!isLoading && data.error) {
     return (
-      <Alert status="error">
+      <Alert status="error" rounded="md" mt={4}>
         <AlertTitle>Error al obtener los prestamos</AlertTitle>
       </Alert>
     )
   }
 
-  if (!isLoading && !data) {
+  if (!isLoading && (!data || !data.data || data.data.length === 0)) {
     return (
-      <Alert status="info">
+      <Alert status="info" rounded="md" mt={4}>
         <AlertTitle>No existen prestamos</AlertTitle>
       </Alert>
     )
@@ -33,15 +39,16 @@ function ListOfLoans () {
           )
         : (
         <>
-          {data && data.map((loan) => (
-            <Loan
-              key={loan.id}
-              state={loan.estado}
-              date={loan.fecha}
-              loanroom={loan.sala_id}
-            />
-            /* "id":25,"usuario_id":16,"razon":"Charla de React","estado":"pendiente","hora_inicio":6,"hora_fin":8,"fecha":"2024-05-09","cantidad_personas":4,"sala_id":285,"createdAt":"2024-05-08","updatedAt":"2024-05-08" */
-          ))}
+          {data &&
+            data.data &&
+            data.data.map((loan) => (
+              <Loan
+                key={loan.id}
+                state={loan.estado}
+                date={loan.fecha}
+                loanroom={loan.sala_id}
+              />
+            ))}
         </>
           )}
     </SimpleGrid>
