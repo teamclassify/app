@@ -1,6 +1,7 @@
 import { Box, Button, Divider, Heading } from '@chakra-ui/react'
 import { FaBuilding, FaComputer } from 'react-icons/fa6'
 import { GrSchedule } from 'react-icons/gr'
+import { IoIosSettings } from 'react-icons/io'
 import { IoPersonSharp } from 'react-icons/io5'
 import { MdLibraryAdd } from 'react-icons/md'
 import { RiLogoutBoxLine } from 'react-icons/ri'
@@ -11,7 +12,7 @@ import useUser from '../hooks/useUser'
 import UserPic from './UserPic'
 
 function DrawerForm () {
-  const { user, logout } = useUser()
+  const { logout } = useUser()
 
   return (
     <Box
@@ -28,37 +29,23 @@ function DrawerForm () {
           <UserPic />
         </Box>
 
-        {user && <Divider mb={4} borderColor="primary.400" borderWidth={1} />}
+        <Divider mb={4} borderColor="primary.400" borderWidth={1} />
 
-        <Button
-          gap={2}
-          w="full"
-          as={Link}
-          href="/home"
-          bg="transparent"
-          colorScheme="red"
-          justifyContent="start"
-        >
-          <IoPersonSharp size="13px" color="white" />
-          <Heading as="h1" size="sl" py={2}>
-            Inicio
-          </Heading>
-        </Button>
+        <Link href="/home">
+          <Button
+            gap={2}
+            w="full"
+            bg="transparent"
+            colorScheme="red"
+            justifyContent="start"
+          >
+            <IoPersonSharp size="13px" color="white" />
 
-        <Button
-          gap={2}
-          w="full"
-          as={Link}
-          href="/horario"
-          bg="transparent"
-          colorScheme="red"
-          justifyContent="start"
-        >
-          <GrSchedule size="13px" color="white" />
-          <Heading as="h1" size="sl" color="white" py={2}>
-            Horario
-          </Heading>
-        </Button>
+            <Heading as="h1" size="sl" py={2}>
+              Inicio
+            </Heading>
+          </Button>
+        </Link>
 
         <Button
           gap={2}
@@ -160,36 +147,35 @@ function DrawerForm () {
       </Box>
 
       <Box>
-        {/* <Button
-          gap={2}
-          w="full"
-          bg="transparent"
-          colorScheme="red"
-          justifyContent="start"
-        >
-          <IoIosSettings size="13px" color="white" />
-          <Link href="">
-            <Heading as="h1" size="sl" color="white" py={2}>
-              Ajustes
-            </Heading>
-          </Link>
-        </Button> */}
-
-        {user && (
+        <Link href="">
           <Button
             gap={2}
             w="full"
-            onClick={logout}
             bg="transparent"
             colorScheme="red"
             justifyContent="start"
           >
-            <RiLogoutBoxLine size="13px" color="white" />
+            <IoIosSettings size="13px" color="white" />
+
             <Heading as="h1" size="sl" color="white" py={2}>
-              Cerrar sesión
+              Ajustes
             </Heading>
           </Button>
-        )}
+        </Link>
+
+        <Button
+          gap={2}
+          w="full"
+          onClick={logout}
+          bg="transparent"
+          colorScheme="red"
+          justifyContent="start"
+        >
+          <RiLogoutBoxLine size="13px" color="white" />
+          <Heading as="h1" size="sl" color="white" py={2}>
+            Cerrar sesión
+          </Heading>
+        </Button>
       </Box>
     </Box>
   )

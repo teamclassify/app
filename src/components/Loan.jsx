@@ -9,14 +9,15 @@ import { FaDoorOpen, FaDoorClosed } from 'react-icons/fa'
 import { Link } from 'wouter'
 import ToolTipo from './ToolTip'
 
-function Loan ({ Room, Date, State }) {
-  const backgroundColor = State === 1 ? '#1B9C4A' : State === 0 ? '#EDD038' : '#D82D2D'
+function Loan ({ state, date, loanroom }) {
+  const backgroundColor = state === 'aprobado' ? '#1B9C4A' : state === 'pendiente' ? '#EDD038' : '#D82D2D'
   let icon
-  if (State === 1) {
+  if (state === 'aprobado') {
     icon = <FaDoorOpen size="50px" color="white" />
   } else {
     icon = <FaDoorClosed size="50px" color="white" />
   }
+
   return (
     <>
       <LinkBox
@@ -24,7 +25,7 @@ function Loan ({ Room, Date, State }) {
         maxW="sm"
         p="8"
         rounded="xl"
-        backgroundColor={backgroundColor}
+        backgroundColor= {backgroundColor}
         display="flex"
         flexDirection="column"
         width="14rem"
@@ -37,7 +38,7 @@ function Loan ({ Room, Date, State }) {
             alignItems="center"
           >
             {icon}
-            <ToolTipo State={State}/>
+            <ToolTipo State={state}/>
           </Box>
           <Box display="flex" flexDirection="column" mt={2} alignItems="start">
             <Heading
@@ -47,10 +48,9 @@ function Loan ({ Room, Date, State }) {
               fontFamily="sans-serif"
               color="white"
             >
-              {Room}
             </Heading>
             <Badge bg='#ffffff24' color="white" fontFamily="sans-serif">
-              {Date}
+              {date}
             </Badge>
           </Box>
         </LinkOverlay>
