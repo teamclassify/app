@@ -1,6 +1,5 @@
 import { Box, Button, Divider, Heading } from '@chakra-ui/react'
 import { FaBuilding, FaComputer } from 'react-icons/fa6'
-import { IoIosSettings } from 'react-icons/io'
 import { IoPersonSharp } from 'react-icons/io5'
 import { MdLibraryAdd } from 'react-icons/md'
 import { RiLogoutBoxLine } from 'react-icons/ri'
@@ -146,7 +145,7 @@ function DrawerForm () {
       </Box>
 
       <Box>
-        <Link href="">
+        {/* <Link href="">
           <Button
             gap={2}
             w="full"
@@ -160,7 +159,7 @@ function DrawerForm () {
               Ajustes
             </Heading>
           </Button>
-        </Link>
+        </Link> */}
 
         <Button
           gap={2}
