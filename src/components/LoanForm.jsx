@@ -1,5 +1,6 @@
 import {
   Button,
+  Center,
   Checkbox,
   Flex,
   FormControl,
@@ -12,11 +13,13 @@ import {
   NumberInputField,
   NumberInputStepper,
   Stack,
+  Text,
   Textarea,
   VStack
 } from '@chakra-ui/react'
-
+import { FaBuilding } from 'react-icons/fa'
 import { useState } from 'react'
+
 import SelectBuildings from '../pages/rooms/SelectBuildings'
 import SelectRooms from '../pages/rooms/SelectRooms'
 import Schedule from './Schedule'
@@ -28,7 +31,7 @@ function MyLoans () {
   return (
     <>
       <Grid
-        minH='calc(100vh - 110px)'
+        minH="calc(100vh - 110px)"
         gap="4"
         fontWeight="bold"
         color="blackAlpha.700"
@@ -37,13 +40,19 @@ function MyLoans () {
         <GridItem bg={'white'} p={2} rounded={5}>
           {!currentBuilding
             ? (
-            <p>Selecciona un edificio para ver sus salas</p>
+            <Center h="100%" flexDir='column'>
+              <FaBuilding size={100} />
+              <Text mt={4}>Selecciona un edificio para ver sus salas</Text>
+            </Center>
               )
             : (
             <>
               {!currentRoom
                 ? (
-                <p>Selecciona una sala para ver su disponibilidad</p>
+                <Center h="100%" flexDir='column'>
+                  <FaBuilding size={100} />
+                  <Text mt={4}>Selecciona una sala para ver su disponibilidad</Text>
+                </Center>
                   )
                 : (
                 <Schedule roomId={currentRoom} />
@@ -52,7 +61,13 @@ function MyLoans () {
               )}
         </GridItem>
 
-        <GridItem maxH='calc(100vh - 110px)' bg={'white'} p={4} rounded={5} overflowY='auto'>
+        <GridItem
+          maxH="calc(100vh - 110px)"
+          bg={'white'}
+          p={4}
+          rounded={5}
+          overflowY="auto"
+        >
           <VStack spacing={4}>
             <FormControl>
               <FormLabel>Edificio</FormLabel>
@@ -95,7 +110,7 @@ function MyLoans () {
 
             <FormControl>
               <FormLabel>Razón de el préstamo</FormLabel>
-              <Textarea placeholder='...' />
+              <Textarea placeholder="..." />
             </FormControl>
           </VStack>
         </GridItem>
