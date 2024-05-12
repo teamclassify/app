@@ -46,13 +46,6 @@ function MyLoans () {
   const { isLoading, mutate } = useMutation(
     (newLoan) => {
       const promise = LoansService.create(newLoan)
-
-      toast.promise(promise, {
-        success: { title: 'Prestamo enviado' },
-        error: { title: 'Error al enviar el prestamo' },
-        loading: { title: 'Procesando el prestamo' }
-      })
-
       return promise
     },
     {
