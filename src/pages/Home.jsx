@@ -28,14 +28,16 @@ function Home () {
 
       <section>
         <Flex
+          w="90%"
           gap={12}
           my={10}
           as="main"
           mx="auto"
           maxW="container.xl"
           alignItems="center"
+          flexDir={{ base: 'column', md: 'row' }}
         >
-          <Box>
+          <Box w={{ md: '50%' }}>
             <Heading
               mb={4}
               size="xl"
@@ -62,6 +64,7 @@ function Home () {
           </Box>
 
           <Image
+            w={{ base: '100%', md: '50%' }}
             mt={4}
             mb={4}
             rounded="md"
