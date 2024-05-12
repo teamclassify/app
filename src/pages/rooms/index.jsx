@@ -1,6 +1,5 @@
 import { Box, useDisclosure } from '@chakra-ui/react'
 import { useState } from 'react'
-import { useLocation } from 'wouter'
 
 import Wrapper from '@/components/Wrapper'
 import useUser from '@/hooks/useUser'
@@ -10,12 +9,14 @@ import ListOfRooms from './ListOfRooms'
 import ModalNewRoom from './ModalNewRoom'
 
 function Rooms () {
-  const [, setLocation] = useLocation()
+  // const [, setLocation] = useLocation()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { user, loading } = useUser()
   const [currentBuilding, setCurrentBuilding] = useState(null)
 
-  if (!loading && !user) setLocation('/')
+  if (!loading && !user) {
+    return <NotAuth />
+  }
 
   if (!loading && user && !user.roles.includes('admin')) {
     return <NotAuth />

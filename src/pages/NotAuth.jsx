@@ -19,7 +19,10 @@ function NotAuth () {
             No estas autorizado
           </Heading>
 
-          <Text mb={4}>No tienes permisos para acceder a esta página</Text>
+          <Text mb={4}>
+            No has iniciado sesion o no tienes permisos para acceder a esta
+            página
+          </Text>
 
           <Button as={Link} href="/" size="sm" colorScheme="primary">
             Volver al Inicio

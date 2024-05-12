@@ -3,8 +3,16 @@ import Carda from '../components/Card'
 import MyLoans from '../components/MyLoans'
 import UserOptions from '../components/UserOptions'
 import Wrapper from '../components/Wrapper'
+import useUser from '../hooks/useUser'
+import NotAuth from './NotAuth'
 
 function User () {
+  const { user, loading } = useUser()
+
+  if (!loading && !user) {
+    return <NotAuth />
+  }
+
   return (
     <Wrapper>
       <Box>
