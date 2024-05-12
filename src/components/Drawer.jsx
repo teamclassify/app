@@ -1,5 +1,7 @@
 import { Box, Button, Divider, Heading } from '@chakra-ui/react'
+import { FaCloudUploadAlt } from 'react-icons/fa'
 import { FaBuilding, FaComputer } from 'react-icons/fa6'
+import { GrSchedule } from 'react-icons/gr'
 import { IoPersonSharp } from 'react-icons/io5'
 import { MdLibraryAdd } from 'react-icons/md'
 import { RiLogoutBoxLine } from 'react-icons/ri'
@@ -41,6 +43,22 @@ function DrawerForm () {
 
             <Heading as="h1" size="sl" py={2}>
               Inicio
+            </Heading>
+          </Button>
+        </Link>
+
+        <Link href="/horario">
+          <Button
+            gap={2}
+            w="full"
+            bg="transparent"
+            colorScheme="red"
+            justifyContent="start"
+          >
+            <GrSchedule size="13px" color="white" />
+
+            <Heading as="h1" size="sl" py={2}>
+              Horario
             </Heading>
           </Button>
         </Link>
@@ -90,7 +108,7 @@ function DrawerForm () {
               colorScheme="red"
               justifyContent="start"
             >
-              <FaComputer size="13px" color="white" />
+              <FaCloudUploadAlt size="13px" color="white" />
               <Heading as="h1" size="sl" color="white" py={2}>
                 Subir salas
               </Heading>
@@ -105,7 +123,7 @@ function DrawerForm () {
               colorScheme="red"
               justifyContent="start"
             >
-              <FaComputer size="13px" color="white" />
+              <FaCloudUploadAlt size="13px" color="white" />
               <Heading as="h1" size="sl" color="white" py={2}>
                 Subir horario
               </Heading>
