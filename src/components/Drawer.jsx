@@ -78,6 +78,23 @@ function DrawerForm () {
           </Heading>
         </Button>
 
+        {user && user.roles && user.roles.includes('superadmin') && (
+          <Button
+            gap={2}
+            w="full"
+            as={Link}
+            href="/usuarios"
+            bg="transparent"
+            colorScheme="red"
+            justifyContent="start"
+          >
+            <TbBuildingArch size="13px" color="white" />
+            <Heading as="h1" size="sl" color="white" py={2}>
+              Usuarios
+            </Heading>
+          </Button>
+        )}
+
         {user && user.roles && user.roles.includes('admin') && (
           <>
             {user && (
