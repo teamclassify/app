@@ -134,10 +134,10 @@ function Schedule (
               </>
                 )}
 
-            {currentEvent.cod_asignatura && currentEvent.grupo && (
+            {currentEvent.cod_asignatura && (
               <Box>
-                <strong>Asignatura:</strong>
-                {currentEvent.cod_asignatura} - {currentEvent.grupo}
+                <strong>Asignatura: </strong>
+                {currentEvent.cod_asignatura}
               </Box>
             )}
 
