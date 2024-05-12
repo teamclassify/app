@@ -21,6 +21,25 @@ async function getAll () {
   }
 }
 
+async function getAllPending () {
+  const token = await getToken()
+
+  try {
+    const res = await axios({
+      url: `${URL}/prestamos/pending`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 async function getById (id) {
   if (!id) {
     return null
@@ -108,7 +127,8 @@ const LoansService = {
   getById,
   update,
   create,
-  remove
+  remove,
+  getAllPending
 }
 
 export default LoansService
