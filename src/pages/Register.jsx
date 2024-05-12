@@ -132,7 +132,13 @@ function Register () {
                   <Input type="password" color="black" w="100%" isRequired />
                 </FormControl>
 
-                <Button w="full" type="submit" colorScheme="primary">
+                <Button
+                  w="full"
+                  type="submit"
+                  colorScheme="primary"
+                  isLoading={loading}
+                  isDisabled={loading}
+                >
                   Registrarse
                 </Button>
 

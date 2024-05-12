@@ -22,7 +22,12 @@ export default function UserProvider ({ children }) {
   const [loading, setLoading] = useState(true)
 
   const registerWithEmail = async (email, password) => {
-    return signUpWithEmailAndPassword(email, password)
+    setLoading(true)
+
+    return signUpWithEmailAndPassword(email, password).then((res) => {
+      setLoading(false)
+      return res
+    })
   }
 
   const loginWithEmail = async (email, password) => {
