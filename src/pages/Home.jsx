@@ -1,7 +1,11 @@
-import { Box, Button, Flex, Heading, Image } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Image, Spinner } from '@chakra-ui/react'
 import { Link } from 'wouter'
 
+import useUser from '../hooks/useUser'
+
 function Home () {
+  const { user, loading } = useUser()
+
   return (
     <>
       <Box bg="white">
@@ -19,9 +23,25 @@ function Home () {
           </Flex>
 
           <Flex>
-            <Button colorScheme="blue" size="sm" as={Link} href="/login">
-              Iniciar Sesión
-            </Button>
+            {loading
+              ? (
+              <Spinner />
+                )
+              : (
+              <>
+                {!user
+                  ? (
+                  <Button colorScheme="blue" size="sm" as={Link} href="/login">
+                    Iniciar Sesión
+                  </Button>
+                    )
+                  : (
+                  <Button colorScheme="blue" size="sm" as={Link} href="/home">
+                    Inicio
+                  </Button>
+                    )}
+              </>
+                )}
           </Flex>
         </Flex>
       </Box>
