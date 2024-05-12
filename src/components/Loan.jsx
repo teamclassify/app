@@ -1,36 +1,42 @@
 import {
-  LinkBox,
-  LinkOverlay,
+  Badge,
   Box,
+  Flex,
   Heading,
-  Badge
+  LinkBox
 } from '@chakra-ui/react'
-import { FaDoorOpen, FaDoorClosed } from 'react-icons/fa'
+import { FaDoorClosed, FaDoorOpen } from 'react-icons/fa'
 import { Link } from 'wouter'
+
 import ToolTipo from './ToolTip'
 
-function Loan ({ state, date, loanroom }) {
-  const backgroundColor = state === 'aprobado' ? '#1B9C4A' : state === 'pendiente' ? '#EDD038' : '#D82D2D'
+function Loan ({ id, state, date, loanroom, building, startHour, endHour }) {
+  const backgroundColor =
+    state === 'APROBADO'
+      ? '#1B9C4A'
+      : state === 'PENDIENTE'
+        ? 'yellow.400'
+        : '#D82D2D'
   let icon
   if (state === 'aprobado') {
-    icon = <FaDoorOpen size="50px" color="white" />
+    icon = <FaDoorOpen size="2rem" color="white" />
   } else {
-    icon = <FaDoorClosed size="50px" color="white" />
+    icon = <FaDoorClosed size="2rem" color="white" />
   }
 
   return (
     <>
       <LinkBox
-        textAlign="center"
+        p="4"
         maxW="sm"
-        p="8"
+        as={Link}
         rounded="xl"
-        backgroundColor= {backgroundColor}
         display="flex"
+        textAlign="center"
         flexDirection="column"
-        width="14rem"
+        backgroundColor={backgroundColor}
+        href={`/prestamo-solicitado/${id}`}
       >
-        <LinkOverlay as={Link} href="">
           <Box
             display="flex"
             flexDirection="row"
@@ -38,22 +44,28 @@ function Loan ({ state, date, loanroom }) {
             alignItems="center"
           >
             {icon}
-            <ToolTipo State={state}/>
+            <ToolTipo State={state} />
           </Box>
           <Box display="flex" flexDirection="column" mt={2} alignItems="start">
             <Heading
-              fontWeight="bold"
-              size="md"
               my="2"
-              fontFamily="sans-serif"
+              size="sm"
               color="white"
+              fontWeight="bold"
+              fontFamily="sans-serif"
             >
+              {building} - {loanroom}
             </Heading>
-            <Badge bg='#ffffff24' color="white" fontFamily="sans-serif">
-              {date}
-            </Badge>
+            <Flex w='full' gap={1}>
+              <Badge colorScheme="yellow">
+                {date}
+              </Badge>
+
+              <Badge colorScheme="yellow">
+                {startHour} - {endHour}
+              </Badge>
+            </Flex>
           </Box>
-        </LinkOverlay>
       </LinkBox>
     </>
   )

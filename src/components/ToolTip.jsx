@@ -2,17 +2,22 @@ import { BiSolidInfoCircle } from 'react-icons/bi'
 import { Tooltip, Button } from '@chakra-ui/react'
 
 function ToolTipo ({ State }) {
-  /* const label = State === 1 ? 'Prestamo aprobado' : State === 0 ? 'Prestamo en espera' : 'Prestamo rechazado' */
+  const label =
+    State === 'APROBADO'
+      ? 'Prestamo aprobado'
+      : State === 'PENDIENTE'
+        ? 'Prestamo en espera'
+        : 'Prestamo rechazado'
 
   return (
     <>
-      <Tooltip hasArrow>
+      <Tooltip hasArrow label={label}>
         <Button
           bg="transparent"
           _hover="none"
-          variant='unstyled'
+          variant="unstyled"
           p={0}
-          leftIcon={<BiSolidInfoCircle size="2rem" color="white" />}
+          leftIcon={<BiSolidInfoCircle size="1.5rem" color="white" />}
           iconSpacing={0}
         />
       </Tooltip>

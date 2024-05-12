@@ -2,6 +2,7 @@ import {
   Alert,
   AlertTitle,
   Center,
+  Grid,
   SimpleGrid,
   Spinner
 } from '@chakra-ui/react'
@@ -38,18 +39,26 @@ function ListOfLoans () {
         </Center>
           )
         : (
-        <>
+        <Grid
+          w="full"
+          gap={2}
+          templateColumns="repeat(auto-fit, minmax(10rem, 1fr))"
+        >
           {data &&
             data.data &&
             data.data.map((loan) => (
               <Loan
                 key={loan.id}
+                id={loan.id}
                 state={loan.estado}
                 date={loan.fecha}
-                loanroom={loan.sala_id}
+                loanroom={loan.sala}
+                building={loan.edificio}
+                startHour={loan.hora_inicio}
+                endHour={loan.hora_fin}
               />
             ))}
-        </>
+        </Grid>
           )}
     </SimpleGrid>
   )
