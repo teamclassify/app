@@ -1,5 +1,4 @@
-import { Button, Center, Heading, Text } from '@chakra-ui/react'
-import { Link } from 'wouter'
+import { Center, Heading, Text } from '@chakra-ui/react'
 
 function RoomNotFound () {
   return (
@@ -8,9 +7,6 @@ function RoomNotFound () {
         No se encuentra la sala
       </Heading>
       <Text mb={6}>La sala que estas buscando no existe por el momento.</Text>
-      <Button as={Link} href="/salas" colorScheme="primary">
-        Ver todas las salas
-      </Button>
     </Center>
   )
 }
