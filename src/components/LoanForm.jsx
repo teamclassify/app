@@ -36,7 +36,7 @@ function MyLoans () {
   const [startHour, setStartHour] = useState(null)
   const [endHour, setEndHour] = useState(null)
   const [date, setDate] = useState(null)
-  const [people, setPeople] = useState(0)
+  const [people, setPeople] = useState(1)
   const [resources, setResources] = useState([])
   const [reason, setReason] = useState('')
 
