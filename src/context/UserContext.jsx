@@ -3,7 +3,12 @@ import { useLocation } from 'wouter'
 
 import { auth } from '../config/firebase'
 import { login } from '../services/api/Auth'
-import { logoutUser, signInGoogle } from '../services/firebase/AuthService'
+import {
+  logoutUser,
+  signInGoogle,
+  signInWithEmail,
+  signUpWithEmailAndPassword
+} from '../services/firebase/AuthService'
 import { formatEmail } from '../utils/formatUser'
 
 export const UserContext = createContext()
@@ -16,14 +21,23 @@ export default function UserProvider ({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
+  const registerWithEmail = async (email, password) => {
+    return signUpWithEmailAndPassword(email, password)
+  }
+
+  const loginWithEmail = async (email, password) => {
+    setLoading(true)
+
+    return signInWithEmail(email, password).then((res) => {
+      setLoading(false)
+      return res
+    })
+  }
+
   const loginWithGoogle = async () => {
     setLoading(true)
 
     return signInGoogle().then((res) => {
-      if (res.status !== 200) {
-        setLocation('/')
-      }
-
       setLoading(false)
       return res
     })
@@ -128,7 +142,9 @@ export default function UserProvider ({ children }) {
       handleLogin,
       loginWithGoogle,
       logout,
-      loading
+      loading,
+      registerWithEmail,
+      loginWithEmail
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

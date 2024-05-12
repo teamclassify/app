@@ -13,6 +13,7 @@ import RoomPage from './pages/room'
 import RoomsPage from './pages/rooms'
 import LoanSuccessPage from './pages/LoanSuccess'
 import LoansPage from './pages/loans'
+import RegisterPage from './pages/Register'
 
 function App () {
   return (
@@ -21,6 +22,7 @@ function App () {
         <Route component={HomePage} path="/" />
         <Route component={LoginPage} path="/login" />
         <Route component={LoginUserPage} path="/login-super-user" />
+        <Route component={RegisterPage} path="/registrarse" />
         <Route component={UserPage} path="/home" />
         <Route component={UploadSchedule} path="/subir-horarios" />
         <Route component={UploadRooms} path="/subir-salas" />

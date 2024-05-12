@@ -16,8 +16,8 @@ import { Link } from 'wouter'
 import LogoUFPS from '../components/Logos/LogoUFPS'
 import useUser from '../hooks/useUser'
 
-function Login () {
-  const { loading, loginWithEmail } = useUser()
+function Register () {
+  const { loading, registerWithEmail } = useUser()
   const toast = useToast()
 
   const handleLogin = async (e) => {
@@ -25,12 +25,23 @@ function Login () {
     const email = e.target[0].value
     const password = e.target[1].value
 
-    console.log(email, password)
+    if (!email.includes('@ufps.edu.co')) {
+      toast({
+        title: 'Error al registrarse',
+        description: 'Debes usar un correo institucional de la UFPS',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      })
 
-    loginWithEmail(email, password).then((res) => {
+      return
+    }
+
+    registerWithEmail(email, password).then((res) => {
+      console.log(res)
       if (res.status === 200) {
         toast({
-          title: 'Inicio de sesión exitoso',
+          title: 'Registro exitoso',
           description: 'Bienvenido a la plataforma',
           status: 'success',
           duration: 3000,
@@ -38,8 +49,9 @@ function Login () {
         })
       } else {
         toast({
-          title: 'Error al iniciar sesión',
-          description: 'Verifica tus credenciales',
+          title: 'Error al registrarse',
+          description:
+            'El correo ya está registrado o la contraseña es muy corta',
           status: 'error',
           duration: 3000,
           isClosable: true
@@ -121,11 +133,11 @@ function Login () {
                 </FormControl>
 
                 <Button w="full" type="submit" colorScheme="primary">
-                  Ingresar
+                  Registrarse
                 </Button>
 
                 <Text mt={4} textAlign="center" color="black">
-                  ¿No tienes cuenta? <Link href="/registrarse">Regístrate</Link>
+                  ¿Yo tienes cuenta? <Link href="/login">Iniciar sesión</Link>
                 </Text>
               </Box>
             </Box>
@@ -136,4 +148,4 @@ function Login () {
   )
 }
 
-export default Login
+export default Register
