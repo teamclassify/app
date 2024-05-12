@@ -1,5 +1,13 @@
 import { CheckIcon } from '@chakra-ui/icons'
-import { Box, Card, CardBody, Heading, Spinner, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Card,
+  CardBody,
+  Center,
+  Heading,
+  Spinner,
+  Text
+} from '@chakra-ui/react'
 import moment from 'moment'
 import { useQuery } from 'react-query'
 import { useParams } from 'wouter'
@@ -17,7 +25,12 @@ function LoanSuccess () {
   )
 
   if (isLoading) {
-    return <Spinner />
+    return (
+      <Center minH='100vh' flexDir='column' gap={4}>
+        <Spinner size="lg" />
+        <Text>Cargando...</Text>
+      </Center>
+    )
   }
 
   if (!isLoading && !data) {
@@ -28,7 +41,7 @@ function LoanSuccess () {
     <>
       <Wrapper>
         <Box
-          textAlign='center'
+          textAlign="center"
           display="flex"
           flexDir="column"
           justifyContent="center"
@@ -36,13 +49,15 @@ function LoanSuccess () {
           h="80vh"
         >
           <CheckIcon w="20%" h="20%" color="green" />
-          <Heading mt={4} size='lg'>¡Su solicitud ha sido realizado con éxito!</Heading>
+          <Heading mt={4} size="lg">
+            ¡Su solicitud ha sido realizado con éxito!
+          </Heading>
           <Text mb={4}>
             Su solicitud ha sido enviada con éxito, en breve recibirá un correo
             con la confirmación de su solicitud.
           </Text>
 
-          <Box display="flex" flexDir="row" gap={2}>
+          <Box display="flex" gap={2}>
             <Card bg="white" border="2px solid #D9D9D9" shadow="none">
               <CardBody p={3}>
                 <Text>
@@ -57,6 +72,33 @@ function LoanSuccess () {
                   {moment(new Date(data.fecha)).format('DD MMM YYYY')},{' '}
                   {data.hora_inicio} - {data.hora_fin}
                 </Text>
+              </CardBody>
+            </Card>
+
+            <Card bg="white" border="2px solid #D9D9D9" shadow="none">
+              <CardBody p={3}>
+                <Text>
+                  {data.estado === 'APROBADO'
+                    ? 'Aprobado'
+                    : data.estado === 'PENDIENTE'
+                      ? 'Pendiente'
+                      : 'Rechazado'}
+                </Text>
+              </CardBody>
+            </Card>
+          </Box>
+
+          <Box mt={4} w="full" display="flex" justifyContent="center">
+            <Card
+              mb={4}
+              bg="white"
+              border="2px solid #D9D9D9"
+              shadow="none"
+              w="100%"
+              maxW="sm"
+            >
+              <CardBody p={3}>
+                <Text>{data.razon}</Text>
               </CardBody>
             </Card>
           </Box>
