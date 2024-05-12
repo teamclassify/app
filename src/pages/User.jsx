@@ -1,4 +1,4 @@
-import { Badge, Box } from '@chakra-ui/react'
+import { Badge, Box, Text } from '@chakra-ui/react'
 import Carda from '../components/Card'
 import MyLoans from '../components/MyLoans'
 import UserOptions from '../components/UserOptions'
@@ -10,7 +10,7 @@ function User () {
       <Box>
         <UserOptions></UserOptions>
         <Carda>
-          <Badge>Realiza tú prestamo aquí con un horario en tiempo real</Badge>
+          <Text>Realiza tú prestamo aquí con un horario en tiempo real</Text>
         </Carda>
         <MyLoans pb={3}></MyLoans>
         <Carda>
