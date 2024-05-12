@@ -16,6 +16,7 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 const providerGoogle = new GoogleAuthProvider()
+providerGoogle.setCustomParameters({ hd: 'ufps.edu.co' })
 
 const auth = getAuth(app)
 
