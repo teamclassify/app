@@ -106,8 +106,22 @@ export default function UploadSchedule () {
 
   return (
     <Wrapper>
+      {data && !data.success && (
+        <Alert rounded="md" status="error" variant="solid" className='animate__fadeIn'>
+          <AlertIcon />
+          <Box>
+            <AlertTitle>Error al cargar el archivo</AlertTitle>
+            <AlertDescription>
+              {data.data && data.data
+                ? data.data
+                : 'Ha ocurrido un error al cargar el archivo, por favor intenta de nuevo'}
+            </AlertDescription>
+          </Box>
+        </Alert>
+      )}
+
       {data && data.data && data.data.message && (
-        <Alert rounded="md" status="success" variant="solid">
+        <Alert rounded="md" status="success" variant="solid" className='animate__fadeIn'>
           <AlertIcon />
           <Box>
             <AlertTitle>{data.data.message}</AlertTitle>
