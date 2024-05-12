@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Center,
   Checkbox,
@@ -15,11 +16,16 @@ import {
   Stack,
   Text,
   Textarea,
-  VStack
+  VStack,
+  useToast
 } from '@chakra-ui/react'
+import moment from 'moment'
 import { useState } from 'react'
 import { FaBuilding } from 'react-icons/fa'
+import { useMutation } from 'react-query'
+import { useLocation } from 'wouter'
 
+import LoansService from '@/services/api/LoansService'
 import SelectBuildings from '../pages/rooms/SelectBuildings'
 import SelectRooms from '../pages/rooms/SelectRooms'
 import Schedule from './Schedule'
@@ -27,14 +33,106 @@ import Schedule from './Schedule'
 function MyLoans () {
   const [currentBuilding, setCurrentBuilding] = useState(null)
   const [currentRoom, setCurrentRoom] = useState(null)
+  const [startHour, setStartHour] = useState(null)
+  const [endHour, setEndHour] = useState(null)
+  const [date, setDate] = useState(null)
+  const [people, setPeople] = useState(0)
+  const [resources, setResources] = useState([])
+  const [reason, setReason] = useState('')
+
+  const toast = useToast()
+  const [, setLocation] = useLocation()
+
+  const { isLoading, mutate } = useMutation(
+    (newLoan) => {
+      const promise = LoansService.create(newLoan)
+
+      toast.promise(promise, {
+        success: { title: 'Prestamo enviado' },
+        error: { title: 'Error al enviar el prestamo' },
+        loading: { title: 'Procesando el prestamo' }
+      })
+
+      return promise
+    },
+    {
+      onSuccess: () => {
+        setLocation('/pretamo-solicitado-exitosamente')
+      }
+    }
+  )
+
+  const handleSelectSlot = (slotInfo) => {
+    const start = new Date(slotInfo.start).getHours()
+    const end = new Date(slotInfo.end).getHours()
+
+    if (start < 6 || end > 22 || start > end || start + 1 > 22) {
+      toast({
+        title: 'Error',
+        description:
+          'El horario de prestamo debe ser entre las 6:00 y las 22:00',
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      })
+
+      return
+    }
+
+    setDate(moment(slotInfo.start).format('YYYY-MM-DD'))
+    setStartHour(start)
+    setEndHour(start === end ? end + 1 : end)
+  }
+
+  const handleChangeStartHour = (val) => {
+    if (val < endHour) setStartHour(val)
+  }
+
+  const handleChangeEndHour = (val) => {
+    if (val > startHour) setEndHour(val)
+  }
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault()
+
+    if (
+      !currentBuilding ||
+      !currentRoom ||
+      !startHour ||
+      !endHour ||
+      !date ||
+      !people ||
+      !reason
+    ) {
+      toast({
+        title: 'Error',
+        description: 'Completa todos los campos',
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      })
+
+      return
+    }
+
+    mutate({
+      fecha: date,
+      sala_id: currentRoom,
+      hora_inicio: startHour,
+      hora_fin: endHour,
+      cantidad_personas: people,
+      recursos: resources,
+      razon: reason
+    })
+  }
 
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <Grid
-        minH="calc(100vh - 110px)"
         gap="4"
         fontWeight="bold"
         color="blackAlpha.700"
+        minH="calc(100vh - 110px)"
         gridTemplateColumns={{ base: '1fr', md: '1.5fr 1fr' }}
       >
         <GridItem bg={'white'} p={2} rounded={5}>
@@ -57,7 +155,11 @@ function MyLoans () {
                 </Center>
                   )
                 : (
-                <Schedule roomId={currentRoom} isClickable />
+                <Schedule
+                  roomId={currentRoom}
+                  isClickable
+                  handleSelectSlot={handleSelectSlot}
+                />
                   )}
             </>
               )}
@@ -71,27 +173,83 @@ function MyLoans () {
           overflowY="auto"
         >
           <VStack spacing={4}>
-            <FormControl>
-              <FormLabel>Edificio</FormLabel>
-              <SelectBuildings
-                currentBuilding={currentBuilding}
-                setCurrentBuilding={setCurrentBuilding}
-              />
-            </FormControl>
+            <Flex gap={2} w="full">
+              <FormControl w="full">
+                <FormLabel>Edificio</FormLabel>
+                <SelectBuildings
+                  currentBuilding={currentBuilding}
+                  setCurrentBuilding={setCurrentBuilding}
+                />
+              </FormControl>
 
-            <FormControl>
-              <FormLabel>Sala</FormLabel>
-              <SelectRooms
-                currentRoom={currentRoom}
-                building={currentBuilding}
-                handleChange={setCurrentRoom}
-              />
-            </FormControl>
+              <FormControl w="full">
+                <FormLabel>Sala</FormLabel>
+                <SelectRooms
+                  currentRoom={currentRoom}
+                  building={currentBuilding}
+                  handleChange={setCurrentRoom}
+                />
+              </FormControl>
+            </Flex>
+
+            {currentBuilding && currentRoom && (
+              <Box w="full" borderWidth={1} rounded="md" p={4}>
+                {date && (
+                  <Text textAlign="left" w="full">
+                    Fecha: {moment(date).format('DD MMM YYYY')}
+                  </Text>
+                )}
+
+                {startHour && endHour
+                  ? (
+                  <Flex gap={2} w="full">
+                    <FormControl w="full">
+                      <FormLabel>Hora de Inicio</FormLabel>
+                      <NumberInput
+                        size="sm"
+                        min={6}
+                        max={22}
+                        value={startHour}
+                        onChange={(val) => handleChangeStartHour(val)}
+                      >
+                        <NumberInputField />
+                        <NumberInputStepper>
+                          <NumberIncrementStepper />
+                          <NumberDecrementStepper />
+                        </NumberInputStepper>
+                      </NumberInput>
+                    </FormControl>
+
+                    <FormControl w="full">
+                      <FormLabel>Hora de Fin</FormLabel>
+                      <NumberInput
+                        min={6}
+                        max={22}
+                        size="sm"
+                        value={endHour}
+                        onChange={(val) => handleChangeEndHour(val)}
+                      >
+                        <NumberInputField />
+                        <NumberInputStepper>
+                          <NumberIncrementStepper />
+                          <NumberDecrementStepper />
+                        </NumberInputStepper>
+                      </NumberInput>
+                    </FormControl>
+                  </Flex>
+                    )
+                  : (
+                  <Text textAlign="left" w="full">
+                    Selecciona una franja horaria
+                  </Text>
+                    )}
+              </Box>
+            )}
 
             <FormControl>
               <FormLabel>Personas</FormLabel>
 
-              <NumberInput>
+              <NumberInput value={people} onChange={(val) => setPeople(val)}>
                 <NumberInputField placeholder="¿Cuantas personas asistiran?" />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
@@ -104,24 +262,56 @@ function MyLoans () {
               <FormLabel>Recursos</FormLabel>
 
               <Stack spacing={5} direction="row">
-                <Checkbox colorScheme="green">Videobeam</Checkbox>
-
-                <Checkbox colorScheme="green">Marcador</Checkbox>
+                <Checkbox
+                  colorScheme="green"
+                  onChange={(evt) => {
+                    if (evt.target.checked) {
+                      setResources([...resources, 'videobeam'])
+                    } else {
+                      setResources(resources.filter((r) => r !== 'videobeam'))
+                    }
+                  }}
+                >
+                  Videobeam
+                </Checkbox>
+                <Checkbox
+                  colorScheme="green"
+                  onChange={(evt) => {
+                    if (evt.target.checked) {
+                      setResources([...resources, 'marcador'])
+                    } else {
+                      setResources(resources.filter((r) => r !== 'marcador'))
+                    }
+                  }}
+                >
+                  Marcador
+                </Checkbox>
               </Stack>
             </FormControl>
 
             <FormControl>
               <FormLabel>Razón de el préstamo</FormLabel>
-              <Textarea placeholder="..." />
+              <Textarea
+                placeholder="..."
+                value={reason}
+                onChange={(evt) => setReason(evt.target.value)}
+              />
             </FormControl>
           </VStack>
         </GridItem>
       </Grid>
 
       <Flex mt={4} justifyContent="end">
-        <Button colorScheme="primary">Confirmar</Button>
+        <Button
+          colorScheme="primary"
+          type="submit"
+          isLoading={isLoading}
+          isDisabled={isLoading}
+        >
+          Confirmar
+        </Button>
       </Flex>
-    </>
+    </form>
   )
 }
 
