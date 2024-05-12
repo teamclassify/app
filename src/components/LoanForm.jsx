@@ -17,8 +17,8 @@ import {
   Textarea,
   VStack
 } from '@chakra-ui/react'
-import { FaBuilding } from 'react-icons/fa'
 import { useState } from 'react'
+import { FaBuilding } from 'react-icons/fa'
 
 import SelectBuildings from '../pages/rooms/SelectBuildings'
 import SelectRooms from '../pages/rooms/SelectRooms'
@@ -40,7 +40,7 @@ function MyLoans () {
         <GridItem bg={'white'} p={2} rounded={5}>
           {!currentBuilding
             ? (
-            <Center h="100%" flexDir='column'>
+            <Center h="100%" flexDir="column">
               <FaBuilding size={100} />
               <Text mt={4}>Selecciona un edificio para ver sus salas</Text>
             </Center>
@@ -49,13 +49,15 @@ function MyLoans () {
             <>
               {!currentRoom
                 ? (
-                <Center h="100%" flexDir='column'>
+                <Center h="100%" flexDir="column">
                   <FaBuilding size={100} />
-                  <Text mt={4}>Selecciona una sala para ver su disponibilidad</Text>
+                  <Text mt={4}>
+                    Selecciona una sala para ver su disponibilidad
+                  </Text>
                 </Center>
                   )
                 : (
-                <Schedule roomId={currentRoom} />
+                <Schedule roomId={currentRoom} isClickable />
                   )}
             </>
               )}
