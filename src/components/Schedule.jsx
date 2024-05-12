@@ -3,6 +3,7 @@ import {
   AlertIcon,
   AlertTitle,
   Box,
+  Center,
   Spinner,
   Text,
   useDisclosure
@@ -67,7 +68,11 @@ function Schedule (
   }, [data, handleSelectSlot, isClickable, currentDate])
 
   if (isLoading) {
-    return <Spinner />
+    return (
+      <Center h="100%">
+        <Spinner />
+      </Center>
+    )
   }
 
   if (!isLoading && isError) {
