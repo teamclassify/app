@@ -57,7 +57,18 @@ function MyLoans () {
     },
     {
       onSuccess: (res) => {
-        setLocation(`/prestamo-solicitado/${res.data.id}`)
+        console.log(res)
+        if (res.success) {
+          setLocation(`/prestamo-solicitado/${res.data.id}`)
+        } else {
+          toast({
+            title: 'Error',
+            description: res.message,
+            status: 'error',
+            duration: 5000,
+            isClosable: true
+          })
+        }
       }
     }
   )
