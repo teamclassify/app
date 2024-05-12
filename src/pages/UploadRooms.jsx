@@ -98,6 +98,8 @@ export default function UploadRooms () {
     }
   }
 
+  if (!loading && !user) return <NotAuth />
+
   if (!loading && user && !user.roles.includes('admin')) {
     return <NotAuth />
   }
