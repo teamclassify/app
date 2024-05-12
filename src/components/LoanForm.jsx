@@ -56,8 +56,8 @@ function MyLoans () {
       return promise
     },
     {
-      onSuccess: () => {
-        setLocation('/pretamo-solicitado-exitosamente')
+      onSuccess: (res) => {
+        setLocation(`/prestamo-solicitado/${res.data.id}`)
       }
     }
   )

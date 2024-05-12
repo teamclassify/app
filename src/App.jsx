@@ -11,6 +11,7 @@ import UserPage from './pages/User'
 import BuildingsPage from './pages/buildings'
 import RoomPage from './pages/room'
 import RoomsPage from './pages/rooms'
+import LoanSuccessPage from './pages/LoanSuccess'
 
 function App () {
   return (
@@ -27,6 +28,7 @@ function App () {
         <Route component={RoomPage} path="/horario/:id" />
         <Route component={RoomsPage} path="/salas" />
         <Route component={LoanPage} path='/nuevo-prestamo'/>
+        <Route component={LoanSuccessPage} path='/prestamo-solicitado/:id'/>
         <Route component={ErrorPage} path="/:rest*" />
       </Switch>
     </>

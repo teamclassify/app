@@ -21,6 +21,29 @@ async function getAll () {
   }
 }
 
+async function getById (id) {
+  if (!id) {
+    return null
+  }
+
+  const token = await getToken()
+
+  try {
+    const res = await axios({
+      url: `${URL}/prestamos/${id}`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 async function update (id, data) {
   try {
     const token = await getToken()
@@ -82,6 +105,7 @@ async function remove (id) {
 
 const LoansService = {
   getAll,
+  getById,
   update,
   create,
   remove
