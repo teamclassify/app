@@ -29,7 +29,7 @@ function DrawerForm () {
           <UserPic />
         </Box>
 
-        <Divider mb={4} borderColor="primary.400" borderWidth={1} />
+        {user && <Divider mb={4} borderColor="primary.400" borderWidth={1} />}
 
         <Link href="/home">
           <Button
@@ -179,19 +179,38 @@ function DrawerForm () {
           </Button>
         </Link> */}
 
-        <Button
-          gap={2}
-          w="full"
-          onClick={logout}
-          bg="transparent"
-          colorScheme="red"
-          justifyContent="start"
-        >
-          <RiLogoutBoxLine size="13px" color="white" />
-          <Heading as="h1" size="sl" color="white" py={2}>
-            Cerrar sesión
-          </Heading>
-        </Button>
+        {user
+          ? (
+          <Button
+            gap={2}
+            w="full"
+            onClick={logout}
+            bg="transparent"
+            colorScheme="red"
+            justifyContent="start"
+          >
+            <RiLogoutBoxLine size="13px" color="white" />
+            <Heading as="h1" size="sl" color="white" py={2}>
+              Cerrar sesión
+            </Heading>
+          </Button>
+            )
+          : (
+          <Button
+            gap={2}
+            w="full"
+            as={Link}
+            href="/login"
+            bg="transparent"
+            colorScheme="red"
+            justifyContent="start"
+          >
+            <RiLogoutBoxLine size="13px" color="white" />
+            <Heading as="h1" size="sl" color="white" py={2}>
+              Inicia sesión
+            </Heading>
+          </Button>
+            )}
       </Box>
     </Box>
   )
