@@ -12,7 +12,7 @@ function ListOfLoans () {
 
   if (!isLoading && loans && loans.data.length === 0) {
     return (
-      <Center my={4} minH="70vh" flexDir='column'>
+      <Center my={4} minH="70vh" flexDir="column">
         <MdPendingActions size="100px" />
         <Text mt={4}>No hay préstamos pendientes</Text>
       </Center>
@@ -40,6 +40,8 @@ function ListOfLoans () {
                 loanroom={loan.sala}
                 building={loan.edificio}
                 reason={loan.razon}
+                people={loan.cantidad_personas}
+                resources={loan.recursos}
               />
             ))}
         </Grid>
