@@ -50,7 +50,6 @@ function MyLoans () {
     },
     {
       onSuccess: (res) => {
-        console.log(res)
         if (res.success) {
           setLocation(`/prestamo-solicitado/${res.data.id}`)
         } else {
@@ -69,6 +68,19 @@ function MyLoans () {
   const handleSelectSlot = (slotInfo) => {
     const start = new Date(slotInfo.start).getHours()
     const end = new Date(slotInfo.end).getHours()
+    const dayOfWeek = new Date(slotInfo.start).getDay()
+
+    if (dayOfWeek === 0) {
+      toast({
+        title: 'Error',
+        description: 'No se pueden hacer prestamos los domingos',
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      })
+
+      return
+    }
 
     if (start < 6 || end > 22 || start > end || start + 1 > 22) {
       toast({
