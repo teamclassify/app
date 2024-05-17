@@ -137,7 +137,7 @@ function MyLoans () {
       hora_inicio: startHour,
       hora_fin: endHour,
       cantidad_personas: people,
-      recursos: resources,
+      recursos: resources.toString(),
       razon: reason
     })
   }
