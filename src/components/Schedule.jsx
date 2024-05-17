@@ -13,12 +13,14 @@ import { useEffect, useState } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { useQuery } from 'react-query'
+import 'moment/locale/es'
 
 import EventsService from '@/services/api/EventsService'
 import { convertDateRoom } from '@/utils/convertDateRoom'
 import Modal from './Modal'
 
 const localizer = momentLocalizer(moment)
+moment.locale('es')
 
 function Schedule (
   { roomId, isClickable, handleSelectSlot } = {
@@ -26,6 +28,8 @@ function Schedule (
   }
 ) {
   const [currentDate, setCurrentDate] = useState(new Date())
+  const [minHours, setMinHours] = useState(new Date())
+  const [maxHours, setMaxHours] = useState(new Date())
   const [currentEvent, setCurrentEvent] = useState(null)
   const [events, setEvents] = useState([])
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -40,6 +44,18 @@ function Schedule (
   }
 
   useEffect(() => {
+    setMinHours((prev) => {
+      prev.setHours(6)
+      prev.setMinutes(0)
+      return prev
+    })
+
+    setMaxHours((prev) => {
+      prev.setHours(22)
+      prev.setMinutes(0)
+      return prev
+    })
+
     if (data) {
       setEvents(() => {
         return data.map((event) => {
@@ -157,6 +173,9 @@ function Schedule (
 
       {data && (
         <Calendar
+          culture='es'
+          min={minHours}
+          max={maxHours}
           onRangeChange={(range) => setCurrentDate(range[0])}
           defaultDate={currentDate}
           localizer={localizer}
