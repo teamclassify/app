@@ -38,20 +38,25 @@ const signInGoogle = async () => {
       const credential = GoogleAuthProvider.credentialFromResult(result)
 
       if (!credential) {
-        throw new Error('Error to login with google')
+        throw new Error('Error al obtener credenciales de google')
+      }
+
+      if (result.user.email && !result.user.email.includes('@ufps.edu.co')) {
+        logoutUser()
+        throw new Error('El correo no es de la universidad')
       }
 
       const token = credential.accessToken
 
       return {
-        msg: 'User logged',
+        msg: 'Usuario logueado correctamente con google',
         data: { token, user: result.user },
         status: 200
       }
     })
     .catch((error) => {
       return {
-        msg: 'User no logged',
+        msg: 'Usuario no logueado con google',
         error: error.message,
         status: 404
       }
@@ -65,6 +70,13 @@ const signInGoogle = async () => {
  * @returns A Promise that resolves to a ResponseFirebase object.
  */
 const signUpWithEmailAndPassword = async (email, password) => {
+  if (!email.includes('@ufps.edu.co')) {
+    return {
+      msg: 'El correo no es de la universidad',
+      status: 404
+    }
+  }
+
   return createUserWithEmailAndPassword(auth, email, password)
     .then((user) => {
       const token = null

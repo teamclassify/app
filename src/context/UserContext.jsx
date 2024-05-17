@@ -1,3 +1,4 @@
+import { useToast } from '@chakra-ui/react'
 import { createContext, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'wouter'
 
@@ -20,6 +21,8 @@ export default function UserProvider ({ children }) {
   const [token, setToken] = useState(null)
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  const toast = useToast()
 
   const registerWithEmail = async (email, password) => {
     setLoading(true)
@@ -44,6 +47,19 @@ export default function UserProvider ({ children }) {
 
     return signInGoogle().then((res) => {
       setLoading(false)
+
+      if (res.status === 404) {
+        toast({
+          title: 'Error',
+          description: res.error,
+          status: 'error',
+          duration: 5000,
+          isClosable: true
+        })
+
+        return
+      }
+
       return res
     })
   }
