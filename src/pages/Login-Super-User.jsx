@@ -11,13 +11,14 @@ import {
   Text,
   useToast
 } from '@chakra-ui/react'
-import { Link } from 'wouter'
+import { Link, useLocation } from 'wouter'
 
 import LogoUFPS from '../components/Logos/LogoUFPS'
 import useUser from '../hooks/useUser'
 
 function Login () {
   const { loading, loginWithEmail } = useUser()
+  const [, setLocation] = useLocation()
   const toast = useToast()
 
   const handleLogin = async (e) => {
@@ -36,6 +37,8 @@ function Login () {
           duration: 3000,
           isClosable: true
         })
+
+        setLocation('/home')
       } else {
         toast({
           title: 'Error al iniciar sesión',
