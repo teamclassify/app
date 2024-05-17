@@ -173,6 +173,8 @@ function Schedule (
 
       {data && (
         <Calendar
+          step={60}
+          timeslots={1}
           culture='es'
           min={minHours}
           max={maxHours}
