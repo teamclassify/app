@@ -1,6 +1,7 @@
 import {
   Alert,
   AlertTitle,
+  Avatar,
   Badge,
   Box,
   Center,
@@ -9,7 +10,6 @@ import {
   Spinner,
   Text
 } from '@chakra-ui/react'
-import { FaRegUser } from 'react-icons/fa'
 import { useQuery } from 'react-query'
 
 import UsersService from '@/services/api/UsersService'
@@ -47,9 +47,10 @@ function ListOfUsers () {
             data.data &&
             data.data.map((user) => (
               <Flex key={user.id} p={4} gap={4} alignItems="center">
-                <FaRegUser size="30px" />
+                <Avatar src={user.photo} alt={user.nombre} />
+
                 <Box>
-                  <Text fontWeight="bold">@{user.nombre}</Text>
+                  <Text fontWeight="bold">{user.nombre}</Text>
                   <Text mb={2}>{user.correo}</Text>
 
                   <Flex>
