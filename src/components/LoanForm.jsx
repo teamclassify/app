@@ -69,6 +69,7 @@ function MyLoans () {
     const start = new Date(slotInfo.start).getHours()
     const end = new Date(slotInfo.end).getHours()
     const dayOfWeek = new Date(slotInfo.start).getDay()
+    const currentDate = new Date()
 
     if (dayOfWeek === 0) {
       toast({
@@ -87,6 +88,18 @@ function MyLoans () {
         title: 'Error',
         description:
           'El horario de prestamo debe ser entre las 6:00 y las 22:00',
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      })
+
+      return
+    }
+
+    if (currentDate > new Date(slotInfo.start)) {
+      toast({
+        title: 'Error',
+        description: 'No se pueden hacer prestamos en el pasado',
         status: 'error',
         duration: 5000,
         isClosable: true
