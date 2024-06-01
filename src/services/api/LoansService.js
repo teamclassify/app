@@ -2,12 +2,33 @@ import axios from 'axios'
 import { URL, handleAxiosError } from '.'
 import { getToken } from './Auth'
 
-async function getAll () {
+async function getAll (filters = []) {
+  const token = await getToken()
+
+  try {
+    const filtersURL = filters.map((f) => `${f?.name}=${f?.value}`).join('&&')
+
+    const res = await axios({
+      url: `${URL}/prestamos?${filtersURL}`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
+async function getAllByUser () {
   const token = await getToken()
 
   try {
     const res = await axios({
-      url: `${URL}/prestamos`,
+      url: `${URL}/prestamos/user`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -124,6 +145,7 @@ async function remove (id) {
 
 const LoansService = {
   getAll,
+  getAllByUser,
   getById,
   update,
   create,
