@@ -17,32 +17,35 @@ function Filters ({ setFilterState, setFilterReason }) {
     setSearchValue(e.target.value)
   }
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     setFilterReason(searchValue)
   }
 
   return (
     <Flex p={2} gap={2} bg={'white'} mb={4} rounded={'md'}>
-      <InputGroup size="sm" maxW="xs">
-        <Input
-          type="text"
-          rounded={'md'}
-          placeholder="Buscar ..."
-          value={searchValue}
-          onChange={handleChangeSearchInput}
-        />
-
-        <InputRightElement>
-          <Button
-            size="sm"
-            iconSpacing={0}
-            colorScheme="blue"
-            borderLeftRadius={0}
-            onClick={handleSearch}
-            leftIcon={<IoSearch />}
+      <form onSubmit={handleSearch}>
+        <InputGroup size="sm" maxW="xs">
+          <Input
+            type="text"
+            rounded={'md'}
+            placeholder="Buscar ..."
+            value={searchValue}
+            onChange={handleChangeSearchInput}
           />
-        </InputRightElement>
-      </InputGroup>
+
+          <InputRightElement>
+            <Button
+              type='submit'
+              size="sm"
+              iconSpacing={0}
+              colorScheme="blue"
+              borderLeftRadius={0}
+              leftIcon={<IoSearch />}
+            />
+          </InputRightElement>
+        </InputGroup>
+      </form>
 
       <FilterSelect
         size="sm"
