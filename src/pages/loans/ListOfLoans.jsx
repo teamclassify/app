@@ -1,20 +1,31 @@
 import { Center, Grid, Spinner, Text } from '@chakra-ui/react'
-import { useQuery } from 'react-query'
 import { MdPendingActions } from 'react-icons/md'
+import { useQuery } from 'react-query'
 
 import LoansService from '@/services/api/LoansService'
 import LoanItem from './LoanItem'
 
-function ListOfLoans () {
-  const { isLoading, data: loans } = useQuery(['loans'], () =>
-    LoansService.getAllPending()
+function ListOfLoans (
+  { filterState, filterReason } = { filterState: [], filterReason: '' }
+) {
+  const { isLoading, data: loans } = useQuery(
+    ['loans', filterState, filterReason],
+    () => {
+      const valueFilter = filterState
+        .filter((f) => f.checked)
+        .map((f) => f.value)
+      return LoansService.getAll([
+        { name: 'estado', value: valueFilter },
+        { name: 'razon', value: filterReason }
+      ])
+    }
   )
 
-  if (!isLoading && loans && loans.data.length === 0) {
+  if (!isLoading && loans && loans?.data?.length === 0) {
     return (
       <Center my={4} minH="70vh" flexDir="column">
         <MdPendingActions size="100px" />
-        <Text mt={4}>No hay préstamos pendientes</Text>
+        <Text mt={4}>No hay préstamos para mostrar</Text>
       </Center>
     )
   }
