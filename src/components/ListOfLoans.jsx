@@ -42,7 +42,7 @@ function ListOfLoans () {
         <Grid
           w="full"
           gap={2}
-          templateColumns="repeat(auto-fill, minmax(10rem, 1fr))"
+          templateColumns="repeat(auto-fill, minmax(12rem, 1fr))"
         >
           {data &&
             data.data &&
