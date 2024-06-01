@@ -12,7 +12,7 @@ import LoansService from '@/services/api/LoansService'
 import Loan from './Loan'
 
 function ListOfLoans () {
-  const { isLoading, data } = useQuery('loans', LoansService.getAll)
+  const { isLoading, data } = useQuery('my-loans', () => LoansService.getAllByUser())
 
   if (!isLoading && data.error) {
     return (
