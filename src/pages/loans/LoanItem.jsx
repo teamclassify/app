@@ -28,7 +28,7 @@ function LoanItem ({
 }) {
   return (
     <Box rounded="md" bg="white">
-      <Box p={2} pb={4}>
+      <Box p={4}>
         <Flex justifyContent={'space-between'}>
           <Flex gap={4}>
             <MdOutlineRateReview size={24} />
@@ -72,8 +72,8 @@ function LoanItem ({
 
               <Flex alignItems="center" gap={2}>
                 {resources &&
-                  resources.split(',').map((resource) => (
-                    <Badge key={resource.id} fontSize="xs" colorScheme="blue">
+                  resources.split(',').map((resource, index) => (
+                    <Badge key={index} fontSize="xs" colorScheme="blue">
                       {resource}
                     </Badge>
                   ))}
@@ -98,7 +98,8 @@ function LoanItem ({
       </Box>
 
       <Flex
-        p={2}
+        py={2}
+        px={4}
         gap={2}
         borderTopWidth={1}
         justifyContent="end"
