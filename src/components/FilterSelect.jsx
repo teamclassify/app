@@ -8,21 +8,14 @@ import {
   PopoverContent,
   PopoverTrigger
 } from '@chakra-ui/react'
-import { useState } from 'react'
 import { FaAngleDown } from 'react-icons/fa'
 
 function FilterSelect (
-  { title, size, options, onCheck } = { size: 'md', options: [] }
+  { title, size, options, onCheck, checkedItems, setCheckedItems } = {
+    size: 'md',
+    options: []
+  }
 ) {
-  const [checkedItems, setCheckedItems] = useState(
-    options.map((option) => {
-      return {
-        value: option,
-        checked: false
-      }
-    })
-  )
-
   const handleCheck = (index, value, isChecked) => {
     setCheckedItems((prev) => {
       const newValues = [...prev]

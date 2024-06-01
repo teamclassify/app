@@ -7,10 +7,27 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { IoSearch } from 'react-icons/io5'
+import { MdOutlineCleaningServices } from 'react-icons/md'
 
 import FilterSelect from '@/components/FilterSelect'
 
+const STATE_OPTIONS = [
+  'PENDIENTE',
+  'PREAPROBADO',
+  'APROBADO',
+  'CANCELADO',
+  'REALIZADO'
+]
+
 function Filters ({ setFilterState, setFilterReason }) {
+  const [checkedItems, setCheckedItems] = useState(
+    STATE_OPTIONS.map((option) => {
+      return {
+        value: option,
+        checked: false
+      }
+    })
+  )
   const [searchValue, setSearchValue] = useState('')
 
   const handleChangeSearchInput = (e) => {
@@ -20,6 +37,29 @@ function Filters ({ setFilterState, setFilterReason }) {
   const handleSearch = (e) => {
     e.preventDefault()
     setFilterReason(searchValue)
+  }
+
+  const handleClean = () => {
+    setCheckedItems((prev) => {
+      return prev.map((el) => {
+        return {
+          value: el.value,
+          checked: false
+        }
+      })
+    })
+
+    setFilterState((prev) => {
+      return prev.map((el) => {
+        return {
+          value: el.value,
+          checked: false
+        }
+      })
+    })
+
+    setFilterReason('')
+    setSearchValue('')
   }
 
   return (
@@ -36,7 +76,7 @@ function Filters ({ setFilterState, setFilterReason }) {
 
           <InputRightElement>
             <Button
-              type='submit'
+              type="submit"
               size="sm"
               iconSpacing={0}
               colorScheme="blue"
@@ -50,14 +90,17 @@ function Filters ({ setFilterState, setFilterReason }) {
       <FilterSelect
         size="sm"
         title="Estado"
-        options={[
-          'PENDIENTE',
-          'PREAPROBADO',
-          'APROBADO',
-          'CANCELADO',
-          'REALIZADO'
-        ]}
+        options={STATE_OPTIONS}
         onCheck={setFilterState}
+        checkedItems={checkedItems}
+        setCheckedItems={setCheckedItems}
+      />
+
+      <Button
+        size="sm"
+        iconSpacing={0}
+        onClick={handleClean}
+        leftIcon={<MdOutlineCleaningServices />}
       />
     </Flex>
   )
