@@ -97,6 +97,7 @@ export default function UserProvider ({ children }) {
       setUser({
         ...user,
         name: response.data.nombre,
+        photo: response.data.photo,
         email: response.data.correo,
         uid: response.data.id,
         codigo: response.data.codigo,
@@ -142,9 +143,11 @@ export default function UserProvider ({ children }) {
   useEffect(() => {
     const fetchUser = async () => {
       if (accessToken && user) {
+        console.log(user)
         await handleLogin({
           nombre: user.name,
-          correo: user.email
+          correo: user.email,
+          photo: user.photo
         })
 
         setToken(accessToken)

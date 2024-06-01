@@ -12,7 +12,7 @@ import LoansService from '@/services/api/LoansService'
 import Loan from './Loan'
 
 function ListOfLoans () {
-  const { isLoading, data } = useQuery('loans', LoansService.getAll)
+  const { isLoading, data } = useQuery('my-loans', () => LoansService.getAllByUser())
 
   if (!isLoading && data.error) {
     return (
@@ -42,7 +42,7 @@ function ListOfLoans () {
         <Grid
           w="full"
           gap={2}
-          templateColumns="repeat(auto-fill, minmax(10rem, 1fr))"
+          templateColumns="repeat(auto-fill, minmax(12rem, 1fr))"
         >
           {data &&
             data.data &&

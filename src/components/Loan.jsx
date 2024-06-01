@@ -1,13 +1,8 @@
-import {
-  Badge,
-  Box,
-  Flex,
-  Heading,
-  LinkBox
-} from '@chakra-ui/react'
+import { Badge, Box, Flex, Heading, LinkBox } from '@chakra-ui/react'
 import { FaDoorClosed, FaDoorOpen } from 'react-icons/fa'
 import { Link } from 'wouter'
 
+import { convertHour12h } from '../utils/date'
 import ToolTipo from './ToolTip'
 
 function Loan ({ id, state, date, loanroom, building, startHour, endHour }) {
@@ -28,7 +23,7 @@ function Loan ({ id, state, date, loanroom, building, startHour, endHour }) {
     <>
       <LinkBox
         p="4"
-        maxW="sm"
+        w="full"
         as={Link}
         rounded="xl"
         display="flex"
@@ -37,35 +32,35 @@ function Loan ({ id, state, date, loanroom, building, startHour, endHour }) {
         backgroundColor={backgroundColor}
         href={`/prestamo-solicitado/${id}`}
       >
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            {icon}
-            <ToolTipo State={state} />
-          </Box>
-          <Box display="flex" flexDirection="column" mt={2} alignItems="start">
-            <Heading
-              my="2"
-              size="sm"
-              color="white"
-              fontWeight="bold"
-              fontFamily="sans-serif"
-            >
-              {building} - {loanroom}
-            </Heading>
-            <Flex w='full' gap={1}>
-              <Badge colorScheme="yellow">
-                {date}
-              </Badge>
+        <Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          {icon}
+          <ToolTipo State={state} />
+        </Box>
 
-              <Badge colorScheme="yellow">
-                {startHour} - {endHour}
-              </Badge>
-            </Flex>
-          </Box>
+        <Box display="flex" flexDirection="column" mt={2} alignItems="start">
+          <Heading
+            my="2"
+            size="sm"
+            color="white"
+            fontWeight="bold"
+            fontFamily="sans-serif"
+          >
+            {building} - {loanroom}
+          </Heading>
+
+          <Flex w="full" gap={1}>
+            <Badge colorScheme="yellow">{date}</Badge>
+
+            <Badge colorScheme="yellow">
+              {convertHour12h(startHour)} - {convertHour12h(endHour)}
+            </Badge>
+          </Flex>
+        </Box>
       </LinkBox>
     </>
   )
