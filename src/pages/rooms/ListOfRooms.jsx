@@ -11,10 +11,12 @@ import { useMutation, useQuery, useQueryClient } from 'react-query'
 import RoomsService from '@/services/api/RoomsService'
 import ModalEditRoom from './ModalEditRoom'
 import RoomItem from './RoomItem'
+import ConfirmDialog from '../../components/ConfirmDialog'
 
 function ListOfRooms ({ currentBuilding }) {
   const [currentRoom, setCurrentRoom] = useState({ id: 0, nombre: '' })
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const diclosureDelete = useDisclosure()
   const { isLoading, data: rooms } = useQuery(['rooms', currentBuilding], () =>
     RoomsService.getAllByBuilding(currentBuilding)
   )
@@ -41,8 +43,12 @@ function ListOfRooms ({ currentBuilding }) {
     }
   )
 
-  const handleDelete = (id) => {
-    mutate(id)
+  const handleDelete = () => {
+    if (!currentRoom) return
+
+    mutate(currentRoom.id)
+
+    diclosureDelete.onClose()
   }
 
   const handleUpdate = (data) => {
@@ -58,6 +64,13 @@ function ListOfRooms ({ currentBuilding }) {
         currentRoom={currentRoom}
       />
 
+      <ConfirmDialog
+        title="Eliminar sala"
+        isOpen={diclosureDelete.isOpen}
+        onClose={diclosureDelete.onClose}
+        onConfirm={handleDelete}
+      />
+
       {isLoading
         ? (
         <Center my={4}>
@@ -71,8 +84,11 @@ function ListOfRooms ({ currentBuilding }) {
               <RoomItem
                 key={room.id}
                 name={room.nombre}
-                handleDelete={handleDelete}
                 handleUpdate={() => handleUpdate(room)}
+                handleDelete={() => {
+                  diclosureDelete.onOpen()
+                  setCurrentRoom(room)
+                }}
               />
             ))}
         </>

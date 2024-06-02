@@ -11,7 +11,7 @@ import React from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdDelete } from 'react-icons/md'
 
-function ConfirmDialog ({ title, isOpen, onClose, onConfirm, children }) {
+function ConfirmDialog ({ title, isOpen, onClose, onConfirm }) {
   const cancelRef = React.useRef()
 
   return (
@@ -27,7 +27,10 @@ function ConfirmDialog ({ title, isOpen, onClose, onConfirm, children }) {
               {title}
             </AlertDialogHeader>
 
-            <AlertDialogBody pt={6}>{children}</AlertDialogBody>
+            <AlertDialogBody pt={6}>
+              La eliminación de este recurso es permanente. No podrás
+              recuperarlo una vez eliminado.
+            </AlertDialogBody>
 
             <AlertDialogFooter>
               <Button
