@@ -16,10 +16,8 @@ function Wrapper ({ children }) {
       <DrawerMenu />
       <Box h={0}></Box>
 
-      <Box>
-        <Box py={4} px={4}>
-          <Box mt={0}>{children}</Box>
-        </Box>
+      <Box py={4} px={4} mt={{ base: 10, md: 0 }}>
+        <Box mt={0}>{children}</Box>
       </Box>
     </Grid>
   )
