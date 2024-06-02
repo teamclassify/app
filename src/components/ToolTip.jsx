@@ -4,10 +4,10 @@ import { Tooltip, Button } from '@chakra-ui/react'
 function ToolTipo ({ State }) {
   const label =
     State === 'APROBADO'
-      ? 'Prestamo aprobado'
+      ? 'Préstamo aprobado'
       : State === 'PENDIENTE'
-        ? 'Prestamo en espera'
-        : 'Prestamo rechazado'
+        ? 'Préstamo en espera'
+        : 'Préstamo rechazado'
 
   return (
     <>

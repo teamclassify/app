@@ -119,7 +119,7 @@ function DrawerForm () {
           >
             <MdLibraryAdd size="13px" color="white" />
             <Heading as="h1" size="sl" color="white" py={2}>
-              Pedir prestamo
+              Pedir préstamo
             </Heading>
           </Button>
 
@@ -161,7 +161,7 @@ function DrawerForm () {
               >
                 <FaComputer size="13px" color="white" />
                 <Heading as="h1" size="sl" color="white" py={2}>
-                  Prestamos
+                  Préstamos
                 </Heading>
               </Button>
 

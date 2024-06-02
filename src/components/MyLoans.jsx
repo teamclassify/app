@@ -12,7 +12,7 @@ function MyLoans () {
           justifyContent="start"
         >
           <Heading fontSize="1.2rem" fontFamily="sans-serif">
-            Prestamos Recientes
+            Préstamos recientes
           </Heading>
         </Box>
         <ListOfLoans/>
