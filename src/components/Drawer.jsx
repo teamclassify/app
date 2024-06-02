@@ -228,7 +228,7 @@ function DrawerForm () {
           )}
         </Box>
 
-        <Box>
+        <Box w='full'>
           {/* <Link href="">
           <Button
             gap={2}
@@ -248,17 +248,14 @@ function DrawerForm () {
           {user
             ? (
             <Button
-              gap={2}
               w="full"
               onClick={logout}
               bg="transparent"
               colorScheme="red"
               justifyContent="start"
+              leftIcon={<RiLogoutBoxLine />}
             >
-              <RiLogoutBoxLine size="13px" color="white" />
-              <Heading as="h1" size="sl" color="white" py={2}>
-                Cerrar sesión
-              </Heading>
+              Cerrar sesión
             </Button>
               )
             : (
