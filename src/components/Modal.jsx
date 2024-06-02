@@ -12,7 +12,7 @@ function Modal ({ title, isOpen, onClose, children }) {
     <ModalChakra isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent overflow='hidden'>
-        <ModalHeader bg='primary.400' color='white' fontSize='md1'>{title}</ModalHeader>
+        <ModalHeader bg='primary.400' color='white' fontSize='md'>{title}</ModalHeader>
         <ModalCloseButton color='white' />
         <ModalBody pt={6}>
           {children}
