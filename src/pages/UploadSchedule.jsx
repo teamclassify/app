@@ -107,7 +107,12 @@ export default function UploadSchedule () {
   return (
     <Wrapper>
       {data && !data.success && (
-        <Alert rounded="md" status="error" variant="solid" className='animate__fadeIn'>
+        <Alert
+          rounded="md"
+          status="error"
+          variant="solid"
+          className="animate__fadeIn"
+        >
           <AlertIcon />
           <Box>
             <AlertTitle>Error al cargar el archivo</AlertTitle>
@@ -121,7 +126,12 @@ export default function UploadSchedule () {
       )}
 
       {data && data.data && data.data.message && (
-        <Alert rounded="md" status="success" variant="solid" className='animate__fadeIn'>
+        <Alert
+          rounded="md"
+          status="success"
+          variant="solid"
+          className="animate__fadeIn"
+        >
           <AlertIcon />
           <Box>
             <AlertTitle>{data.data.message}</AlertTitle>
@@ -135,9 +145,10 @@ export default function UploadSchedule () {
 
       <Box display={{ base: 'block', lg: 'flex' }} flexDir="row" gap={4}>
         <Box w="100%">
-          <Heading as="h2" size="md" noOfLines={1} p="20px 0px">
+          <Heading as="h2" size="md" noOfLines={1} mb={4}>
             Cargar horario
           </Heading>
+
           <AspectRatio maxW="800px" ratio={16 / 8}>
             <Box
               id="uploadDocument"

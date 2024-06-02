@@ -17,11 +17,9 @@ function Users () {
   return (
     <Wrapper>
       <Box>
-        <Box py={4}>
-          <Heading as="h2" size="md">
-            Usuarios
-          </Heading>
-        </Box>
+        <Heading as="h2" mb={4} size="md">
+          Usuarios
+        </Heading>
 
         <ListOfUsers />
       </Box>
