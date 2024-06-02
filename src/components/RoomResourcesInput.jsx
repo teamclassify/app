@@ -4,6 +4,7 @@ import {
   Checkbox,
   FormControl,
   FormLabel,
+  Spinner,
   Stack,
   Text
 } from '@chakra-ui/react'
@@ -12,9 +13,8 @@ import { useQuery } from 'react-query'
 import RoomResourcesService from '../services/api/RoomResourcesService'
 
 function RoomResourcesInput ({ resources, setResources }) {
-  const { isLoading, data } = useQuery(
-    'room-resources',
-    RoomResourcesService.getAll
+  const { isLoading, data } = useQuery('room-resources', () =>
+    RoomResourcesService.getAll('activo=true')
   )
 
   if (!isLoading && data.error) {
@@ -37,31 +37,39 @@ function RoomResourcesInput ({ resources, setResources }) {
     <FormControl>
       <FormLabel>Recursos</FormLabel>
 
-      <Stack spacing={5} direction="row">
-        {data && data?.data?.length > 0
-          ? (
-              data?.data?.map((resource) => {
-                return (
-              <Checkbox
-                key={resource.id}
-                colorScheme="green"
-                onChange={(evt) => {
-                  if (evt.target.checked) {
-                    setResources([...resources, resource.nombre])
-                  } else {
-                    setResources(resources.filter((r) => r !== resource.nombre))
-                  }
-                }}
-              >
-                {resource.nombre}
-              </Checkbox>
-                )
-              })
-            )
-          : (
-          <Text>No existen recursos de salas.</Text>
-            )}
-      </Stack>
+      {isLoading
+        ? (
+        <Spinner />
+          )
+        : (
+        <Stack spacing={5} direction="row">
+          {data && data?.data?.length > 0
+            ? (
+                data?.data?.map((resource) => {
+                  return (
+                <Checkbox
+                  key={resource.id}
+                  colorScheme="green"
+                  onChange={(evt) => {
+                    if (evt.target.checked) {
+                      setResources([...resources, resource.nombre])
+                    } else {
+                      setResources(
+                        resources.filter((r) => r !== resource.nombre)
+                      )
+                    }
+                  }}
+                >
+                  {resource.nombre}
+                </Checkbox>
+                  )
+                })
+              )
+            : (
+            <Text>No existen recursos de salas.</Text>
+              )}
+        </Stack>
+          )}
     </FormControl>
   )
 }
