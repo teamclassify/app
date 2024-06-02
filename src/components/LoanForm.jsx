@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Center,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
@@ -13,7 +12,6 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  Stack,
   Text,
   Textarea,
   VStack,
@@ -28,6 +26,7 @@ import { useLocation } from 'wouter'
 import LoansService from '@/services/api/LoansService'
 import SelectBuildings from '../pages/rooms/SelectBuildings'
 import SelectRooms from '../pages/rooms/SelectRooms'
+import RoomResourcesInput from './RoomResourcesInput'
 import Schedule from './Schedule'
 
 function MyLoans () {
@@ -287,36 +286,10 @@ function MyLoans () {
               </NumberInput>
             </FormControl>
 
-            <FormControl>
-              <FormLabel>Recursos</FormLabel>
-
-              <Stack spacing={5} direction="row">
-                <Checkbox
-                  colorScheme="green"
-                  onChange={(evt) => {
-                    if (evt.target.checked) {
-                      setResources([...resources, 'videobeam'])
-                    } else {
-                      setResources(resources.filter((r) => r !== 'videobeam'))
-                    }
-                  }}
-                >
-                  Videobeam
-                </Checkbox>
-                <Checkbox
-                  colorScheme="green"
-                  onChange={(evt) => {
-                    if (evt.target.checked) {
-                      setResources([...resources, 'marcador'])
-                    } else {
-                      setResources(resources.filter((r) => r !== 'marcador'))
-                    }
-                  }}
-                >
-                  Marcador
-                </Checkbox>
-              </Stack>
-            </FormControl>
+            <RoomResourcesInput
+              resources={resources}
+              setResources={setResources}
+            />
 
             <FormControl>
               <FormLabel>Razón de el préstamo</FormLabel>
