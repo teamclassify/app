@@ -17,7 +17,7 @@ function ListOfLoans () {
   if (!isLoading && data.error) {
     return (
       <Alert status="error" rounded="md" mt={4}>
-        <AlertTitle>Error al obtener los prestamos</AlertTitle>
+        <AlertTitle>Error al obtener los préstamos</AlertTitle>
       </Alert>
     )
   }
@@ -25,7 +25,7 @@ function ListOfLoans () {
   if (!isLoading && (!data || !data.data || data.data.length === 0)) {
     return (
       <Alert status="info" rounded="md" mt={4}>
-        <AlertTitle>No existen prestamos</AlertTitle>
+        <AlertTitle>No existen préstamos</AlertTitle>
       </Alert>
     )
   }

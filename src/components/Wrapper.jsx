@@ -3,7 +3,6 @@ import { Box, Grid } from '@chakra-ui/react'
 import useUser from '../hooks/useUser'
 import LoadingUser from '../pages/LoadingUser'
 import DrawerMenu from './Drawer'
-import Header from './Header'
 
 function Wrapper ({ children }) {
   const { loading } = useUser()
@@ -13,12 +12,11 @@ function Wrapper ({ children }) {
   }
 
   return (
-    <Grid h="100vh" gridTemplateColumns={{ base: '1fr', md: '0.2fr 1fr' }}>
+    <Grid gridTemplateColumns={{ base: '1fr', md: '250px 1fr' }}>
       <DrawerMenu />
+      <Box h={0}></Box>
 
-      <Box px={4} overflowY="auto">
-        <Header />
-
+      <Box py={4} px={4} mt={{ base: 10, md: 0 }}>
         <Box mt={0}>{children}</Box>
       </Box>
     </Grid>

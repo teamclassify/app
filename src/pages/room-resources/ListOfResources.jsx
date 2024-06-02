@@ -100,9 +100,7 @@ function ListOfResources () {
         isOpen={diclosureDelete.isOpen}
         onClose={diclosureDelete.onClose}
         onConfirm={handleConfirmDelete}
-      >
-        La eliminación de este recurso es permanente. No podrás recuperarlo una vez eliminado.
-      </ConfirmDialog>
+      />
 
       {isLoading
         ? (

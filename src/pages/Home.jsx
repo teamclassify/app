@@ -19,7 +19,7 @@ function Home () {
         >
           <Flex alignItems="center" gap={4}>
             <Image src="/favicon.ico" alt="Logo" w="30px" />
-            <Heading size="md">Prestamo de Salas</Heading>
+            <Heading size="md">Préstamo de Salas</Heading>
           </Flex>
 
           <Flex>
@@ -66,7 +66,7 @@ function Home () {
                 textWrap: 'balance'
               }}
             >
-              Bienvenido a la aplicación de prestamo de salas
+              Bienvenido a la aplicación de préstamo de salas
             </Heading>
 
             <Heading mb={8} size="md" textAlign="left" fontWeight="400">
@@ -105,7 +105,7 @@ function Home () {
           justifyContent="center"
         >
           <Heading size="sm">
-            © {new Date().getFullYear()} - Prestamo de Salas
+            © {new Date().getFullYear()} - Préstamo de Salas
           </Heading>
         </Flex>
       </footer>

@@ -27,7 +27,7 @@ function userOptions () {
         </Box>
         <Heading size="md" my="2" fontFamily="sans-serif">
           <LinkOverlay as={Link} href="/nuevo-prestamo" fontSize="1rem" color='white'>
-            Solicitar Prestamo
+            Solicitar préstamo
           </LinkOverlay>
         </Heading>
       </LinkBox>

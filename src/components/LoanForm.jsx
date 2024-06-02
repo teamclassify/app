@@ -73,7 +73,7 @@ function MyLoans () {
     if (dayOfWeek === 0) {
       toast({
         title: 'Error',
-        description: 'No se pueden hacer prestamos los domingos',
+        description: 'No se pueden hacer préstamos los domingos',
         status: 'error',
         duration: 5000,
         isClosable: true
@@ -98,7 +98,7 @@ function MyLoans () {
     if (currentDate > new Date(slotInfo.start)) {
       toast({
         title: 'Error',
-        description: 'No se pueden hacer prestamos en el pasado',
+        description: 'No se pueden hacer préstamos en el pasado',
         status: 'error',
         duration: 5000,
         isClosable: true
