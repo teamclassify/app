@@ -17,12 +17,15 @@ function DrawerForm () {
   return (
     <Box
       p={4}
+      maxW='250px'
       minH="100vh"
+      position='fixed'
       bg="rgb(196 38 38)"
       alignItems="start"
       flexDirection="column"
       justifyContent="space-between"
       display={{ base: 'none', md: 'flex' }}
+      visibility={{ base: 'hidden', md: 'visible' }}
     >
       <Box>
         <Box display="flex" justifyContent="center" mb={6}>

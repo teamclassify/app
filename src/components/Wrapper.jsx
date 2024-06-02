@@ -12,13 +12,12 @@ function Wrapper ({ children }) {
   }
 
   return (
-    <Grid h="100vh" gridTemplateColumns={{ base: '1fr', md: '0.2fr 1fr' }}>
+    <Grid gridTemplateColumns={{ base: '1fr', md: '250px 1fr' }}>
       <DrawerMenu />
+      <Box h={0}></Box>
 
       <Box>
-        {/* <Header /> */}
-
-        <Box py={4} px={4} overflowY="auto">
+        <Box py={4} px={4}>
           <Box mt={0}>{children}</Box>
         </Box>
       </Box>
