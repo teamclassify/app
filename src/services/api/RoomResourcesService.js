@@ -2,7 +2,7 @@ import axios from 'axios'
 import { URL, handleAxiosError } from '.'
 import { getToken } from './Auth'
 
-async function getAll (query) {
+async function getAll (query = null) {
   try {
     const res = await axios({
       url: `${URL}/sala-recursos${query ? `?${query}` : ''}`,
