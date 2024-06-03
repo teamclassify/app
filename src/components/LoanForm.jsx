@@ -14,8 +14,8 @@ import {
   NumberInputStepper,
   Text,
   Textarea,
-  VStack,
-  useToast
+  useToast,
+  VStack
 } from '@chakra-ui/react'
 import moment from 'moment'
 import { useState } from 'react'
@@ -28,8 +28,10 @@ import SelectBuildings from '../pages/rooms/SelectBuildings'
 import SelectRooms from '../pages/rooms/SelectRooms'
 import RoomResourcesInput from './RoomResourcesInput'
 import Schedule from './Schedule'
+import useUser from '../hooks/useUser.js'
 
 function MyLoans () {
+  const { user } = useUser()
   const [currentBuilding, setCurrentBuilding] = useState(null)
   const [currentRoom, setCurrentRoom] = useState(null)
   const [startHour, setStartHour] = useState(null)
@@ -44,8 +46,7 @@ function MyLoans () {
 
   const { isLoading, mutate } = useMutation(
     (newLoan) => {
-      const promise = LoansService.create(newLoan)
-      return promise
+      return LoansService.create(newLoan)
     },
     {
       onSuccess: (res) => {
@@ -150,7 +151,8 @@ function MyLoans () {
       hora_fin: endHour,
       cantidad_personas: people,
       recursos: resources.toString(),
-      razon: reason
+      razon: reason,
+      email: user.email
     })
   }
 
