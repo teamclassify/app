@@ -114,7 +114,6 @@ function ListOfResources () {
             ? (
             <Grid
               w="full"
-              gap={2}
               bg="white"
               rounded="md"
               templateColumns="repeat(auto-fill, minmax(15rem, 1fr))"
@@ -127,6 +126,7 @@ function ListOfResources () {
                   key={resource.id}
                   alignItems="start"
                   borderRightWidth={1}
+                  borderBottomWidth={1}
                 >
                   <Box w="full">
                     <Text fontWeight="bold">{resource.nombre}</Text>
