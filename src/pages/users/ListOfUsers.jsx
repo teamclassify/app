@@ -14,8 +14,35 @@ import { useQuery } from 'react-query'
 
 import UsersService from '@/services/api/UsersService'
 
-function ListOfUsers () {
-  const { isLoading, data } = useQuery('users', UsersService.getAll)
+function ListOfUsers ({
+  filterState,
+  filterName,
+  filterRol
+} = {
+  filterState: [],
+  filterName: '',
+  filterRol: ''
+}) {
+  const {
+    isLoading,
+    data
+  } = useQuery(['users', filterState, filterName, filterRol], () => {
+
+    return UsersService.getAll([
+      {
+        name: 'estado',
+        value: filterState
+      },
+      {
+        name: 'nombre',
+        value: filterName
+      },
+      {
+        name: 'rol',
+        value: filterRol
+      }
+    ])
+  })
 
   if (!isLoading && data.error) {
     return (
@@ -37,34 +64,33 @@ function ListOfUsers () {
     <Grid>
       {isLoading
         ? (
-        <Center my={4}>
-          <Spinner size="md" />
-        </Center>
-          )
+          <Center my={4}>
+            <Spinner size="md"/>
+          </Center>)
         : (
-        <Box bg="white" rounded="md">
-          {data &&
-            data.data &&
-            data.data.map((user) => (
-              <Flex key={user.id} p={4} gap={4} alignItems="center">
-                <Avatar src={user.photo} alt={user.nombre} />
+          <Box bg="white" rounded="md">
+            {data &&
+              data.data &&
+              data.data.map((user) => (
+                <Flex key={user.id} p={4} gap={4} alignItems="center">
+                  <Avatar src={user.photo} alt={user.nombre}/>
 
-                <Box>
-                  <Text fontWeight="bold">{user.nombre}</Text>
-                  <Text mb={2}>{user.correo}</Text>
+                  <Box>
+                    <Text fontWeight="bold">{user.nombre}</Text>
+                    <Text mb={2}>{user.correo}</Text>
 
-                  <Flex>
-                    {user.roles.map((role) => (
-                      <Badge key={role} colorScheme="green" mr={2}>
-                        {role}
-                      </Badge>
-                    ))}
-                  </Flex>
-                </Box>
-              </Flex>
-            ))}
-        </Box>
-          )}
+                    <Flex>
+                      {user.rol.split(',').map((role) => (
+                        <Badge key={role} colorScheme="green" mr={2}>
+                          {role}
+                        </Badge>
+                      ))}
+                    </Flex>
+                  </Box>
+                </Flex>
+              ))}
+          </Box>
+        )}
     </Grid>
   )
 }
