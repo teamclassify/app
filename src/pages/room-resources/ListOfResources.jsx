@@ -36,7 +36,7 @@ function ListOfResources () {
 
   const { isLoading, data } = useQuery(
     'room-resources',
-    RoomResourcesService.getAll
+    () => RoomResourcesService.getAll()
   )
 
   const { mutate } = useMutation(
