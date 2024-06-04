@@ -24,9 +24,9 @@ function DrawerForm () {
     function clickOutWrapper (event) {
       if (
         refWrapper &&
-        !refWrapper.current.contains(event.target) &&
+        !refWrapper?.current?.contains(event.target) &&
         refButton &&
-        !refButton.current.contains(event.target)
+        !refButton?.current?.contains(event.target)
       ) {
         setIsVisible(false)
       }
