@@ -9,7 +9,9 @@ import { useQuery } from 'react-query'
 
 import BuildingsService from '@/services/api/BuildingsService'
 
-function SelectBuildings ({ size, currentBuilding, setCurrentBuilding } = { size: 'md' }) {
+function SelectBuildings (
+  { size, currentBuilding, setCurrentBuilding } = { size: 'md' }
+) {
   const { data, isLoading } = useQuery('buildings', BuildingsService.getAll)
 
   const handleSelect = (e) => {
@@ -22,7 +24,7 @@ function SelectBuildings ({ size, currentBuilding, setCurrentBuilding } = { size
 
   if (!isLoading && data.error) {
     return (
-      <Alert status="error" rounded='md'>
+      <Alert status="error" rounded="md">
         <AlertTitle>Error al obtener los edificios</AlertTitle>
       </Alert>
     )
@@ -30,7 +32,7 @@ function SelectBuildings ({ size, currentBuilding, setCurrentBuilding } = { size
 
   if (!isLoading && !data) {
     return (
-      <Alert status="info" rounded='md'>
+      <Alert status="info" rounded="md">
         <AlertTitle>No existen edificios</AlertTitle>
       </Alert>
     )

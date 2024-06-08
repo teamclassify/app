@@ -11,24 +11,27 @@ function ModalNewBuilding ({ isOpen, onClose }) {
   const queryClient = useQueryClient()
   const toast = useToast()
 
-  const { isLoading, mutate } = useMutation(newBuilding => {
-    const promise = BuildingsService.create(newBuilding)
+  const { isLoading, mutate } = useMutation(
+    (newBuilding) => {
+      const promise = BuildingsService.create(newBuilding)
 
-    toast.promise(promise, {
-      success: { title: 'Edificio creado' },
-      error: { title: 'Error al crear' },
-      loading: { title: 'Creando' }
-    })
+      toast.promise(promise, {
+        success: { title: 'Edificio creado' },
+        error: { title: 'Error al crear' },
+        loading: { title: 'Creando' }
+      })
 
-    return promise
-  }, {
-    onSuccess: () => {
-      setName('')
-      onClose()
+      return promise
+    },
+    {
+      onSuccess: () => {
+        setName('')
+        onClose()
 
-      queryClient.fetchQuery(['buildings'])
+        queryClient.fetchQuery(['buildings'])
+      }
     }
-  })
+  )
 
   const handleSubmit = () => {
     mutate({ nombre: name })

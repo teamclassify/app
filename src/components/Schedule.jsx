@@ -175,7 +175,7 @@ function Schedule (
         <Calendar
           step={60}
           timeslots={1}
-          culture='es'
+          culture="es"
           min={minHours}
           max={maxHours}
           onRangeChange={(range) => setCurrentDate(range[0])}

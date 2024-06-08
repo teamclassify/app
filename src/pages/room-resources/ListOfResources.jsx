@@ -34,9 +34,8 @@ function ListOfResources () {
   const queryClient = useQueryClient()
   const toast = useToast()
 
-  const { isLoading, data } = useQuery(
-    'room-resources',
-    () => RoomResourcesService.getAll()
+  const { isLoading, data } = useQuery('room-resources', () =>
+    RoomResourcesService.getAll()
   )
 
   const { mutate } = useMutation(

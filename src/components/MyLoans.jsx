@@ -15,7 +15,7 @@ function MyLoans () {
             Préstamos recientes
           </Heading>
         </Box>
-        <ListOfLoans/>
+        <ListOfLoans />
       </Box>
     </>
   )

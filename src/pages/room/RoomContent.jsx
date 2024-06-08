@@ -21,7 +21,7 @@ function RoomContent ({ id }) {
   return (
     <>
       {data && (
-        <Box className='animate__fadeIn'>
+        <Box className="animate__fadeIn">
           <Schedule roomId={data.id} />
         </Box>
       )}

@@ -32,11 +32,11 @@ function App () {
         <Route component={RoomPage} path="/horario" />
         <Route component={RoomPage} path="/horario/:id" />
         <Route component={RoomsPage} path="/salas" />
-        <Route component={RoomResourcesPage} path='/salas/recursos'/>
-        <Route component={LoanPage} path='/nuevo-prestamo'/>
-        <Route component={LoanSuccessPage} path='/prestamo-solicitado/:id'/>
-        <Route component={LoansPage} path='/prestamos'/>
-        <Route component={UsersPage} path='/usuarios'/>
+        <Route component={RoomResourcesPage} path="/salas/recursos" />
+        <Route component={LoanPage} path="/nuevo-prestamo" />
+        <Route component={LoanSuccessPage} path="/prestamo-solicitado/:id" />
+        <Route component={LoansPage} path="/prestamos" />
+        <Route component={UsersPage} path="/usuarios" />
         <Route component={ErrorPage} path="/:rest*" />
       </Switch>
     </>

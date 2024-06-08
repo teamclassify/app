@@ -4,9 +4,15 @@ import Wrapper from '@/components/Wrapper'
 import useUser from '../../hooks/useUser'
 import NotAuth from '../NotAuth'
 import ListOfUsers from './ListOfUsers'
+import { useState } from 'react'
+import Filters from './Filters.jsx'
 
 function Users () {
   const { user, loading } = useUser()
+
+  const [filterName, setFilterName] = useState('')
+  const [filterState, setFilterState] = useState('')
+  const [filterRol, setFilterRol] = useState('')
 
   if (!loading && !user) return <NotAuth />
 
@@ -21,7 +27,19 @@ function Users () {
           Usuarios
         </Heading>
 
-        <ListOfUsers />
+        <Filters
+          filterRol={filterRol}
+          filterState={filterState}
+          setFilterRol={setFilterRol}
+          setFilterName={setFilterName}
+          setFilterState={setFilterState}
+        />
+
+        <ListOfUsers
+          filterState={filterState}
+          filterName={filterName}
+          filterRol={filterRol}
+        />
       </Box>
     </Wrapper>
   )
