@@ -15,6 +15,7 @@ import { useParams } from 'wouter'
 import LoanService from '@/services/api/LoansService'
 import Wrapper from '../components/Wrapper'
 import LoanNotFound from './LoanNotFound'
+import { convertHour12h } from '../utils/date.js'
 
 function LoanSuccess () {
   const params = useParams()
@@ -68,8 +69,8 @@ function LoanSuccess () {
               <Card bg="white" border="2px solid #D9D9D9" shadow="none">
                 <CardBody p={3}>
                   <Text>
-                    {moment(new Date(data.fecha)).format('DD MMM YYYY')},{' '}
-                    {data.hora_inicio} - {data.hora_fin}
+                    {data.fecha},{' '}
+                    {convertHour12h(data.hora_inicio)} - {convertHour12h(data.hora_fin)}
                   </Text>
                 </CardBody>
               </Card>
