@@ -76,13 +76,7 @@ function LoanSuccess () {
 
               <Card bg="white" border="2px solid #D9D9D9" shadow="none">
                 <CardBody p={3}>
-                  <Text>
-                    {data.estado === 'APROBADO'
-                      ? 'Aprobado'
-                      : data.estado === 'PENDIENTE'
-                        ? 'Pendiente'
-                        : 'Rechazado'}
-                  </Text>
+                  <Text>{data.estado}</Text>
                 </CardBody>
               </Card>
             </Box>

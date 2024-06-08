@@ -50,6 +50,7 @@ function RoomResourcesInput ({ resources, setResources }) {
                 <Checkbox
                   key={resource.id}
                   colorScheme="green"
+                  defaultChecked={resources.includes(resource.nombre)}
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setResources([...resources, resource.nombre])

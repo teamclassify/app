@@ -13,11 +13,12 @@ function ToolTipo ({ State }) {
     <>
       <Tooltip hasArrow label={label}>
         <Button
+          mt={1}
           bg="transparent"
           _hover="none"
           variant="unstyled"
           p={0}
-          leftIcon={<BiSolidInfoCircle size="1.5rem" color="white" />}
+          leftIcon={<BiSolidInfoCircle size="1.3rem" color="white" />}
           iconSpacing={0}
         />
       </Tooltip>

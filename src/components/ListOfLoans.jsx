@@ -1,19 +1,56 @@
 import {
-  Alert,
-  AlertTitle,
+  Alert, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay,
+  AlertTitle, Button,
   Center,
   Grid,
   SimpleGrid,
-  Spinner
+  Spinner, useDisclosure, useToast
 } from '@chakra-ui/react'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 
 import LoansService from '@/services/api/LoansService'
 import Loan from './Loan'
+import React, { useState } from 'react'
+import ModalEditLoan from '../pages/user-home/ModalEditLoan.jsx'
+import { IoIosArrowBack } from 'react-icons/io'
+import { MdDelete } from 'react-icons/md'
 
 function ListOfLoans () {
-  const { isLoading, data } = useQuery('my-loans', () =>
+  const cancelRef = React.useRef()
+  const queryClient = useQueryClient()
+  const toast = useToast()
+  const modalEdit = useDisclosure()
+  const modalCancel = useDisclosure()
+
+  const [currentLoan, setCurrentLoan] = useState(null)
+
+  const {
+    isLoading,
+    data
+  } = useQuery('my-loans', () =>
     LoansService.getAllByUser()
+  )
+
+  const {
+    mutate
+  } = useMutation(
+    (id) => {
+      const promise = LoansService.update(id, { estado: 'CANCELADO' })
+
+      toast.promise(promise, {
+        success: { title: 'Préstamo cancelado' },
+        error: { title: 'Error al cancelar el préstamo' },
+        loading: { title: 'Cancelando préstamo' }
+      })
+
+      return promise
+    },
+    {
+      onSuccess: () => {
+        queryClient.fetchQuery(['my-loans'])
+        modalCancel.onClose()
+      }
+    }
   )
 
   if (!isLoading && data.error) {
@@ -32,35 +69,99 @@ function ListOfLoans () {
     )
   }
 
+  const handleOpenEdit = (loan) => {
+    setCurrentLoan(loan)
+    modalEdit.onOpen()
+  }
+
+  const handleOpenCancel = (loan) => {
+    setCurrentLoan(loan)
+    modalCancel.onOpen()
+  }
+
+  const handleConfirmCancel = () => {
+    if (currentLoan) mutate(currentLoan.id)
+  }
+
   return (
     <SimpleGrid display="flex" flexDirection="row" spacing="4" mt="10px">
+      {currentLoan && <><ModalEditLoan
+        isOpen={modalEdit.isOpen}
+        onClose={modalEdit.onClose}
+        currentLoan={currentLoan}
+      />
+
+        <AlertDialog
+          isOpen={modalCancel.isOpen}
+          onClose={modalCancel.onClose}
+          leastDestructiveRef={cancelRef}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader bg="primary.400" color="white" fontSize="md">
+                Cancelar préstamo
+              </AlertDialogHeader>
+
+              <AlertDialogBody pt={6}>
+                La cancelación de este recurso es permanente. No podrás
+                recuperarlo una vez cancelado.
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button
+                  size="sm"
+                  ref={cancelRef}
+                  onClick={modalCancel.onClose}
+                  leftIcon={<IoIosArrowBack/>}
+                >
+                  Salir
+                </Button>
+
+                <Button
+                  ml={3}
+                  size="sm"
+                  onClick={handleConfirmCancel}
+                  colorScheme="primary"
+                  leftIcon={<MdDelete/>}
+                >
+                  Cancelar préstamo
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+      </>}
+
       {isLoading
         ? (
-        <Center my={4}>
-          <Spinner size="md" />
-        </Center>
+          <Center my={4}>
+            <Spinner size="md"/>
+          </Center>
           )
         : (
-        <Grid
-          w="full"
-          gap={2}
-          templateColumns="repeat(auto-fill, minmax(12rem, 1fr))"
-        >
-          {data &&
-            data.data &&
-            data.data.map((loan) => (
-              <Loan
-                key={loan.id}
-                id={loan.id}
-                state={loan.estado}
-                date={loan.fecha}
-                loanroom={loan.sala}
-                building={loan.edificio}
-                startHour={loan.hora_inicio}
-                endHour={loan.hora_fin}
-              />
-            ))}
-        </Grid>
+          <Grid
+            w="full"
+            gap={2}
+            templateColumns="repeat(auto-fill, minmax(12rem, 1fr))"
+          >
+            {data &&
+              data.data &&
+              data.data.map((loan) => (
+                <Loan
+                  key={loan.id}
+                  id={loan.id}
+                  loan={loan}
+                  state={loan.estado}
+                  date={loan.fecha}
+                  loanroom={loan.sala}
+                  building={loan.edificio}
+                  startHour={loan.hora_inicio}
+                  endHour={loan.hora_fin}
+                  handleOpenEdit={handleOpenEdit}
+                  handleOpenCancel={handleOpenCancel}
+                />
+              ))}
+          </Grid>
           )}
     </SimpleGrid>
   )
