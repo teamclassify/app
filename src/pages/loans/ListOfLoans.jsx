@@ -1,13 +1,21 @@
-import { Center, Grid, Spinner, Text } from '@chakra-ui/react'
+import { Center, Grid, Spinner, Text, useDisclosure } from '@chakra-ui/react'
 import { MdPendingActions } from 'react-icons/md'
 import { useQuery } from 'react-query'
 
 import LoansService from '@/services/api/LoansService'
 import LoanItem from './LoanItem'
+import ModalCancelLoan from './ModalCancelLoan.jsx'
+import { useState } from 'react'
 
 function ListOfLoans (
-  { filterState, filterReason } = { filterState: [], filterReason: '' }
+  { filterState, filterReason } = {
+    filterState: [],
+    filterReason: ''
+  }
 ) {
+  const modalCancel = useDisclosure()
+  const [currentLoan, setCurrentLoan] = useState(null)
+
   const { isLoading, data: loans } = useQuery(
     ['loans', filterState, filterReason],
     () => {
@@ -15,8 +23,14 @@ function ListOfLoans (
         .filter((f) => f.checked)
         .map((f) => f.value)
       return LoansService.getAll([
-        { name: 'estado', value: valueFilter },
-        { name: 'razon', value: filterReason }
+        {
+          name: 'estado',
+          value: valueFilter
+        },
+        {
+          name: 'razon',
+          value: filterReason
+        }
       ])
     }
   )
@@ -30,8 +44,23 @@ function ListOfLoans (
     )
   }
 
+  const handleCancel = (loan) => {
+    setCurrentLoan(loan)
+    modalCancel.onOpen()
+  }
+
   return (
     <Grid>
+      {currentLoan && (
+        <ModalCancelLoan
+          isOpen={modalCancel.isOpen}
+          onClose={modalCancel.onClose}
+          currentLoan={currentLoan}
+          filterState={filterState}
+          filterReason={filterReason}
+        />
+      )}
+
       {isLoading
         ? (
         <Center my={4}>
@@ -46,6 +75,7 @@ function ListOfLoans (
               <LoanItem
                 key={loan.id}
                 id={loan.id}
+                loan={loan}
                 state={loan.estado}
                 date={loan.fecha}
                 loanroom={loan.sala}
@@ -66,6 +96,7 @@ function ListOfLoans (
                 }}
                 filterState={filterState}
                 filterReason={filterReason}
+                handleCancel={handleCancel}
               />
             ))}
         </Grid>

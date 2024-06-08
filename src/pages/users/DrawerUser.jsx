@@ -13,7 +13,8 @@ import {
   Flex,
   Heading,
   Stack,
-  Text, useToast
+  Text,
+  useToast
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
@@ -97,7 +98,7 @@ function DrawerUser ({ isOpen, onClose, user, queryId }) {
                             return copyPrevState
                           })
                         }}
-                        textTransform='uppercase'
+                        textTransform="uppercase"
                       >
                         {rol.replaceAll('_', ' ')}
                       </Checkbox>
@@ -113,7 +114,9 @@ function DrawerUser ({ isOpen, onClose, user, queryId }) {
               Cancelar
             </Button>
 
-            <Button colorScheme="primary" onClick={handleSave}>Guardar</Button>
+            <Button colorScheme="primary" onClick={handleSave}>
+              Guardar
+            </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

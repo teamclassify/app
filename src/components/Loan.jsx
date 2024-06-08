@@ -41,9 +41,9 @@ function Loan ({
         : '#D82D2D'
   let icon
   if (state === 'aprobado') {
-    icon = <FaDoorOpen size="2rem" color="white"/>
+    icon = <FaDoorOpen size="2rem" color="white" />
   } else {
-    icon = <FaDoorClosed size="2rem" color="white"/>
+    icon = <FaDoorClosed size="2rem" color="white" />
   }
 
   const handleShowInfo = (id) => {
@@ -81,23 +81,31 @@ function Loan ({
                 variant="none"
                 iconSpacing={0}
                 color="white"
-                rightIcon={<SlOptionsVertical/>}
+                rightIcon={<SlOptionsVertical />}
               ></MenuButton>
 
               <MenuList p={0}>
-                <MenuItem icon={<FaInfo/>} onClick={() => handleShowInfo(id)}>Información</MenuItem>
+                <MenuItem icon={<FaInfo />} onClick={() => handleShowInfo(id)}>
+                  Información
+                </MenuItem>
 
-                {
-                  loan.estado !== 'CANCELADO' && <>
-                    <MenuItem icon={<MdEdit/>} onClick={() => handleOpenEdit(loan)}>
+                {loan.estado !== 'CANCELADO' && (
+                  <>
+                    <MenuItem
+                      icon={<MdEdit />}
+                      onClick={() => handleOpenEdit(loan)}
+                    >
                       Editar
                     </MenuItem>
 
-                    <MenuItem icon={<GiCancel/>} onClick={() => handleOpenCancel(loan)}>
+                    <MenuItem
+                      icon={<GiCancel />}
+                      onClick={() => handleOpenCancel(loan)}
+                    >
                       Cancelar
                     </MenuItem>
                   </>
-                }
+                )}
               </MenuList>
             </Menu>
           </Flex>
@@ -115,7 +123,9 @@ function Loan ({
           </Heading>
 
           <Flex w="full" gap={1}>
-            <Badge colorScheme={loan.estado === 'CANCELADO' ? 'red' : 'yellow'}>{date}</Badge>
+            <Badge colorScheme={loan.estado === 'CANCELADO' ? 'red' : 'yellow'}>
+              {date}
+            </Badge>
 
             <Badge colorScheme={loan.estado === 'CANCELADO' ? 'red' : 'yellow'}>
               {convertHour12h(startHour)} - {convertHour12h(endHour)}

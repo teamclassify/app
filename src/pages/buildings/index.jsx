@@ -14,7 +14,12 @@ function Buildings () {
 
   if (!loading && !user) return <NotAuth />
 
-  if (!loading && user && !user.roles.includes('admin') && !user.roles.includes('soporte_tecnico')) {
+  if (
+    !loading &&
+    user &&
+    !user.roles.includes('admin') &&
+    !user.roles.includes('soporte_tecnico')
+  ) {
     return <NotAuth />
   }
 

@@ -6,7 +6,8 @@ import {
   Button,
   Flex,
   Heading,
-  Text, useToast
+  Text,
+  useToast
 } from '@chakra-ui/react'
 import { BsPeople } from 'react-icons/bs'
 import { FaCheck } from 'react-icons/fa'
@@ -20,6 +21,7 @@ import LoansService from '../../services/api/LoansService.js'
 function LoanItem ({
   id,
   state,
+  loan,
   date,
   loanroom,
   roomId,
@@ -30,11 +32,19 @@ function LoanItem ({
   user: userLoan,
   hour,
   filterReason,
-  filterState
+  filterState,
+  handleCancel
 }) {
   const queryClient = useQueryClient()
   const toast = useToast()
   const { user } = useUser()
+
+  const BADGE_COLOR = {
+    PENDIENTE: 'yellow',
+    PREAPROBADO: 'yellow',
+    APROBADO: 'green',
+    CANCELADO: 'red'
+  }
 
   const { mutate } = useMutation(
     (data) => {
@@ -64,12 +74,21 @@ function LoanItem ({
     }
   }
 
+  const handleClickAprobar = () => {
+    if (state === 'PREAPROBADO') {
+      mutate({
+        id,
+        state: 'APROBADO'
+      })
+    }
+  }
+
   return (
     <Box rounded="md" bg="white">
       <Box p={4}>
         <Flex justifyContent={'space-between'}>
           <Flex gap={4}>
-            <MdOutlineRateReview size={24}/>
+            <MdOutlineRateReview size={24} />
 
             <Box>
               <Flex gap={2}>
@@ -86,15 +105,12 @@ function LoanItem ({
                   </Link>
                 </Heading>
 
-                <Badge
-                  size="sm"
-                  colorScheme={state === 'PENDIENTE' ? 'yellow' : 'gray'}
-                >
+                <Badge size="sm" colorScheme={BADGE_COLOR[state]}>
                   {state}
                 </Badge>
               </Flex>
 
-              <Text fontSize="xs">
+              <Text mt={1} fontSize="sm">
                 {date} de {convertHour12h(hour.start)} a{' '}
                 {convertHour12h(hour.end)}
               </Text>
@@ -104,7 +120,7 @@ function LoanItem ({
               </Text>
 
               <Flex alignItems="center" gap={2} mb={2}>
-                <BsPeople/>
+                <BsPeople />
                 <Text fontSize="sm">{people}</Text>
               </Flex>
 
@@ -120,7 +136,7 @@ function LoanItem ({
           </Flex>
 
           <Box textAlign="right">
-            <Avatar src={userLoan.photo} mb={2}/>
+            <Avatar src={userLoan.photo} mb={2} />
             <Text
               fontSize="sm"
               title="Ver perfil"
@@ -129,14 +145,16 @@ function LoanItem ({
                 color: 'primary.400'
               }}
             >
-              <Link href={`/usuarios/${userLoan.username}`}>@{userLoan.username}</Link>
+              <Link href={`/usuarios/${userLoan.username}`}>
+                @{userLoan.username}
+              </Link>
             </Text>
           </Box>
         </Flex>
       </Box>
 
-      {
-        (state !== 'CANCELADO' && state !== 'APROBADO' && state !== 'REALIZADO') && <Flex
+      {state !== 'CANCELADO' && state !== 'REALIZADO' && (
+        <Flex
           py={2}
           px={4}
           gap={2}
@@ -144,26 +162,50 @@ function LoanItem ({
           justifyContent="end"
           borderColor="gray.200"
         >
-          {
-            (user.roles.includes('admin') || user.roles.includes('soporte_tecnico')) && (state === 'PREAPROBADO' || state === 'PENDIENTE') &&
-            <Button size="sm" colorScheme="yellow" leftIcon={<FaCheck/>} onClick={handleClickPreabrobar}>
-              {state === 'PREAPROBADO' ? 'Quitar Prea-probado' : 'Pre-aprobar'}
-            </Button>
-          }
+          {(user.roles.includes('admin') ||
+            user.roles.includes('soporte_tecnico')) &&
+            (state === 'PREAPROBADO' || state === 'PENDIENTE') && (
+              <Button
+                size="sm"
+                colorScheme="yellow"
+                leftIcon={<FaCheck />}
+                onClick={handleClickPreabrobar}
+              >
+                {state === 'PREAPROBADO'
+                  ? 'Quitar Prea-probado'
+                  : 'Pre-aprobar'}
+              </Button>
+          )}
 
-          {
-            user.roles.includes('admin') && <><Button size="sm" colorScheme="green" leftIcon={<FaCheck/>} isDisabled={state !== 'PREAPROBADO'} title={state !== 'PREAPROBADO' ? 'Debe estar pre-aprobado para poder ser aceptado' : ''}>
-              Aceptar
-            </Button>
+          {user.roles.includes('admin') && (
+            <>
+              <Button
+                size="sm"
+                colorScheme="green"
+                leftIcon={<FaCheck />}
+                onClick={handleClickAprobar}
+                isDisabled={state !== 'PREAPROBADO'}
+                title={
+                  state !== 'PREAPROBADO'
+                    ? 'Debe estar pre-aprobado para poder ser aceptado'
+                    : ''
+                }
+              >
+                Aceptar
+              </Button>
 
-              <Button size="sm" colorScheme="primary" leftIcon={<TiCancel/>}>
+              <Button
+                size="sm"
+                colorScheme="primary"
+                leftIcon={<TiCancel />}
+                onClick={() => handleCancel(loan)}
+              >
                 Cancelar
               </Button>
             </>
-          }
-
+          )}
         </Flex>
-      }
+      )}
     </Box>
   )
 }

@@ -1,10 +1,19 @@
 import {
-  Alert, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay,
-  AlertTitle, Button,
+  Alert,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  AlertTitle,
+  Button,
   Center,
   Grid,
   SimpleGrid,
-  Spinner, useDisclosure, useToast
+  Spinner,
+  useDisclosure,
+  useToast
 } from '@chakra-ui/react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
@@ -24,16 +33,11 @@ function ListOfLoans () {
 
   const [currentLoan, setCurrentLoan] = useState(null)
 
-  const {
-    isLoading,
-    data
-  } = useQuery('my-loans', () =>
+  const { isLoading, data } = useQuery('my-loans', () =>
     LoansService.getAllByUser()
   )
 
-  const {
-    mutate
-  } = useMutation(
+  const { mutate } = useMutation(
     (id) => {
       const promise = LoansService.update(id, { estado: 'CANCELADO' })
 
@@ -85,83 +89,86 @@ function ListOfLoans () {
 
   return (
     <SimpleGrid display="flex" flexDirection="row" spacing="4" mt="10px">
-      {currentLoan && <><ModalEditLoan
-        isOpen={modalEdit.isOpen}
-        onClose={modalEdit.onClose}
-        currentLoan={currentLoan}
-      />
+      {currentLoan && (
+        <>
+          <ModalEditLoan
+            isOpen={modalEdit.isOpen}
+            onClose={modalEdit.onClose}
+            currentLoan={currentLoan}
+          />
 
-        <AlertDialog
-          isOpen={modalCancel.isOpen}
-          onClose={modalCancel.onClose}
-          leastDestructiveRef={cancelRef}
-        >
-          <AlertDialogOverlay>
-            <AlertDialogContent>
-              <AlertDialogHeader bg="primary.400" color="white" fontSize="md">
-                Cancelar préstamo
-              </AlertDialogHeader>
-
-              <AlertDialogBody pt={6}>
-                La cancelación de este recurso es permanente. No podrás
-                recuperarlo una vez cancelado.
-              </AlertDialogBody>
-
-              <AlertDialogFooter>
-                <Button
-                  size="sm"
-                  ref={cancelRef}
-                  onClick={modalCancel.onClose}
-                  leftIcon={<IoIosArrowBack/>}
-                >
-                  Salir
-                </Button>
-
-                <Button
-                  ml={3}
-                  size="sm"
-                  onClick={handleConfirmCancel}
-                  colorScheme="primary"
-                  leftIcon={<MdDelete/>}
-                >
+          <AlertDialog
+            isOpen={modalCancel.isOpen}
+            onClose={modalCancel.onClose}
+            leastDestructiveRef={cancelRef}
+          >
+            <AlertDialogOverlay>
+              <AlertDialogContent>
+                <AlertDialogHeader bg="primary.400" color="white" fontSize="md">
                   Cancelar préstamo
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
-      </>}
+                </AlertDialogHeader>
+
+                <AlertDialogBody pt={6}>
+                  La cancelación de este recurso es permanente. No podrás
+                  recuperarlo una vez cancelado.
+                </AlertDialogBody>
+
+                <AlertDialogFooter>
+                  <Button
+                    size="sm"
+                    ref={cancelRef}
+                    onClick={modalCancel.onClose}
+                    leftIcon={<IoIosArrowBack />}
+                  >
+                    Salir
+                  </Button>
+
+                  <Button
+                    ml={3}
+                    size="sm"
+                    onClick={handleConfirmCancel}
+                    colorScheme="primary"
+                    leftIcon={<MdDelete />}
+                  >
+                    Cancelar préstamo
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialogOverlay>
+          </AlertDialog>
+        </>
+      )}
 
       {isLoading
         ? (
-          <Center my={4}>
-            <Spinner size="md"/>
-          </Center>
+        <Center my={4}>
+          <Spinner size="md" />
+        </Center>
           )
         : (
-          <Grid
-            w="full"
-            gap={2}
-            templateColumns="repeat(auto-fill, minmax(12rem, 1fr))"
-          >
-            {data &&
-              data.data &&
-              data.data.map((loan) => (
-                <Loan
-                  key={loan.id}
-                  id={loan.id}
-                  loan={loan}
-                  state={loan.estado}
-                  date={loan.fecha}
-                  loanroom={loan.sala}
-                  building={loan.edificio}
-                  startHour={loan.hora_inicio}
-                  endHour={loan.hora_fin}
-                  handleOpenEdit={handleOpenEdit}
-                  handleOpenCancel={handleOpenCancel}
-                />
-              ))}
-          </Grid>
+        <Grid
+          w="full"
+          gap={2}
+          templateColumns="repeat(auto-fill, minmax(12rem, 1fr))"
+        >
+          {data &&
+            data.data &&
+            data.data.map((loan) => (
+              <Loan
+                key={loan.id}
+                id={loan.id}
+                loan={loan}
+                state={loan.estado}
+                date={loan.fecha}
+                loanroom={loan.sala}
+                building={loan.edificio}
+                startHour={loan.hora_inicio}
+                endHour={loan.hora_fin}
+                handleOpenEdit={handleOpenEdit}
+                handleOpenCancel={handleOpenCancel}
+              />
+            ))}
+        </Grid>
           )}
     </SimpleGrid>
   )

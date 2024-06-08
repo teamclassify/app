@@ -66,7 +66,7 @@ function Filters ({
       <FilterRadio
         size="sm"
         title="Estado"
-        defaultValue='TODOS'
+        defaultValue="TODOS"
         value={filterState}
         options={STATE_OPTIONS}
         setValue={setFilterState}

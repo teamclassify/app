@@ -9,7 +9,8 @@ import {
   NumberInputField,
   NumberInputStepper,
   VStack,
-  useToast, Textarea
+  useToast,
+  Textarea
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
@@ -18,11 +19,7 @@ import Modal from '@/components/Modal'
 import LoansService from '@/services/api/LoansService'
 import RoomResourcesInput from '../../components/RoomResourcesInput.jsx'
 
-function ModalEditLoan ({
-  currentLoan,
-  isOpen,
-  onClose
-}) {
+function ModalEditLoan ({ currentLoan, isOpen, onClose }) {
   const [reason, setReason] = useState(currentLoan?.razon || '')
   const [people, setPeople] = useState(1)
   const [resources, setResources] = useState([])
@@ -30,10 +27,7 @@ function ModalEditLoan ({
   const queryClient = useQueryClient()
   const toast = useToast()
 
-  const {
-    isLoading,
-    mutate
-  } = useMutation(
+  const { isLoading, mutate } = useMutation(
     (data) => {
       const promise = LoansService.update(data.id, data.data)
 
@@ -68,11 +62,7 @@ function ModalEditLoan ({
     setReason(currentLoan.razon)
     setPeople(currentLoan.cantidad_personas)
     setResources(currentLoan.recursos.split(','))
-  }, [
-    currentLoan.razon,
-    currentLoan.cantidad_personas,
-    currentLoan.recursos
-  ])
+  }, [currentLoan.razon, currentLoan.cantidad_personas, currentLoan.recursos])
 
   return (
     <>
@@ -82,10 +72,10 @@ function ModalEditLoan ({
             <FormLabel>Personas</FormLabel>
 
             <NumberInput value={people} onChange={(val) => setPeople(val)}>
-              <NumberInputField placeholder="¿Cuantas personas asistiran?"/>
+              <NumberInputField placeholder="¿Cuantas personas asistiran?" />
               <NumberInputStepper>
-                <NumberIncrementStepper/>
-                <NumberDecrementStepper/>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
               </NumberInputStepper>
             </NumberInput>
           </FormControl>
