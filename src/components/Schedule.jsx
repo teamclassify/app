@@ -63,7 +63,7 @@ function Schedule (
             id: event.id,
             title: event.nombre,
             ...convertDateRoom(
-              currentDate,
+              event.tipo === 'prestamo' ? new Date(event.fecha): currentDate,
               event.dia,
               event.hora_inicio,
               event.hora_fin
