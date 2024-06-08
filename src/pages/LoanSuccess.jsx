@@ -8,7 +8,6 @@ import {
   Spinner,
   Text
 } from '@chakra-ui/react'
-import moment from 'moment'
 import { useQuery } from 'react-query'
 import { useParams } from 'wouter'
 
@@ -69,8 +68,8 @@ function LoanSuccess () {
               <Card bg="white" border="2px solid #D9D9D9" shadow="none">
                 <CardBody p={3}>
                   <Text>
-                    {data.fecha},{' '}
-                    {convertHour12h(data.hora_inicio)} - {convertHour12h(data.hora_fin)}
+                    {data.fecha}, {convertHour12h(data.hora_inicio)} -{' '}
+                    {convertHour12h(data.hora_fin)}
                   </Text>
                 </CardBody>
               </Card>

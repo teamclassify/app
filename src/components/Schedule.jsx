@@ -2,8 +2,10 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  Avatar,
   Box,
   Center,
+  Flex,
   Spinner,
   Text,
   useDisclosure
@@ -18,6 +20,7 @@ import 'moment/locale/es'
 import EventsService from '@/services/api/EventsService'
 import { convertDateRoom } from '@/utils/convertDateRoom'
 import Modal from './Modal'
+import { Link } from 'wouter'
 
 const localizer = momentLocalizer(moment)
 moment.locale('es')
@@ -63,7 +66,7 @@ function Schedule (
             id: event.id,
             title: event.nombre,
             ...convertDateRoom(
-              event.tipo === 'prestamo' ? new Date(event.fecha): currentDate,
+              event.tipo === 'prestamo' ? new Date(event.fecha) : currentDate,
               event.dia,
               event.hora_inicio,
               event.hora_fin
@@ -75,6 +78,10 @@ function Schedule (
             estado: event.estado,
             fecha: event.fecha,
             usuario_id: event.usuario_id,
+            usuario_nombre: event.usuario_nombre,
+            usuario_username: event.usuario_username,
+            usuario_foto: event.usuario_foto,
+            usuario_codigo: event.usuario_codigo,
             cod_docente: event.cod_docente,
             tipo: event.tipo
           }
@@ -130,26 +137,6 @@ function Schedule (
               </Text>
             </Box>
 
-            {currentEvent.tipo && currentEvent.tipo === 'clase'
-              ? (
-              <>
-                {currentEvent.cod_docente && (
-                  <Box>
-                    <strong>Docente:</strong> {currentEvent.cod_docente}
-                  </Box>
-                )}
-              </>
-                )
-              : (
-              <>
-                {currentEvent.usuario_id && (
-                  <Box>
-                    <strong>Prestado a:</strong> {currentEvent.usuario_id}
-                  </Box>
-                )}
-              </>
-                )}
-
             {currentEvent.cod_asignatura && (
               <Box>
                 <strong>Asignatura: </strong>
@@ -167,6 +154,58 @@ function Schedule (
               <strong>Cantidad de personas: </strong>
               <Text display="inline">{currentEvent.cantidad_personas}</Text>
             </Box>
+
+            {currentEvent.tipo && currentEvent.tipo === 'clase'
+              ? (
+              <>
+                {currentEvent.cod_docente && (
+                  <Box>
+                    <strong>Docente:</strong> {currentEvent.cod_docente}
+                  </Box>
+                )}
+              </>
+                )
+              : (
+              <>
+                {currentEvent.usuario_id && (
+                  <Box>
+                    <strong>Prestado a:</strong>
+
+                    <Flex mt={2} gap={4}>
+                      <Avatar
+                        src={currentEvent.usuario_foto}
+                        mb={2}
+                        size="lg"
+                      />
+                      <Box>
+                        <Text fontSize="sm">{currentEvent.usuario_nombre}</Text>
+
+                        {currentEvent.usuario_codigo && (
+                          <Text fontSize="sm">
+                            {currentEvent.usuario_codigo}
+                          </Text>
+                        )}
+
+                        <Text
+                          fontSize="sm"
+                          title="Ver perfil"
+                          _hover={{
+                            textDecoration: 'underline',
+                            color: 'primary.400'
+                          }}
+                        >
+                          <Link
+                            href={`/usuarios/${currentEvent.usuario_username}`}
+                          >
+                            @{currentEvent.usuario_username}
+                          </Link>
+                        </Text>
+                      </Box>
+                    </Flex>
+                  </Box>
+                )}
+              </>
+                )}
           </Box>
         </Modal>
       )}
