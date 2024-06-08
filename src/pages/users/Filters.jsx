@@ -79,7 +79,7 @@ function Filters ({
         title={'Rol'}
         value={filterRol}
         setValue={setFilterRol}
-        options={['usuario', 'admin', 'superadmin']}
+        options={['usuario', 'admin', 'soporte_tecnico']}
       />
 
       <Button

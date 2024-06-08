@@ -37,7 +37,7 @@ function FilterRadio (
                 <Stack direction="column">
                   {options?.map((option, index) => {
                     return (
-                      <Radio key={index} value={option}>{option}</Radio>
+                      <Radio key={index} value={option}>{option.replaceAll('_', ' ')}</Radio>
                     )
                   })}
                 </Stack>
