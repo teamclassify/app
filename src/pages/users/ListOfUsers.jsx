@@ -14,9 +14,9 @@ import {
   MenuList,
   Spinner,
   Text,
-  useDisclosure
+  useDisclosure, useToast
 } from '@chakra-ui/react'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 
 import UsersService from '@/services/api/UsersService'
@@ -35,6 +35,9 @@ function ListOfUsers (
     filterRol: ''
   }
 ) {
+  const queryClient = useQueryClient()
+  const toast = useToast()
+
   const {
     isLoading,
     data,
@@ -66,18 +69,44 @@ function ListOfUsers (
   } = useDisclosure()
   const [currentUser, setCurrentUser] = useState(null)
 
+  const { mutate } = useMutation(
+    (data) => {
+      const promise = UsersService.update(data.uid, { estado: data.state })
+
+      toast.promise(promise, {
+        success: { title: 'Usuario actualizado.' },
+        error: { title: 'Error al actualizar el usuario.' },
+        loading: { title: 'Actualizando el usuario.' }
+      })
+
+      return promise
+    },
+    {
+      onSuccess: () => {
+        queryClient.fetchQuery(['users', filterState, filterName, filterRol])
+      }
+    }
+  )
+
+  const handleToggleUserState = (user) => {
+    mutate({
+      uid: user.id,
+      state: user.estado === 'ACTIVO' ? 'INACTIVO' : 'ACTIVO'
+    })
+  }
+
   if (!isLoading && data.error) {
     return (
       <Alert status="error">
-        <AlertTitle>Error al obtener los edificios</AlertTitle>
+        <AlertTitle>Error al obtener los usuarios</AlertTitle>
       </Alert>
     )
   }
 
-  if (!isLoading && !data) {
+  if (!isLoading && (!data?.data || data?.data?.length <= 0)) {
     return (
-      <Alert status="info">
-        <AlertTitle>No existen edificios</AlertTitle>
+      <Alert status="info" rounded='md'>
+        <AlertTitle>No hay usuarios para mostrar</AlertTitle>
       </Alert>
     )
   }
@@ -134,8 +163,8 @@ function ListOfUsers (
                     </MenuButton>
 
                     <MenuList p={0}>
-                      <MenuItem icon={<FaUser/>}>
-                        {user.activo ? 'Desactivar usuario' : 'Activar usuario'}
+                      <MenuItem icon={<FaUser/>} onClick={() => handleToggleUserState(user)}>
+                        {user.estado === 'ACTIVO' ? 'Desactivar usuario' : 'Activar usuario'}
                       </MenuItem>
 
                       <MenuItem

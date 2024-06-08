@@ -43,9 +43,32 @@ async function updateRols (uid, rols) {
   }
 }
 
+async function update (id, data) {
+  if (!id) return
+
+  try {
+    const token = await getToken()
+
+    const res = await axios({
+      url: `${URL}/usuarios/${id}`,
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      data
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 const UsersService = {
   getAll,
-  updateRols
+  updateRols,
+  update
 }
 
 export default UsersService

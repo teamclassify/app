@@ -55,7 +55,7 @@ function DrawerUser ({ isOpen, onClose, user, queryId }) {
     const newRoles = rolesIds.filter((rol, index) => {
       return checkedItems[index]
     })
-    console.log(newRoles)
+
     mutate(newRoles)
   }
 

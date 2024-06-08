@@ -13,9 +13,10 @@ import {
 import { FaAngleDown } from 'react-icons/fa'
 
 function FilterRadio (
-  { title, size, options, value, setValue } = {
+  { title, size, options, value, setValue, defaultValue } = {
     size: 'md',
-    options: []
+    options: [],
+    defaultValue: ''
   }
 ) {
   return (
@@ -30,7 +31,7 @@ function FilterRadio (
         <PopoverContent maxW="170px">
           <PopoverBody>
             <FormControl>
-              <RadioGroup onChange={setValue} value={value}>
+              <RadioGroup onChange={setValue} value={value || defaultValue}>
                 <Stack direction="column">
                   {options?.map((option, index) => {
                     return (
