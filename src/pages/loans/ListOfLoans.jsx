@@ -64,6 +64,8 @@ function ListOfLoans (
                   photo: loan.usuario_photo,
                   username: loan.usuario_username
                 }}
+                filterState={filterState}
+                filterReason={filterReason}
               />
             ))}
         </Grid>

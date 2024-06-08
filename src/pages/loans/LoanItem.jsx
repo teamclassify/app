@@ -6,15 +6,19 @@ import {
   Button,
   Flex,
   Heading,
-  Text
+  Text, useToast
 } from '@chakra-ui/react'
 import { BsPeople } from 'react-icons/bs'
 import { FaCheck } from 'react-icons/fa'
 import { MdOutlineRateReview } from 'react-icons/md'
 import { TiCancel } from 'react-icons/ti'
 import { Link } from 'wouter'
+import useUser from '../../hooks/useUser.js'
+import { useMutation, useQueryClient } from 'react-query'
+import LoansService from '../../services/api/LoansService.js'
 
 function LoanItem ({
+  id,
   state,
   date,
   loanroom,
@@ -23,9 +27,43 @@ function LoanItem ({
   reason,
   people,
   resources,
-  user,
-  hour
+  user: userLoan,
+  hour,
+  filterReason,
+  filterState
 }) {
+  const queryClient = useQueryClient()
+  const toast = useToast()
+  const { user } = useUser()
+
+  const { mutate } = useMutation(
+    (data) => {
+      const promise = LoansService.update(data.id, { estado: data.state })
+
+      toast.promise(promise, {
+        success: { title: 'Préstamo actualizado.' },
+        error: { title: 'Error al actualizar el préstamo.' },
+        loading: { title: 'Actualizando el préstamo.' }
+      })
+
+      return promise
+    },
+    {
+      onSuccess: () => {
+        queryClient.fetchQuery(['loans', filterState, filterReason])
+      }
+    }
+  )
+
+  const handleClickPreabrobar = () => {
+    if (state === 'PREAPROBADO' || state === 'PENDIENTE') {
+      mutate({
+        id,
+        state: state === 'PREAPROBADO' ? 'PENDIENTE' : 'PREAPROBADO'
+      })
+    }
+  }
+
   return (
     <Box rounded="md" bg="white">
       <Box p={4}>
@@ -82,7 +120,7 @@ function LoanItem ({
           </Flex>
 
           <Box textAlign="right">
-            <Avatar src={user.photo} mb={2}/>
+            <Avatar src={userLoan.photo} mb={2}/>
             <Text
               fontSize="sm"
               title="Ver perfil"
@@ -91,7 +129,7 @@ function LoanItem ({
                 color: 'primary.400'
               }}
             >
-              <Link href={`/usuarios/${user.username}`}>@{user.username}</Link>
+              <Link href={`/usuarios/${userLoan.username}`}>@{userLoan.username}</Link>
             </Text>
           </Box>
         </Flex>
@@ -106,13 +144,24 @@ function LoanItem ({
           justifyContent="end"
           borderColor="gray.200"
         >
-          <Button size="sm" colorScheme="green" leftIcon={<FaCheck/>}>
-            Aceptar
-          </Button>
+          {
+            (user.roles.includes('admin') || user.roles.includes('soporte_tecnico')) && (state === 'PREAPROBADO' || state === 'PENDIENTE') &&
+            <Button size="sm" colorScheme="yellow" leftIcon={<FaCheck/>} onClick={handleClickPreabrobar}>
+              {state === 'PREAPROBADO' ? 'Quitar Prea-probado' : 'Pre-aprobar'}
+            </Button>
+          }
 
-          <Button size="sm" colorScheme="primary" leftIcon={<TiCancel/>}>
-            Cancelar
-          </Button>
+          {
+            user.roles.includes('admin') && <><Button size="sm" colorScheme="green" leftIcon={<FaCheck/>} isDisabled={state !== 'PREAPROBADO'} title={state !== 'PREAPROBADO' ? 'Debe estar pre-aprobado para poder ser aceptado' : ''}>
+              Aceptar
+            </Button>
+
+              <Button size="sm" colorScheme="primary" leftIcon={<TiCancel/>}>
+                Cancelar
+              </Button>
+            </>
+          }
+
         </Flex>
       }
     </Box>

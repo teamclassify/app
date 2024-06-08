@@ -100,7 +100,7 @@ export default function UploadRooms () {
 
   if (!loading && !user) return <NotAuth />
 
-  if (!loading && user && !user.roles.includes('admin')) {
+  if (!loading && user && !user.roles.includes('admin') && !user.roles.includes('soporte_tecnico')) {
     return <NotAuth />
   }
 

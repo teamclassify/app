@@ -14,7 +14,10 @@ import useUser from '../hooks/useUser'
 import UserPic from './UserPic'
 
 function DrawerForm () {
-  const { user, logout } = useUser()
+  const {
+    user,
+    logout
+  } = useUser()
   const refWrapper = useRef()
   const refButton = useRef()
 
@@ -48,9 +51,12 @@ function DrawerForm () {
         iconSpacing={0}
         ref={refButton}
         colorScheme="primary"
-        leftIcon={<HamburgerIcon />}
+        leftIcon={<HamburgerIcon/>}
         onClick={() => setIsVisible((prev) => !prev)}
-        visibility={{ base: 'visible', md: 'hidden' }}
+        visibility={{
+          base: 'visible',
+          md: 'hidden'
+        }}
       />
 
       <Box
@@ -66,15 +72,21 @@ function DrawerForm () {
         transition="all 400ms"
         flexDirection="column"
         justifyContent="space-between"
-        left={{ base: isVisible ? '0' : '-250px', md: '0' }}
-        visibility={{ base: isVisible ? 'visible' : 'hidden', md: 'visible' }}
+        left={{
+          base: isVisible ? '0' : '-250px',
+          md: '0'
+        }}
+        visibility={{
+          base: isVisible ? 'visible' : 'hidden',
+          md: 'visible'
+        }}
       >
         <Box>
           <Box display="flex" justifyContent="center" mb={6}>
-            <UserPic />
+            <UserPic/>
           </Box>
 
-          {user && <Divider mb={4} borderColor="primary.400" borderWidth={1} />}
+          {user && <Divider mb={4} borderColor="primary.400" borderWidth={1}/>}
 
           <Link href="/home">
             <Button
@@ -84,7 +96,7 @@ function DrawerForm () {
               colorScheme="red"
               justifyContent="start"
             >
-              <IoPersonSharp size="13px" color="white" />
+              <IoPersonSharp size="13px" color="white"/>
 
               <Heading as="h1" size="sl" py={2}>
                 Inicio
@@ -100,7 +112,7 @@ function DrawerForm () {
               colorScheme="red"
               justifyContent="start"
             >
-              <GrSchedule size="13px" color="white" />
+              <GrSchedule size="13px" color="white"/>
 
               <Heading as="h1" size="sl" py={2}>
                 Horario
@@ -117,19 +129,18 @@ function DrawerForm () {
             colorScheme="red"
             justifyContent="start"
           >
-            <MdLibraryAdd size="13px" color="white" />
+            <MdLibraryAdd size="13px" color="white"/>
             <Heading as="h1" size="sl" color="white" py={2}>
               Pedir préstamo
             </Heading>
           </Button>
 
           {user &&
-            (user.roles.includes('superadmin') ||
-              user.roles.includes('admin')) && (
-              <Divider my={4} borderColor="primary.400" borderWidth={1} />
+            (user?.roles.includes('superadmin') || user?.roles.includes('admin') || user?.roles.includes('soporte_tecnico')) && (
+              <Divider my={4} borderColor="primary.400" borderWidth={1}/>
           )}
 
-          {user && user.roles && user.roles.includes('superadmin') && (
+          {user && user?.roles && user?.roles.includes('superadmin') && (
             <>
               <Button
                 gap={2}
@@ -140,7 +151,7 @@ function DrawerForm () {
                 colorScheme="red"
                 justifyContent="start"
               >
-                <TbBuildingArch size="13px" color="white" />
+                <TbBuildingArch size="13px" color="white"/>
                 <Heading as="h1" size="sl" color="white" py={2}>
                   Usuarios
                 </Heading>
@@ -148,7 +159,7 @@ function DrawerForm () {
             </>
           )}
 
-          {user && user.roles && user.roles.includes('admin') && (
+          {user && user?.roles && (user?.roles.includes('admin') || user?.roles.includes('soporte_tecnico')) && (
             <>
               <Button
                 gap={2}
@@ -159,7 +170,7 @@ function DrawerForm () {
                 colorScheme="red"
                 justifyContent="start"
               >
-                <FaComputer size="13px" color="white" />
+                <FaComputer size="13px" color="white"/>
                 <Heading as="h1" size="sl" color="white" py={2}>
                   Préstamos
                 </Heading>
@@ -174,26 +185,28 @@ function DrawerForm () {
                 colorScheme="red"
                 justifyContent="start"
               >
-                <FaCloudUploadAlt size="13px" color="white" />
+                <FaCloudUploadAlt size="13px" color="white"/>
                 <Heading as="h1" size="sl" color="white" py={2}>
                   Subir salas
                 </Heading>
               </Button>
 
-              <Button
-                gap={2}
-                w="full"
-                as={Link}
-                href="/subir-horarios"
-                bg="transparent"
-                colorScheme="red"
-                justifyContent="start"
-              >
-                <FaCloudUploadAlt size="13px" color="white" />
-                <Heading as="h1" size="sl" color="white" py={2}>
-                  Subir horario
-                </Heading>
-              </Button>
+              {
+                user?.roles.includes('admin') && <Button
+                  gap={2}
+                  w="full"
+                  as={Link}
+                  href="/subir-horarios"
+                  bg="transparent"
+                  colorScheme="red"
+                  justifyContent="start"
+                >
+                  <FaCloudUploadAlt size="13px" color="white"/>
+                  <Heading as="h1" size="sl" color="white" py={2}>
+                    Subir horario
+                  </Heading>
+                </Button>
+              }
 
               <Button
                 gap={2}
@@ -204,7 +217,7 @@ function DrawerForm () {
                 colorScheme="red"
                 justifyContent="start"
               >
-                <FaBuilding size="13px" color="white" />
+                <FaBuilding size="13px" color="white"/>
                 <Heading as="h1" size="sl" color="white" py={2}>
                   Edificios
                 </Heading>
@@ -219,7 +232,7 @@ function DrawerForm () {
                 colorScheme="red"
                 justifyContent="start"
               >
-                <TbBuildingArch size="13px" color="white" />
+                <TbBuildingArch size="13px" color="white"/>
                 <Heading as="h1" size="sl" color="white" py={2}>
                   Salas
                 </Heading>
@@ -247,32 +260,32 @@ function DrawerForm () {
 
           {user
             ? (
-            <Button
-              w="full"
-              onClick={logout}
-              bg="transparent"
-              colorScheme="red"
-              justifyContent="start"
-              leftIcon={<RiLogoutBoxLine />}
-            >
-              Cerrar sesión
-            </Button>
+              <Button
+                w="full"
+                onClick={logout}
+                bg="transparent"
+                colorScheme="red"
+                justifyContent="start"
+                leftIcon={<RiLogoutBoxLine/>}
+              >
+                Cerrar sesión
+              </Button>
               )
             : (
-            <Button
-              gap={2}
-              w="full"
-              as={Link}
-              href="/login"
-              bg="transparent"
-              colorScheme="red"
-              justifyContent="start"
-            >
-              <RiLogoutBoxLine size="13px" color="white" />
-              <Heading as="h1" size="sl" color="white" py={2}>
-                Inicia sesión
-              </Heading>
-            </Button>
+              <Button
+                gap={2}
+                w="full"
+                as={Link}
+                href="/login"
+                bg="transparent"
+                colorScheme="red"
+                justifyContent="start"
+              >
+                <RiLogoutBoxLine size="13px" color="white"/>
+                <Heading as="h1" size="sl" color="white" py={2}>
+                  Inicia sesión
+                </Heading>
+              </Button>
               )}
         </Box>
       </Box>

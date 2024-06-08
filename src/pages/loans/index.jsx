@@ -17,7 +17,7 @@ function Loans () {
 
   if (!loading && !user) setLocation('/')
 
-  if (!loading && user && !user.roles.includes('admin')) {
+  if (!loading && user && !user.roles.includes('admin') && !user.roles.includes('soporte_tecnico')) {
     return <NotAuth />
   }
 
