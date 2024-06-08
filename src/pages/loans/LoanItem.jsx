@@ -59,8 +59,18 @@ function LoanItem ({
       return promise
     },
     {
-      onSuccess: () => {
-        queryClient.fetchQuery(['loans', filterState, filterReason])
+      onSuccess: (data) => {
+        if (data?.success) {
+          queryClient.fetchQuery(['loans', filterState, filterReason])
+        } else {
+          toast({
+            title: 'Error',
+            description: data.message,
+            status: 'error',
+            duration: 5000,
+            isClosable: true
+          })
+        }
       }
     }
   )
