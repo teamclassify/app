@@ -31,7 +31,7 @@ function LoanItem ({
       <Box p={4}>
         <Flex justifyContent={'space-between'}>
           <Flex gap={4}>
-            <MdOutlineRateReview size={24} />
+            <MdOutlineRateReview size={24}/>
 
             <Box>
               <Flex gap={2}>
@@ -66,7 +66,7 @@ function LoanItem ({
               </Text>
 
               <Flex alignItems="center" gap={2} mb={2}>
-                <BsPeople />
+                <BsPeople/>
                 <Text fontSize="sm">{people}</Text>
               </Flex>
 
@@ -82,7 +82,7 @@ function LoanItem ({
           </Flex>
 
           <Box textAlign="right">
-            <Avatar src={user.photo} mb={2} />
+            <Avatar src={user.photo} mb={2}/>
             <Text
               fontSize="sm"
               title="Ver perfil"
@@ -97,22 +97,24 @@ function LoanItem ({
         </Flex>
       </Box>
 
-      <Flex
-        py={2}
-        px={4}
-        gap={2}
-        borderTopWidth={1}
-        justifyContent="end"
-        borderColor="gray.200"
-      >
-        <Button size="sm" colorScheme="green" leftIcon={<FaCheck />}>
-          Aceptar
-        </Button>
+      {
+        (state !== 'CANCELADO' && state !== 'APROBADO' && state !== 'REALIZADO') && <Flex
+          py={2}
+          px={4}
+          gap={2}
+          borderTopWidth={1}
+          justifyContent="end"
+          borderColor="gray.200"
+        >
+          <Button size="sm" colorScheme="green" leftIcon={<FaCheck/>}>
+            Aceptar
+          </Button>
 
-        <Button size="sm" colorScheme="primary" leftIcon={<TiCancel />}>
-          Cancelar
-        </Button>
-      </Flex>
+          <Button size="sm" colorScheme="primary" leftIcon={<TiCancel/>}>
+            Cancelar
+          </Button>
+        </Flex>
+      }
     </Box>
   )
 }
