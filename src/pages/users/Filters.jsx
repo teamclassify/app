@@ -11,17 +11,14 @@ import { MdOutlineCleaningServices } from 'react-icons/md'
 
 import FilterRadio from '../../components/FilterRadio.jsx'
 
-const STATE_OPTIONS = [
-  'ACTIVO',
-  'INACTIVO'
-]
+const STATE_OPTIONS = ['ACTIVO', 'INACTIVO']
 
 function Filters ({
   filterState,
   filterRol,
   setFilterRol,
   setFilterName,
-  setFilterState,
+  setFilterState
 }) {
   const [searchValue, setSearchValue] = useState('')
 
@@ -60,7 +57,7 @@ function Filters ({
               iconSpacing={0}
               colorScheme="blue"
               borderLeftRadius={0}
-              leftIcon={<IoSearch/>}
+              leftIcon={<IoSearch />}
             />
           </InputRightElement>
         </InputGroup>
@@ -86,7 +83,7 @@ function Filters ({
         size="sm"
         iconSpacing={0}
         onClick={handleClean}
-        leftIcon={<MdOutlineCleaningServices/>}
+        leftIcon={<MdOutlineCleaningServices />}
       />
     </Flex>
   )

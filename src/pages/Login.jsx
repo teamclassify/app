@@ -1,4 +1,11 @@
-import { Box, Button, Image, Spinner, AbsoluteCenter, Divider } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Image,
+  Spinner,
+  AbsoluteCenter,
+  Divider
+} from '@chakra-ui/react'
 import LogoUFPS from '../components/Logos/LogoUFPS'
 import LoginGoogle from '../components/ButtonGoogle'
 import useUser from '../hooks/useUser'
@@ -20,7 +27,7 @@ function Login () {
           zIndex={-1}
           w="full"
           h="100vh"
-          objectFit='cover'
+          objectFit="cover"
         />
       </Box>
 
@@ -56,16 +63,20 @@ function Login () {
                 )
               : (
               <>
-              <Button colorScheme="primary" as={Link} href="/login-super-user">
-                Ingresar con correo electronico
-              </Button>
-              <Box position='relative' padding='2' px={10} w="60%">
-                <Divider borderColor="gray.400" />
-                <AbsoluteCenter bg='white' color='black' px='4'>
-                  o
-                </AbsoluteCenter>
-              </Box>
-              <LoginGoogle />
+                <Button
+                  colorScheme="primary"
+                  as={Link}
+                  href="/login-super-user"
+                >
+                  Ingresar con correo electronico
+                </Button>
+                <Box position="relative" padding="2" px={10} w="60%">
+                  <Divider borderColor="gray.400" />
+                  <AbsoluteCenter bg="white" color="black" px="4">
+                    o
+                  </AbsoluteCenter>
+                </Box>
+                <LoginGoogle />
               </>
                 )}
           </Box>

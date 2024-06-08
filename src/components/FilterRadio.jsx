@@ -5,18 +5,15 @@ import {
   Popover,
   PopoverBody,
   PopoverContent,
-  PopoverTrigger, Radio, RadioGroup, Stack
+  PopoverTrigger,
+  Radio,
+  RadioGroup,
+  Stack
 } from '@chakra-ui/react'
 import { FaAngleDown } from 'react-icons/fa'
 
 function FilterRadio (
-  {
-    title,
-    size,
-    options,
-    value,
-    setValue
-  } = {
+  { title, size, options, value, setValue } = {
     size: 'md',
     options: []
   }
@@ -25,7 +22,7 @@ function FilterRadio (
     <Box>
       <Popover placement="bottom-start">
         <PopoverTrigger>
-          <Button size={size} rightIcon={<FaAngleDown/>} colorScheme="gray">
+          <Button size={size} rightIcon={<FaAngleDown />} colorScheme="gray">
             {title}
           </Button>
         </PopoverTrigger>
@@ -37,7 +34,9 @@ function FilterRadio (
                 <Stack direction="column">
                   {options?.map((option, index) => {
                     return (
-                      <Radio key={index} value={option}>{option.replaceAll('_', ' ')}</Radio>
+                      <Radio key={index} value={option}>
+                        {option.replaceAll('_', ' ')}
+                      </Radio>
                     )
                   })}
                 </Stack>

@@ -11,24 +11,27 @@ function ModalEditBuilding ({ currentBuilding, isOpen, onClose }) {
   const queryClient = useQueryClient()
   const toast = useToast()
 
-  const { isLoading, mutate } = useMutation((data) => {
-    const promise = BuildingsService.update(data.id, data.data)
+  const { isLoading, mutate } = useMutation(
+    (data) => {
+      const promise = BuildingsService.update(data.id, data.data)
 
-    toast.promise(promise, {
-      success: { title: 'Edificio actualizado' },
-      error: { title: 'Error al actualizar' },
-      loading: { title: 'Actualizando' }
-    })
+      toast.promise(promise, {
+        success: { title: 'Edificio actualizado' },
+        error: { title: 'Error al actualizar' },
+        loading: { title: 'Actualizando' }
+      })
 
-    return promise
-  }, {
-    onSuccess: () => {
-      setName('')
-      onClose()
+      return promise
+    },
+    {
+      onSuccess: () => {
+        setName('')
+        onClose()
 
-      queryClient.fetchQuery(['buildings'])
+        queryClient.fetchQuery(['buildings'])
+      }
     }
-  })
+  )
 
   const handleSubmit = () => {
     mutate({ id: currentBuilding.id, data: { nombre: name } })

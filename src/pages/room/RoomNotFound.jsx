@@ -4,7 +4,7 @@ import { IoWarningOutline } from 'react-icons/io5'
 function RoomNotFound () {
   return (
     <Center flexDir="column" minH="calc(100vh - 100px)">
-      <IoWarningOutline size='100px' />
+      <IoWarningOutline size="100px" />
 
       <Heading my={2} as="h2" size="lg">
         No se encuentra la sala

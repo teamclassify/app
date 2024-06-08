@@ -23,8 +23,29 @@ async function getAll (filters = []) {
   }
 }
 
+async function updateRols (uid, rols) {
+  const token = await getToken()
+
+  try {
+    const res = await axios({
+      url: `${URL}/usuarios/rols`,
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      data: { uid, rols }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 const UsersService = {
-  getAll
+  getAll,
+  updateRols
 }
 
 export default UsersService

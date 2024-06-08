@@ -26,19 +26,33 @@ function Room () {
     <>
       <Wrapper>
         <Flex mb={2} gap={2} alignItems="center">
-          <Flex alignItems="center" gap={2} bg='white' px={2} py={1} rounded='md'>
+          <Flex
+            alignItems="center"
+            gap={2}
+            bg="white"
+            px={2}
+            py={1}
+            rounded="md"
+          >
             <FaRegBuilding size="20px" />
             <SelectBuildings
-              size='sm'
+              size="sm"
               currentBuilding={currentBuilding}
               setCurrentBuilding={setCurrentBuilding}
             />
           </Flex>
 
-          <Flex alignItems="center" gap={2} bg='white' px={2} py={1} rounded='md'>
+          <Flex
+            alignItems="center"
+            gap={2}
+            bg="white"
+            px={2}
+            py={1}
+            rounded="md"
+          >
             <MdOutlineDoorBack size="26px" />
             <SelectRooms
-              size='sm'
+              size="sm"
               currentRoom={id}
               building={currentBuilding}
               handleChange={handleChangeRoom}

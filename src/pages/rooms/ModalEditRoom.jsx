@@ -66,7 +66,11 @@ function ModalEditRoom ({ currentRoom, isOpen, onClose }) {
     setName(currentRoom.nombre)
     setCapacity(currentRoom.capacidad)
     setComputers(currentRoom.cantidad_computadores)
-  }, [currentRoom.nombre, currentRoom.capacidad, currentRoom.cantidad_computadores])
+  }, [
+    currentRoom.nombre,
+    currentRoom.capacidad,
+    currentRoom.cantidad_computadores
+  ])
 
   return (
     <>

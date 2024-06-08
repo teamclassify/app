@@ -1,4 +1,12 @@
-import { Avatar, Flex, Spinner, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
+import {
+  Avatar,
+  Flex,
+  Spinner,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem
+} from '@chakra-ui/react'
 import { MdArrowDropDown } from 'react-icons/md'
 import { Link } from 'wouter'
 
@@ -8,33 +16,38 @@ function UserAvatar () {
   const { user, loading, logout } = useUser()
 
   return (
-   <>
-    {loading
-      ? <Spinner />
-      : <Flex>
-        {
-          user
-            ? <>
+    <>
+      {loading
+        ? (
+        <Spinner />
+          )
+        : (
+        <Flex>
+          {user
+            ? (
+            <>
               <Menu>
                 <MenuButton>
                   <Flex gap={1} alignItems="center">
-                    <Avatar src={user.photo} size='sm' />
+                    <Avatar src={user.photo} size="sm" />
                     <MdArrowDropDown />
                   </Flex>
                 </MenuButton>
 
-                <MenuList p={0} fontSize="sm" overflow='hidden'>
-                  <MenuItem onClick={logout} bg='primary.400' color='white'>
+                <MenuList p={0} fontSize="sm" overflow="hidden">
+                  <MenuItem onClick={logout} bg="primary.400" color="white">
                     Cerrar sesion
                   </MenuItem>
                 </MenuList>
               </Menu>
             </>
-            : <Link href='/login'>Iniciar sesion</Link>
-        }
-      </Flex>
-      }
-   </>
+              )
+            : (
+            <Link href="/login">Iniciar sesion</Link>
+              )}
+        </Flex>
+          )}
+    </>
   )
 }
 

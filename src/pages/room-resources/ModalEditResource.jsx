@@ -103,7 +103,7 @@ function ModalEditResource ({ currentResource, isOpen, onClose }) {
             />
           </FormControl>
 
-          <FormControl display='flex' alignItems='center'>
+          <FormControl display="flex" alignItems="center">
             <FormLabel mb={1}>Habilitado</FormLabel>
             <Checkbox
               isChecked={isEnabled}

@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "jest",
     "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --write \"{,!(node_modules)/**/}*.tsx\""
+    "format": "prettier --write \"{,!(node_modules)/**/}*.jsx\""
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",

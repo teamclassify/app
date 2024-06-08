@@ -8,19 +8,16 @@ import { useState } from 'react'
 import Filters from './Filters.jsx'
 
 function Users () {
-  const {
-    user,
-    loading
-  } = useUser()
+  const { user, loading } = useUser()
 
   const [filterName, setFilterName] = useState('')
   const [filterState, setFilterState] = useState('')
   const [filterRol, setFilterRol] = useState('')
 
-  if (!loading && !user) return <NotAuth/>
+  if (!loading && !user) return <NotAuth />
 
   if (!loading && user && !user.roles.includes('superadmin')) {
-    return <NotAuth/>
+    return <NotAuth />
   }
 
   return (
@@ -38,7 +35,11 @@ function Users () {
           setFilterState={setFilterState}
         />
 
-        <ListOfUsers filterState={filterState} filterName={filterName} filterRol={filterRol}/>
+        <ListOfUsers
+          filterState={filterState}
+          filterName={filterName}
+          filterRol={filterRol}
+        />
       </Box>
     </Wrapper>
   )
