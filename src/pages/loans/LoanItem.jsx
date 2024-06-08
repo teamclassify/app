@@ -48,7 +48,7 @@ function LoanItem ({
 
   const { mutate } = useMutation(
     (data) => {
-      const promise = LoansService.update(data.id, { estado: data.state })
+      const promise = LoansService.update(data.id, data.data)
 
       toast.promise(promise, {
         success: { title: 'Préstamo actualizado.' },
@@ -69,7 +69,9 @@ function LoanItem ({
     if (state === 'PREAPROBADO' || state === 'PENDIENTE') {
       mutate({
         id,
-        state: state === 'PREAPROBADO' ? 'PENDIENTE' : 'PREAPROBADO'
+        data: {
+          estado: state === 'PREAPROBADO' ? 'PENDIENTE' : 'PREAPROBADO'
+        }
       })
     }
   }
@@ -78,7 +80,11 @@ function LoanItem ({
     if (state === 'PREAPROBADO') {
       mutate({
         id,
-        state: 'APROBADO'
+        data: {
+          estado: 'APROBADO',
+          edificio: building,
+          sala: loanroom
+        }
       })
     }
   }
@@ -88,7 +94,7 @@ function LoanItem ({
       <Box p={4}>
         <Flex justifyContent={'space-between'}>
           <Flex gap={4}>
-            <MdOutlineRateReview size={24} />
+            <MdOutlineRateReview size={24}/>
 
             <Box>
               <Flex gap={2}>
@@ -120,7 +126,7 @@ function LoanItem ({
               </Text>
 
               <Flex alignItems="center" gap={2} mb={2}>
-                <BsPeople />
+                <BsPeople/>
                 <Text fontSize="sm">{people}</Text>
               </Flex>
 
@@ -136,7 +142,7 @@ function LoanItem ({
           </Flex>
 
           <Box textAlign="right">
-            <Avatar src={userLoan.photo} mb={2} />
+            <Avatar src={userLoan.photo} mb={2}/>
             <Text
               fontSize="sm"
               title="Ver perfil"
@@ -163,26 +169,26 @@ function LoanItem ({
           borderColor="gray.200"
         >
           {(user.roles.includes('admin') ||
-            user.roles.includes('soporte_tecnico')) &&
+              user.roles.includes('soporte_tecnico')) &&
             (state === 'PREAPROBADO' || state === 'PENDIENTE') && (
               <Button
                 size="sm"
                 colorScheme="yellow"
-                leftIcon={<FaCheck />}
+                leftIcon={<FaCheck/>}
                 onClick={handleClickPreabrobar}
               >
                 {state === 'PREAPROBADO'
                   ? 'Quitar Prea-probado'
                   : 'Pre-aprobar'}
               </Button>
-          )}
+            )}
 
           {user.roles.includes('admin') && (
             <>
               <Button
                 size="sm"
                 colorScheme="green"
-                leftIcon={<FaCheck />}
+                leftIcon={<FaCheck/>}
                 onClick={handleClickAprobar}
                 isDisabled={state !== 'PREAPROBADO'}
                 title={
@@ -197,7 +203,7 @@ function LoanItem ({
               <Button
                 size="sm"
                 colorScheme="primary"
-                leftIcon={<TiCancel />}
+                leftIcon={<TiCancel/>}
                 onClick={() => handleCancel(loan)}
               >
                 Cancelar
