@@ -11,7 +11,7 @@ import { MdOutlineCleaningServices } from 'react-icons/md'
 
 import FilterRadio from '../../components/FilterRadio.jsx'
 
-const STATE_OPTIONS = ['ACTIVO', 'INACTIVO']
+const STATE_OPTIONS = ['TODOS', 'ACTIVO', 'INACTIVO']
 
 function Filters ({
   filterState,

@@ -30,7 +30,7 @@ function ListOfUsers (
     filterName,
     filterRol
   } = {
-    filterState: [],
+    filterState: '',
     filterName: '',
     filterRol: ''
   }
@@ -45,7 +45,7 @@ function ListOfUsers (
       return UsersService.getAll([
         {
           name: 'estado',
-          value: filterState
+          value: filterState === 'TODOS' ? '' : filterState
         },
         {
           name: 'nombre',
