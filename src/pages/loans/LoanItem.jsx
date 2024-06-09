@@ -188,7 +188,7 @@ function LoanItem ({
                 onClick={handleClickPreabrobar}
               >
                 {state === 'PREAPROBADO'
-                  ? 'Quitar Prea-probado'
+                  ? 'Quitar Pre-aprobado'
                   : 'Pre-aprobar'}
               </Button>
           )}
