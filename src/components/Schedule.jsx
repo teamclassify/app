@@ -263,6 +263,8 @@ function Schedule (
                       >
                         SI asistió
                       </Button>
+
+                      {currentEvent.asistencia && <Text mb={4} size='sm'>Ya marcaste que el usuario asistió al préstamo.</Text>}
                     </Box>
                 )}
               </>
