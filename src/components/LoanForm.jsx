@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button,
   Center,
@@ -7,311 +10,269 @@ import {
   FormLabel,
   Grid,
   GridItem,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
+  Heading,
+  Input,
+  Select, Spinner,
   Text,
-  Textarea,
-  useToast,
+  useDisclosure,
   VStack
 } from '@chakra-ui/react'
-import moment from 'moment'
 import { useState } from 'react'
-import { FaBuilding } from 'react-icons/fa'
+import { FaBuilding, FaSearch } from 'react-icons/fa'
 import { useMutation } from 'react-query'
-import { useLocation } from 'wouter'
+import { IoPeople } from 'react-icons/io5'
+import { RiComputerLine } from 'react-icons/ri'
 
-import LoansService from '@/services/api/LoansService'
-import SelectBuildings from '../pages/rooms/SelectBuildings'
-import SelectRooms from '../pages/rooms/SelectRooms'
-import RoomResourcesInput from './RoomResourcesInput'
-import Schedule from './Schedule'
-import useUser from '../hooks/useUser.js'
+import RoomsService from '@/services/api/RoomsService'
+import { convertHour12h } from '../utils/date.js'
+import ModalNewLoan from './ModalNewLoan.jsx'
+
+const AVAILABLE_HOURS = [
+  6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
+]
 
 function MyLoans () {
-  const { user } = useUser()
-  const [currentBuilding, setCurrentBuilding] = useState(null)
+  const modalNewLoan = useDisclosure()
+
   const [currentRoom, setCurrentRoom] = useState(null)
-  const [startHour, setStartHour] = useState(null)
-  const [endHour, setEndHour] = useState(null)
-  const [date, setDate] = useState(null)
-  const [people, setPeople] = useState(1)
-  const [resources, setResources] = useState([])
-  const [reason, setReason] = useState('')
+  const [error, setError] = useState(null)
 
-  const toast = useToast()
-  const [, setLocation] = useLocation()
+  const [startHour, setStartHour] = useState(6)
+  const [endHour, setEndHour] = useState(8)
+  const [date, setDate] = useState('')
 
-  const { isLoading, mutate } = useMutation(
-    (newLoan) => {
-      return LoansService.create(newLoan)
-    },
-    {
-      onSuccess: (res) => {
-        if (res.success) {
-          setLocation(`/prestamo-solicitado/${res.data.id}`)
-        } else {
-          toast({
-            title: 'Error',
-            description: res.message,
-            status: 'error',
-            duration: 5000,
-            isClosable: true
-          })
-        }
-      }
-    }
-  )
+  const mutationAvailableRooms = useMutation((data) => {
+    return RoomsService.getAllAvailable(
+      data.date,
+      data.startHour,
+      data.endHour
+    )
+  })
 
-  const handleSelectSlot = (slotInfo) => {
-    const start = new Date(slotInfo.start).getHours()
-    const end = new Date(slotInfo.end).getHours()
-    const dayOfWeek = new Date(slotInfo.start).getDay()
-    const currentDate = new Date()
+  const handleChangeStartHour = (e) => {
+    const val = parseInt(e.target.value)
+    setStartHour(val)
 
-    if (dayOfWeek === 0) {
-      toast({
-        title: 'Error',
-        description: 'No se pueden hacer préstamos los domingos',
-        status: 'error',
-        duration: 5000,
-        isClosable: true
-      })
-
-      return
-    }
-
-    if (start < 6 || end > 22 || start > end || start + 1 > 22) {
-      toast({
-        title: 'Error',
-        description:
-          'El horario de prestamo debe ser entre las 6:00 y las 22:00',
-        status: 'error',
-        duration: 5000,
-        isClosable: true
-      })
-
-      return
-    }
-
-    if (currentDate > new Date(slotInfo.start)) {
-      toast({
-        title: 'Error',
-        description: 'No se pueden hacer préstamos en el pasado',
-        status: 'error',
-        duration: 5000,
-        isClosable: true
-      })
-
-      return
-    }
-
-    setDate(moment(slotInfo.start).format('YYYY-MM-DD'))
-    setStartHour(start)
-    setEndHour(start === end ? end + 1 : end)
+    handleSearch(date, val, endHour)
   }
 
-  const handleChangeStartHour = (val) => {
-    if (val < endHour) setStartHour(val)
-  }
+  const handleChangeEndHour = (e) => {
+    const val = parseInt(e.target.value)
+    setEndHour(val)
 
-  const handleChangeEndHour = (val) => {
-    if (val > startHour) setEndHour(val)
+    handleSearch(date, startHour, val)
   }
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
 
-    if (
-      !currentBuilding ||
-      !currentRoom ||
-      !startHour ||
-      !endHour ||
-      !date ||
-      !people ||
-      !reason
-    ) {
-      toast({
-        title: 'Error',
-        description: 'Completa todos los campos',
-        status: 'error',
-        duration: 5000,
-        isClosable: true
-      })
-
+    if (!date || !currentRoom) {
+      setError('Debes seleccionar una fecha y una sala.')
       return
     }
 
-    mutate({
-      fecha: date,
-      sala_id: currentRoom,
-      hora_inicio: startHour,
-      hora_fin: endHour,
-      cantidad_personas: people,
-      recursos: resources.toString(),
-      razon: reason,
-      email: user.email
-    })
+    modalNewLoan.onOpen()
+  }
+
+  const handleSearch = (date, startHour, endHour) => {
+    if (!date) {
+      setError('Debes seleccionar una fecha.')
+    } else if (new Date(Date.now()).getTime() > new Date(date).getTime()) {
+      setError('Debes seleccionar una fecha futura.')
+    } else if (endHour < startHour) {
+      setError('La hora de inicio debe ser menor que la hora fin.')
+    } else if (endHour === startHour) {
+      setError('La duracion minima de un evento es de 1 hora.')
+    } else {
+      setError(null)
+
+      mutationAvailableRooms.mutate({
+        date,
+        startHour,
+        endHour
+      })
+    }
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      <ModalNewLoan
+        isOpen={modalNewLoan.isOpen}
+        onClose={modalNewLoan.onClose}
+        data={{
+          date,
+          endHour,
+          startHour,
+          currentRoom
+        }}
+      />
+
+      <Heading as="h2" size="md" mb={4}>
+        Nuevo prestamo
+      </Heading>
+
       <Grid
         gap="4"
         fontWeight="bold"
         color="blackAlpha.700"
         minH="calc(100vh - 110px)"
-        gridTemplateColumns={{ base: '1fr', md: '1.5fr 1fr' }}
+        gridTemplateColumns={{
+          base: '1fr',
+          md: '1fr 1.5fr'
+        }}
       >
-        <GridItem bg={'white'} p={2} rounded={5}>
-          {!currentBuilding
+        <GridItem
+          p={4}
+          rounded={5}
+          bg={'white'}
+          overflowY="auto"
+          maxH="calc(100vh - 110px)"
+        >
+          <VStack spacing={4} alignItems="start">
+            {error && (
+              <Alert status="error" rounded="md">
+                <AlertIcon />
+                <AlertDescription fontSize="sm">{error}</AlertDescription>
+              </Alert>
+            )}
+
+            <Flex gap={2} w="full">
+              <FormControl w="full">
+                <FormLabel>Fecha</FormLabel>
+                <Input
+                  type="date"
+                  value={date}
+                  onChange={(e) => {
+                    setDate(e.target.value)
+                    handleSearch(e.target.value, startHour, endHour)
+                  }}
+                />
+              </FormControl>
+
+              <FormControl w="full">
+                <FormLabel>Hora Inicio</FormLabel>
+                <Select value={startHour} onChange={handleChangeStartHour}>
+                  {AVAILABLE_HOURS.map((hour) => {
+                    return (
+                      <option value={hour} key={hour}>
+                        {convertHour12h(hour).toUpperCase()}
+                      </option>
+                    )
+                  })}
+                </Select>
+              </FormControl>
+
+              <FormControl w="full">
+                <FormLabel>Hora Fin</FormLabel>
+                <Select value={endHour} onChange={handleChangeEndHour}>
+                  {AVAILABLE_HOURS.map((hour) => {
+                    return (
+                      <option value={hour} key={hour}>
+                        {convertHour12h(hour).toUpperCase()}
+                      </option>
+                    )
+                  })}
+                </Select>
+              </FormControl>
+            </Flex>
+
+            <Button
+              size="sm"
+              colorScheme="primary"
+              onClick={() => handleSearch(date, startHour, endHour)}
+              leftIcon={<FaSearch />}
+            >
+              Buscar
+            </Button>
+          </VStack>
+        </GridItem>
+
+        <GridItem bg={'white'} p={4} rounded={5}>
+          {mutationAvailableRooms.isLoading
             ? (
-            <Center h="100%" flexDir="column">
-              <FaBuilding size={100} />
-              <Text mt={4}>Selecciona un edificio para ver sus salas</Text>
-            </Center>
+            <Spinner />
               )
             : (
             <>
-              {!currentRoom
+              {!mutationAvailableRooms.data
                 ? (
                 <Center h="100%" flexDir="column">
                   <FaBuilding size={100} />
                   <Text mt={4}>
-                    Selecciona una sala para ver su disponibilidad
+                    Selecciona un fecha y hora para ver las salas disponibles
                   </Text>
                 </Center>
                   )
                 : (
-                <Schedule
-                  roomId={currentRoom}
-                  isClickable
-                  handleSelectSlot={handleSelectSlot}
-                />
+                <>
+                  <Heading as={'h3'} size={'sm'} mb={4}>
+                    Lista de salas disponibles
+                  </Heading>
+
+                  <Grid
+                    maxH={'calc(100vh - 200px)'}
+                    templateColumns="repeat(auto-fit, minmax(10rem, 1fr))"
+                    gap={4}
+                    pb={6}
+                    overflowY="auto"
+                  >
+                    {mutationAvailableRooms.data?.data
+                      ?.sort((room) => room.edificio)
+                      .map((room) => {
+                        return (
+                          <Box
+                            bg={
+                              currentRoom && currentRoom?.id === room.id
+                                ? 'green.100'
+                                : ''
+                            }
+                            key={room.id}
+                            borderWidth={1}
+                            p={4}
+                            rounded={'md'}
+                            cursor={'pointer'}
+                            transition={'all 400ms'}
+                            _hover={{
+                              bg: 'green.100'
+                            }}
+                            _active={{
+                              bg: 'green.300'
+                            }}
+                            onClick={() => setCurrentRoom(room)}
+                          >
+                            <Heading as={'h4'} size={'xs'} mb={1}>
+                              {room.edificio} - {room.nombre}
+                            </Heading>
+
+                            <Text
+                              fontSize={'sm'}
+                              display="flex"
+                              alignItems="center"
+                              gap={2}
+                            >
+                              <IoPeople /> {room.capacidad}
+                            </Text>
+                            <Text
+                              fontSize={'sm'}
+                              display="flex"
+                              alignItems="center"
+                              gap={2}
+                            >
+                              <RiComputerLine /> {room.cantidad_computadores}
+                            </Text>
+                          </Box>
+                        )
+                      })}
+                  </Grid>
+                </>
                   )}
             </>
               )}
         </GridItem>
-
-        <GridItem
-          maxH="calc(100vh - 110px)"
-          bg={'white'}
-          p={4}
-          rounded={5}
-          overflowY="auto"
-        >
-          <VStack spacing={4}>
-            <Flex gap={2} w="full">
-              <FormControl w="full">
-                <FormLabel>Edificio</FormLabel>
-                <SelectBuildings
-                  currentBuilding={currentBuilding}
-                  setCurrentBuilding={setCurrentBuilding}
-                />
-              </FormControl>
-
-              <FormControl w="full">
-                <FormLabel>Sala</FormLabel>
-                <SelectRooms
-                  currentRoom={currentRoom}
-                  building={currentBuilding}
-                  handleChange={setCurrentRoom}
-                />
-              </FormControl>
-            </Flex>
-
-            {currentBuilding && currentRoom && (
-              <Box w="full" borderWidth={1} rounded="md" p={4}>
-                {date && (
-                  <Text textAlign="left" w="full">
-                    Fecha: {moment(date).format('DD MMM YYYY')}
-                  </Text>
-                )}
-
-                {startHour && endHour
-                  ? (
-                  <Flex gap={2} w="full">
-                    <FormControl w="full">
-                      <FormLabel>Hora de Inicio</FormLabel>
-                      <NumberInput
-                        size="sm"
-                        min={6}
-                        max={22}
-                        value={startHour}
-                        onChange={(val) => handleChangeStartHour(val)}
-                      >
-                        <NumberInputField />
-                        <NumberInputStepper>
-                          <NumberIncrementStepper />
-                          <NumberDecrementStepper />
-                        </NumberInputStepper>
-                      </NumberInput>
-                    </FormControl>
-
-                    <FormControl w="full">
-                      <FormLabel>Hora de Fin</FormLabel>
-                      <NumberInput
-                        min={6}
-                        max={22}
-                        size="sm"
-                        value={endHour}
-                        onChange={(val) => handleChangeEndHour(val)}
-                      >
-                        <NumberInputField />
-                        <NumberInputStepper>
-                          <NumberIncrementStepper />
-                          <NumberDecrementStepper />
-                        </NumberInputStepper>
-                      </NumberInput>
-                    </FormControl>
-                  </Flex>
-                    )
-                  : (
-                  <Text textAlign="left" w="full">
-                    Selecciona una franja horaria
-                  </Text>
-                    )}
-              </Box>
-            )}
-
-            <FormControl>
-              <FormLabel>Personas</FormLabel>
-
-              <NumberInput value={people} onChange={(val) => setPeople(val)}>
-                <NumberInputField placeholder="¿Cuantas personas asistiran?" />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
-
-            <RoomResourcesInput
-              resources={resources}
-              setResources={setResources}
-            />
-
-            <FormControl>
-              <FormLabel>Razón de el préstamo</FormLabel>
-              <Textarea
-                placeholder="..."
-                value={reason}
-                onChange={(evt) => setReason(evt.target.value)}
-              />
-            </FormControl>
-          </VStack>
-        </GridItem>
       </Grid>
 
       <Flex mt={4} justifyContent="end">
-        <Button
-          colorScheme="primary"
-          type="submit"
-          isLoading={isLoading}
-          isDisabled={isLoading}
-        >
+        <Button type="submit" colorScheme="primary">
           Confirmar
         </Button>
       </Flex>

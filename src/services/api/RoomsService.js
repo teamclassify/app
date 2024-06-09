@@ -117,13 +117,40 @@ async function remove (id) {
   }
 }
 
+async function getAllAvailable (date, startHour, endHour) {
+  if (!date) return
+
+  try {
+    const token = await getToken()
+
+    const res = await axios({
+      url: `${URL}/salas/disponibles`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      params: {
+        fecha: date,
+        end_hour: endHour,
+        start_hour: startHour
+      }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 const RoomsService = {
   getAll,
   getById,
   getAllByBuilding,
   update,
   create,
-  remove
+  remove,
+  getAllAvailable
 }
 
 export default RoomsService
