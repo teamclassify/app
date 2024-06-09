@@ -1,5 +1,7 @@
 import { Box, Button, Flex, Heading } from '@chakra-ui/react'
 import { IoMdAdd } from 'react-icons/io'
+import { ImWrench } from 'react-icons/im'
+import { Link } from 'wouter'
 
 import SelectBuildings from './SelectBuildings'
 
@@ -28,11 +30,25 @@ function Header ({ handleOpenModal, currentBuilding, setCurrentBuilding }) {
         </Button>
       </Flex>
 
-      <Flex p={4} borderBottomWidth={1}>
+      <Flex
+        p={4}
+        borderBottomWidth={1}
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <SelectBuildings
           currentBuilding={currentBuilding}
           setCurrentBuilding={setCurrentBuilding}
         />
+
+        <Button
+          size="sm"
+          as={Link}
+          href="/salas/recursos"
+          leftIcon={<ImWrench />}
+        >
+          Editar recursos
+        </Button>
       </Flex>
     </Box>
   )
