@@ -16,7 +16,7 @@ import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { useMutation, useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import 'moment/locale/es'
 import { FaCheck } from 'react-icons/fa'
 import { Link } from 'wouter'
@@ -36,6 +36,7 @@ function Schedule (
 ) {
   const { user } = useUser()
   const toast = useToast()
+  const queryClient = useQueryClient()
 
   const [currentDate, setCurrentDate] = useState(new Date())
   const [minHours, setMinHours] = useState(new Date())
@@ -62,6 +63,8 @@ function Schedule (
             duration: 5000,
             isClosable: true
           })
+
+          queryClient.fetchQuery(['schedule', roomId])
 
           onClose()
         } else {
@@ -216,7 +219,7 @@ function Schedule (
                 {currentEvent.usuario_id &&
                   (user?.roles.includes('vigilante') ||
                     user?.roles.includes('admin')) && (
-                    <Box>
+                    <Box pb={4}>
                       <strong>Prestado a:</strong>
 
                       <Flex mt={4} gap={4}>
@@ -253,8 +256,12 @@ function Schedule (
                         </Box>
                       </Flex>
 
+                      <Text mt={4} fontWeight="bold">
+                        Acciones
+                      </Text>
+
                       <Button
-                        my={4}
+                        my={2}
                         size="sm"
                         colorScheme="blue"
                         leftIcon={<FaCheck />}
@@ -264,7 +271,17 @@ function Schedule (
                         SI asistió
                       </Button>
 
-                      {currentEvent.asistencia && <Text mb={4} size='sm'>Ya marcaste que el usuario asistió al préstamo.</Text>}
+                      <Button
+                        ml={2}
+                        my={2}
+                        size="sm"
+                        colorScheme="primary"
+                        leftIcon={<FaCheck />}
+                        onClick={handleCheckAssist}
+                        isDisabled={!currentEvent.asistencia}
+                      >
+                        NO asistió
+                      </Button>
                     </Box>
                 )}
               </>
