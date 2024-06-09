@@ -23,15 +23,6 @@ function User () {
       <Box>
         <UserOptions />
         <MyLoans />
-        {/*
-        <Carda>
-          <Text mb={2}>Estados de los prestamos</Text>
-          <Flex gap={2}>
-            <Badge colorScheme="yellow">EN ESPERA</Badge>
-            <Badge colorScheme="green">APROBADO</Badge>
-            <Badge colorScheme="red">RECHAZADO</Badge>
-          </Flex>
-        </Carda> */}
       </Box>
     </Wrapper>
   )

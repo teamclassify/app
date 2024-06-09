@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/react'
+import { Badge, Box, Flex, Heading } from '@chakra-ui/react'
 import ListOfLoans from './ListOfLoans'
 
 function MyLoans () {
@@ -6,6 +6,7 @@ function MyLoans () {
     <>
       <Box display="flex" flexDirection="column" mt="2rem">
         <Box
+          mb={2}
           display="flex"
           alignContent="center"
           alignItems="center"
@@ -15,6 +16,13 @@ function MyLoans () {
             Préstamos recientes
           </Heading>
         </Box>
+
+        <Flex gap={2} mb={2}>
+          <Badge colorScheme="yellow">Pendiente</Badge>
+          <Badge colorScheme="green">Aprobado</Badge>
+          <Badge colorScheme="red">Cancelado</Badge>
+        </Flex>
+
         <ListOfLoans />
       </Box>
     </>

@@ -4,20 +4,25 @@ import {
   Button,
   Flex,
   Heading,
-  LinkBox,
   Menu,
   MenuButton,
   MenuItem,
   MenuList
 } from '@chakra-ui/react'
 import { FaDoorClosed, FaDoorOpen, FaInfo } from 'react-icons/fa'
-import { Link, useLocation } from 'wouter'
+import { useLocation } from 'wouter'
 import { SlOptionsVertical } from 'react-icons/sl'
 import { GiCancel } from 'react-icons/gi'
+import { MdEdit } from 'react-icons/md'
 
 import { convertHour12h } from '../utils/date'
-// import ToolTipo from './ToolTip'
-import { MdEdit } from 'react-icons/md'
+
+const BADGE_COLOR = {
+  PENDIENTE: 'yellow',
+  PREAPROBADO: 'yellow',
+  APROBADO: 'green',
+  CANCELADO: 'red'
+}
 
 function Loan ({
   id,
@@ -36,7 +41,7 @@ function Loan ({
   const backgroundColor =
     state === 'APROBADO'
       ? '#1B9C4A'
-      : state === 'PENDIENTE'
+      : state === 'PENDIENTE' || state === 'PREAPROBADO'
         ? 'yellow.400'
         : '#D82D2D'
   let icon
@@ -52,16 +57,14 @@ function Loan ({
 
   return (
     <>
-      <LinkBox
+      <Box
         p="4"
         w="full"
-        as={Link}
         rounded="xl"
         display="flex"
         textAlign="center"
         flexDirection="column"
         backgroundColor={backgroundColor}
-        href={''}
       >
         <Box
           display="flex"
@@ -123,16 +126,14 @@ function Loan ({
           </Heading>
 
           <Flex w="full" gap={1}>
-            <Badge colorScheme={loan.estado === 'CANCELADO' ? 'red' : 'yellow'}>
-              {date}
-            </Badge>
+            <Badge colorScheme={BADGE_COLOR[loan.estado]}>{date}</Badge>
 
-            <Badge colorScheme={loan.estado === 'CANCELADO' ? 'red' : 'yellow'}>
+            <Badge colorScheme={BADGE_COLOR[loan.estado]}>
               {convertHour12h(startHour)} - {convertHour12h(endHour)}
             </Badge>
           </Flex>
         </Box>
-      </LinkBox>
+      </Box>
     </>
   )
 }
