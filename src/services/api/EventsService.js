@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { URL, handleAxiosError } from '.'
+import { getToken } from './Auth.js'
 
 async function getAll () {
   try {
@@ -49,10 +50,31 @@ async function getById (id) {
   }
 }
 
+async function update (id, asistencia) {
+  try {
+    const token = await getToken()
+
+    const res = await axios({
+      url: `${URL}/eventos/${id}`,
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      data: { asistencia }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 const EventsService = {
   getAll,
   getAllByRoom,
-  getById
+  getById,
+  update
 }
 
 export default EventsService

@@ -24,8 +24,13 @@ function DrawerUser ({ isOpen, onClose, user, queryId }) {
   const queryClient = useQueryClient()
   const toast = useToast()
 
-  const [roles] = useState(['usuario', 'admin', 'soporte_tecnico'])
-  const [rolesIds] = useState([1, 2, 0])
+  const [roles] = useState([
+    'usuario',
+    'admin',
+    'soporte_tecnico',
+    'vigilante'
+  ])
+  const [rolesIds] = useState([1, 2, 0, 5])
   const [checkedItems, setCheckedItems] = useState([])
 
   const { mutate } = useMutation(

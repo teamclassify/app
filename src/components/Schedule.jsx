@@ -4,23 +4,27 @@ import {
   AlertTitle,
   Avatar,
   Box,
+  Button,
   Center,
   Flex,
   Spinner,
   Text,
-  useDisclosure
+  useDisclosure,
+  useToast
 } from '@chakra-ui/react'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import 'moment/locale/es'
+import { FaCheck } from 'react-icons/fa'
+import { Link } from 'wouter'
 
 import EventsService from '@/services/api/EventsService'
 import { convertDateRoom } from '@/utils/convertDateRoom'
 import Modal from './Modal'
-import { Link } from 'wouter'
+import useUser from '../hooks/useUser.js'
 
 const localizer = momentLocalizer(moment)
 moment.locale('es')
@@ -30,6 +34,9 @@ function Schedule (
     isClickable: false
   }
 ) {
+  const { user } = useUser()
+  const toast = useToast()
+
   const [currentDate, setCurrentDate] = useState(new Date())
   const [minHours, setMinHours] = useState(new Date())
   const [maxHours, setMaxHours] = useState(new Date())
@@ -41,9 +48,47 @@ function Schedule (
     EventsService.getAllByRoom(roomId)
   )
 
+  const { mutate } = useMutation(
+    (data) => {
+      return EventsService.update(data.id, data.asistencia)
+    },
+    {
+      onSuccess: (data) => {
+        if (data?.success) {
+          toast({
+            title: 'Correcto',
+            description: 'Asistencia registrada correctamente',
+            status: 'success',
+            duration: 5000,
+            isClosable: true
+          })
+
+          onClose()
+        } else {
+          toast({
+            title: 'Error',
+            description: data.message,
+            status: 'error',
+            duration: 5000,
+            isClosable: true
+          })
+        }
+      }
+    }
+  )
+
   const handleSelectEvent = (event) => {
     setCurrentEvent(event)
     onOpen()
+  }
+
+  const handleCheckAssist = () => {
+    if (!currentEvent) return
+
+    mutate({
+      id: currentEvent.id,
+      asistencia: !currentEvent.asistencia
+    })
   }
 
   useEffect(() => {
@@ -83,7 +128,8 @@ function Schedule (
             usuario_foto: event.usuario_foto,
             usuario_codigo: event.usuario_codigo,
             cod_docente: event.cod_docente,
-            tipo: event.tipo
+            tipo: event.tipo,
+            asistencia: event.asistencia
           }
         })
       })
@@ -167,42 +213,57 @@ function Schedule (
                 )
               : (
               <>
-                {currentEvent.usuario_id && (
-                  <Box>
-                    <strong>Prestado a:</strong>
+                {currentEvent.usuario_id &&
+                  (user?.roles.includes('vigilante') ||
+                    user?.roles.includes('admin')) && (
+                    <Box>
+                      <strong>Prestado a:</strong>
 
-                    <Flex mt={2} gap={4}>
-                      <Avatar
-                        src={currentEvent.usuario_foto}
-                        mb={2}
-                        size="lg"
-                      />
-                      <Box>
-                        <Text fontSize="sm">{currentEvent.usuario_nombre}</Text>
-
-                        {currentEvent.usuario_codigo && (
+                      <Flex mt={4} gap={4}>
+                        <Avatar
+                          src={currentEvent.usuario_foto}
+                          mb={2}
+                          size="lg"
+                        />
+                        <Box>
                           <Text fontSize="sm">
-                            {currentEvent.usuario_codigo}
+                            {currentEvent.usuario_nombre}
                           </Text>
-                        )}
 
-                        <Text
-                          fontSize="sm"
-                          title="Ver perfil"
-                          _hover={{
-                            textDecoration: 'underline',
-                            color: 'primary.400'
-                          }}
-                        >
-                          <Link
-                            href={`/usuarios/${currentEvent.usuario_username}`}
+                          {currentEvent.usuario_codigo && (
+                            <Text fontSize="sm">
+                              {currentEvent.usuario_codigo}
+                            </Text>
+                          )}
+
+                          <Text
+                            fontSize="sm"
+                            title="Ver perfil"
+                            _hover={{
+                              textDecoration: 'underline',
+                              color: 'primary.400'
+                            }}
                           >
-                            @{currentEvent.usuario_username}
-                          </Link>
-                        </Text>
-                      </Box>
-                    </Flex>
-                  </Box>
+                            <Link
+                              href={`/usuarios/${currentEvent.usuario_username}`}
+                            >
+                              @{currentEvent.usuario_username}
+                            </Link>
+                          </Text>
+                        </Box>
+                      </Flex>
+
+                      <Button
+                        my={4}
+                        size="sm"
+                        colorScheme="blue"
+                        leftIcon={<FaCheck />}
+                        onClick={handleCheckAssist}
+                        isDisabled={currentEvent.asistencia}
+                      >
+                        SI asistió
+                      </Button>
+                    </Box>
                 )}
               </>
                 )}
