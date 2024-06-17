@@ -1,0 +1,5 @@
+const PAGINATION_LIMIT = 2
+
+export {
+  PAGINATION_LIMIT
+}

@@ -2,14 +2,14 @@ import axios from 'axios'
 import { URL, handleAxiosError } from '.'
 import { getToken } from './Auth'
 
-async function getAll (filters = []) {
+async function getAll (filters = [], page = 0) {
   const token = await getToken()
 
   try {
     const filtersURL = filters.map((f) => `${f?.name}=${f?.value}`).join('&&')
 
     const res = await axios({
-      url: `${URL}/prestamos?${filtersURL}`,
+      url: `${URL}/prestamos?page=${page > 0 ? page - 1 : page}&${filtersURL}`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -23,12 +23,12 @@ async function getAll (filters = []) {
   }
 }
 
-async function getAllByUser () {
+async function getAllByUser (page = 0) {
   const token = await getToken()
 
   try {
     const res = await axios({
-      url: `${URL}/prestamos/user`,
+      url: `${URL}/prestamos/user?page=${page > 0 ? page - 1 : page}`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,

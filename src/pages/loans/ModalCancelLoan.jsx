@@ -18,7 +18,8 @@ function ModalCancelLoan ({
   isOpen,
   onClose,
   filterState,
-  filterReason
+  filterReason,
+  currentPage
 }) {
   const [reason, setReason] = useState('')
 
@@ -42,7 +43,12 @@ function ModalCancelLoan ({
     },
     {
       onSuccess: () => {
-        queryClient.fetchQuery(['loans', filterState, filterReason])
+        queryClient.fetchQuery([
+          'loans',
+          filterState,
+          filterReason,
+          currentPage
+        ])
         onClose()
         setReason('')
       }

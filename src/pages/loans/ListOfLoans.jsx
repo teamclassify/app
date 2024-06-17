@@ -1,11 +1,12 @@
 import { Center, Grid, Spinner, Text, useDisclosure } from '@chakra-ui/react'
 import { MdPendingActions } from 'react-icons/md'
 import { useQuery } from 'react-query'
+import { useState } from 'react'
 
 import LoansService from '@/services/api/LoansService'
 import LoanItem from './LoanItem'
 import ModalCancelLoan from './ModalCancelLoan.jsx'
-import { useState } from 'react'
+import Pagination from '../../components/Pagination.jsx'
 
 function ListOfLoans (
   { filterState, filterReason } = {
@@ -15,23 +16,27 @@ function ListOfLoans (
 ) {
   const modalCancel = useDisclosure()
   const [currentLoan, setCurrentLoan] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
 
   const { isLoading, data: loans } = useQuery(
-    ['loans', filterState, filterReason],
+    ['loans', filterState, filterReason, currentPage],
     () => {
       const valueFilter = filterState
         .filter((f) => f.checked)
         .map((f) => f.value)
-      return LoansService.getAll([
-        {
-          name: 'estado',
-          value: valueFilter
-        },
-        {
-          name: 'razon',
-          value: filterReason
-        }
-      ])
+      return LoansService.getAll(
+        [
+          {
+            name: 'estado',
+            value: valueFilter
+          },
+          {
+            name: 'razon',
+            value: filterReason
+          }
+        ],
+        currentPage
+      )
     }
   )
 
@@ -58,6 +63,7 @@ function ListOfLoans (
           currentLoan={currentLoan}
           filterState={filterState}
           filterReason={filterReason}
+          currentPage={currentPage}
         />
       )}
 
@@ -68,38 +74,48 @@ function ListOfLoans (
         </Center>
           )
         : (
-        <Grid gap={2}>
-          {loans &&
-            loans.data &&
-            loans.data.map((loan) => (
-              <LoanItem
-                key={loan.id}
-                id={loan.id}
-                loan={loan}
-                state={loan.estado}
-                date={loan.fecha}
-                loanroom={loan.sala}
-                roomId={loan.sala_id}
-                building={loan.edificio}
-                reason={loan.razon}
-                people={loan.cantidad_personas}
-                resources={loan.recursos}
-                hour={{
-                  start: loan.hora_inicio,
-                  end: loan.hora_fin
-                }}
-                user={{
-                  name: loan.usuario_nombre,
-                  email: loan.usuario_correo,
-                  photo: loan.usuario_photo,
-                  username: loan.usuario_username
-                }}
-                filterState={filterState}
-                filterReason={filterReason}
-                handleCancel={handleCancel}
+        <>
+          {loans && loans.data && (
+            <>
+              <Grid gap={2}>
+                {loans.data.map((loan) => (
+                  <LoanItem
+                    key={loan.id}
+                    id={loan.id}
+                    loan={loan}
+                    state={loan.estado}
+                    date={loan.fecha}
+                    loanroom={loan.sala}
+                    roomId={loan.sala_id}
+                    building={loan.edificio}
+                    reason={loan.razon}
+                    people={loan.cantidad_personas}
+                    resources={loan.recursos}
+                    hour={{
+                      start: loan.hora_inicio,
+                      end: loan.hora_fin
+                    }}
+                    user={{
+                      name: loan.usuario_nombre,
+                      email: loan.usuario_correo,
+                      photo: loan.usuario_photo,
+                      username: loan.usuario_username
+                    }}
+                    filterState={filterState}
+                    filterReason={filterReason}
+                    handleCancel={handleCancel}
+                  />
+                ))}
+              </Grid>
+
+              <Pagination
+                totalItems={loans?.count ?? 0}
+                currentPage={currentPage}
+                onChangePage={setCurrentPage}
               />
-            ))}
-        </Grid>
+            </>
+          )}
+        </>
           )}
     </Grid>
   )
