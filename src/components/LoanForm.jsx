@@ -12,7 +12,8 @@ import {
   GridItem,
   Heading,
   Input,
-  Select, Spinner,
+  Select,
+  Spinner,
   Text,
   useDisclosure,
   VStack

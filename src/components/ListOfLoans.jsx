@@ -7,10 +7,11 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   AlertTitle,
+  Box,
   Button,
   Center,
+  Flex,
   Grid,
-  SimpleGrid,
   Spinner,
   useDisclosure,
   useToast
@@ -23,6 +24,7 @@ import React, { useState } from 'react'
 import ModalEditLoan from '../pages/user-home/ModalEditLoan.jsx'
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdDelete } from 'react-icons/md'
+import Pagination from './Pagination.jsx'
 
 function ListOfLoans () {
   const cancelRef = React.useRef()
@@ -32,9 +34,10 @@ function ListOfLoans () {
   const modalCancel = useDisclosure()
 
   const [currentLoan, setCurrentLoan] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
 
-  const { isLoading, data } = useQuery('my-loans', () =>
-    LoansService.getAllByUser()
+  const { isLoading, data } = useQuery(['my-loans', currentPage], () =>
+    LoansService.getAllByUser(currentPage)
   )
 
   const { mutate } = useMutation(
@@ -51,7 +54,7 @@ function ListOfLoans () {
     },
     {
       onSuccess: () => {
-        queryClient.fetchQuery(['my-loans'])
+        queryClient.fetchQuery(['my-loans', currentPage])
         modalCancel.onClose()
       }
     }
@@ -88,7 +91,7 @@ function ListOfLoans () {
   }
 
   return (
-    <SimpleGrid display="flex" flexDirection="row" spacing="4" mt="10px">
+    <Box mt="10px">
       {currentLoan && (
         <>
           <ModalEditLoan
@@ -146,31 +149,45 @@ function ListOfLoans () {
         </Center>
           )
         : (
-        <Grid
-          w="full"
-          gap={2}
-          templateColumns="repeat(auto-fill, minmax(12rem, 1fr))"
-        >
-          {data &&
-            data.data &&
-            data.data.map((loan) => (
-              <Loan
-                key={loan.id}
-                id={loan.id}
-                loan={loan}
-                state={loan.estado}
-                date={loan.fecha}
-                loanroom={loan.sala}
-                building={loan.edificio}
-                startHour={loan.hora_inicio}
-                endHour={loan.hora_fin}
-                handleOpenEdit={handleOpenEdit}
-                handleOpenCancel={handleOpenCancel}
-              />
-            ))}
-        </Grid>
+        <>
+          {data && data.data && (
+            <>
+              <Grid
+                w="full"
+                gap={2}
+                templateColumns="repeat(auto-fill, minmax(12rem, 1fr))"
+              >
+                {data.data.map((loan) => (
+                  <>
+                    <Loan
+                      key={loan.id}
+                      id={loan.id}
+                      loan={loan}
+                      state={loan.estado}
+                      date={loan.fecha}
+                      loanroom={loan.sala}
+                      building={loan.edificio}
+                      startHour={loan.hora_inicio}
+                      endHour={loan.hora_fin}
+                      handleOpenEdit={handleOpenEdit}
+                      handleOpenCancel={handleOpenCancel}
+                    />
+                  </>
+                ))}
+              </Grid>
+
+              <Flex justifyContent="center">
+                <Pagination
+                  totalItems={data?.count ?? 0}
+                  currentPage={currentPage}
+                  onChangePage={setCurrentPage}
+                />
+              </Flex>
+            </>
           )}
-    </SimpleGrid>
+        </>
+          )}
+    </Box>
   )
 }
 

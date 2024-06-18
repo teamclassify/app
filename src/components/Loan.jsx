@@ -92,22 +92,22 @@ function Loan ({
                   Información
                 </MenuItem>
 
-                {loan.estado !== 'CANCELADO' && (
-                  <>
-                    <MenuItem
-                      icon={<MdEdit />}
-                      onClick={() => handleOpenEdit(loan)}
-                    >
-                      Editar
-                    </MenuItem>
+                {loan.estado !== 'CANCELADO' && loan.estado !== 'APROBADO' && (
+                  <MenuItem
+                    icon={<MdEdit />}
+                    onClick={() => handleOpenEdit(loan)}
+                  >
+                    Editar
+                  </MenuItem>
+                )}
 
-                    <MenuItem
-                      icon={<GiCancel />}
-                      onClick={() => handleOpenCancel(loan)}
-                    >
-                      Cancelar
-                    </MenuItem>
-                  </>
+                {loan.estado !== 'CANCELADO' && (
+                  <MenuItem
+                    icon={<GiCancel />}
+                    onClick={() => handleOpenCancel(loan)}
+                  >
+                    Cancelar
+                  </MenuItem>
                 )}
               </MenuList>
             </Menu>
