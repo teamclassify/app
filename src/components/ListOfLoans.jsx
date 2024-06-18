@@ -6,11 +6,12 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  AlertTitle, Box,
+  AlertTitle,
+  Box,
   Button,
-  Center, Flex,
+  Center,
+  Flex,
   Grid,
-  SimpleGrid,
   Spinner,
   useDisclosure,
   useToast
@@ -175,7 +176,7 @@ function ListOfLoans () {
                 ))}
               </Grid>
 
-              <Flex justifyContent='center'>
+              <Flex justifyContent="center">
                 <Pagination
                   totalItems={data?.count ?? 0}
                   currentPage={currentPage}
