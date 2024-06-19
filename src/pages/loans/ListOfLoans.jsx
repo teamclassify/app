@@ -103,6 +103,7 @@ function ListOfLoans (
                     }}
                     filterState={filterState}
                     filterReason={filterReason}
+                    currentPage={currentPage}
                     handleCancel={handleCancel}
                   />
                 ))}

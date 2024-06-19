@@ -16,6 +16,7 @@ import LoansPage from './pages/loans'
 import RegisterPage from './pages/Register'
 import UsersPage from './pages/users'
 import RoomResourcesPage from './pages/room-resources'
+import StatisticsPage from './pages/statistics'
 
 function App () {
   return (
@@ -37,6 +38,7 @@ function App () {
         <Route component={LoanSuccessPage} path="/prestamo-solicitado/:id" />
         <Route component={LoansPage} path="/prestamos" />
         <Route component={UsersPage} path="/usuarios" />
+        <Route component={StatisticsPage} path="/estadisticas" />
         <Route component={ErrorPage} path="/:rest*" />
       </Switch>
     </>
