@@ -33,6 +33,7 @@ function LoanItem ({
   hour,
   filterReason,
   filterState,
+  page,
   handleCancel
 }) {
   const queryClient = useQueryClient()
@@ -61,7 +62,7 @@ function LoanItem ({
     {
       onSuccess: (data) => {
         if (data?.success) {
-          queryClient.fetchQuery(['loans', filterState, filterReason])
+          queryClient.fetchQuery(['loans', filterState, filterReason, page])
         } else {
           toast({
             title: 'Error',

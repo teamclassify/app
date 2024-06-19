@@ -12,6 +12,7 @@ import { Link } from 'wouter'
 
 import useUser from '../hooks/useUser'
 import UserPic from './UserPic'
+import { IoMdStats } from 'react-icons/io'
 
 function DrawerForm () {
   const { user, logout } = useUser()
@@ -156,6 +157,23 @@ function DrawerForm () {
                 </Heading>
               </Button>
             </>
+          )}
+
+          {user && user?.roles && user?.roles.includes('admin') && (
+            <Button
+              gap={2}
+              w="full"
+              as={Link}
+              href="/estadisticas"
+              bg="transparent"
+              colorScheme="red"
+              justifyContent="start"
+            >
+              <IoMdStats size="13px" color="white" />
+              <Heading as="h1" size="sl" color="white" py={2}>
+                Estadísticas
+              </Heading>
+            </Button>
           )}
 
           {user &&
