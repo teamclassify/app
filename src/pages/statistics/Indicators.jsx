@@ -1,26 +1,25 @@
 import { Box, Grid, Heading, Icon, Skeleton, Text } from '@chakra-ui/react'
-import { FaUserAlt, FaBuilding } from 'react-icons/fa'
+import { FaUserCircle } from 'react-icons/fa'
 import useUsers from './useUsers.jsx'
-import useLoans from './useLoans.js'
+import LoansIndicators from './LoansIndicators.jsx'
 
 function Indicators () {
   const { users, isLoading } = useUsers()
-  const { loans, isLoading: isLoadingLoans } = useLoans()
 
   return (
     <>
       <Heading mb={2} as={'h3'} size={'sm'}>
-        Indicadores
+        Historico
       </Heading>
 
       <Grid gap={4} templateColumns={'repeat(auto-fill, minmax(15rem, 1fr))'}>
         {isLoading
           ? (
-          <Skeleton height={'200px'} />
+          <Skeleton height={'160px'} />
             )
           : (
           <Box bg={'blue.400'} p={4} rounded={'md'} color={'white'}>
-            <Icon as={FaUserAlt} fontSize={'xx-large'} mb={2} />
+            <Icon as={FaUserCircle} fontSize={'xx-large'} mb={2} />
             <Text fontSize={'lg'} fontWeight={'bold'}>
               Usuarios
             </Text>
@@ -30,21 +29,7 @@ function Indicators () {
           </Box>
             )}
 
-        {isLoadingLoans
-          ? (
-          <Skeleton height={'200px'} />
-            )
-          : (
-          <Box bg={'orange.400'} p={4} rounded={'md'} color={'white'}>
-            <Icon as={FaBuilding} fontSize={'xx-large'} mb={2} />
-            <Text fontSize={'lg'} fontWeight={'bold'}>
-              Prestamos solicitados
-            </Text>
-            <Text fontSize={'xx-large'} fontWeight={'bold'}>
-              {loans?.reduce((acc, cur) => acc + cur.cantidad_prestamos, 0)}
-            </Text>
-          </Box>
-            )}
+        <LoansIndicators />
       </Grid>
     </>
   )
