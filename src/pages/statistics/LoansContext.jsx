@@ -6,11 +6,12 @@ export const LoansContext = createContext()
 
 export default function LoansProvider ({ children }) {
   const [loans, setLoans] = useState([])
+  const [year, setYear] = useState('total')
 
   const { isLoading, isRefetching } = useQuery(
-    ['stats', 'loans-total'],
+    ['stats', 'loans-total', year],
     () => {
-      return StatsService.getAllLoans()
+      return StatsService.getAllLoans(year)
     },
     {
       onSuccess: (data) => {
@@ -24,9 +25,12 @@ export default function LoansProvider ({ children }) {
   const value = useMemo(() => {
     return {
       loans,
-      isLoading: isLoading || isRefetching
+      isLoading,
+      isRefetching,
+      year,
+      setYear
     }
-  }, [loans, isLoading, isRefetching])
+  }, [loans, isLoading, isRefetching, year])
 
   return (
     <LoansContext.Provider value={value}>{children}</LoansContext.Provider>

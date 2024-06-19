@@ -9,7 +9,18 @@ import {
 } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 import { useState } from 'react'
-import { Box, Skeleton } from '@chakra-ui/react'
+import {
+  Box,
+  Center,
+  Flex,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Skeleton,
+  Spinner
+} from '@chakra-ui/react'
 import { useQuery } from 'react-query'
 import StatsService from '@/services/api/StatsService'
 import COLORS from './Colors.js'
@@ -26,11 +37,12 @@ ChartJS.register(
 function LoansGraphMonths () {
   const [labels, setLabels] = useState([])
   const [data, setData] = useState([])
+  const [year, setYear] = useState(new Date().getFullYear())
 
-  const { isLoading } = useQuery(
-    ['stats', 'loans-months'],
+  const { isLoading, isRefetching } = useQuery(
+    ['stats', 'loans-months', year],
     () => {
-      return StatsService.getLoansByMonths()
+      return StatsService.getLoansByMonths(year)
     },
     {
       onSuccess: (data) => {
@@ -78,9 +90,6 @@ function LoansGraphMonths () {
     }
   )
 
-  console.log(labels)
-  console.log(data)
-
   return (
     <Box w={'full'} bg={'white'} rounded={'md'}>
       {isLoading
@@ -89,24 +98,48 @@ function LoansGraphMonths () {
           )
         : (
         <Box p={4}>
-          <Bar
-            data={{
-              labels,
-              datasets: data
-            }}
-            options={{
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'top'
-                },
-                title: {
-                  display: true,
-                  text: 'Prestamos mensuales'
+          <Flex justifyContent={'end'}>
+            <NumberInput
+              size={'sm'}
+              min={2024}
+              value={year}
+              maxW={'100px'}
+              onChange={(val) => setYear(parseInt(val))}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          </Flex>
+
+          {isRefetching
+            ? (
+            <Center minH={'200px'}>
+              <Spinner />
+            </Center>
+              )
+            : (
+            <Bar
+              data={{
+                labels,
+                datasets: data
+              }}
+              options={{
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: 'top'
+                  },
+                  title: {
+                    display: true,
+                    text: 'Prestamos mensuales del ' + year
+                  }
                 }
-              }
-            }}
-          />
+              }}
+            />
+              )}
         </Box>
           )}
     </Box>

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { URL, handleAxiosError } from '.'
 import { getToken } from './Auth'
 
-async function getAllLoans () {
+async function getAllLoans (year = 'total') {
   const token = await getToken()
 
   try {
@@ -12,6 +12,9 @@ async function getAllLoans () {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
+      },
+      params: {
+        year
       }
     })
 
@@ -21,7 +24,7 @@ async function getAllLoans () {
   }
 }
 
-async function getLoansByMonths () {
+async function getLoansByMonths (year = null) {
   const token = await getToken()
 
   try {
@@ -31,6 +34,9 @@ async function getLoansByMonths () {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
+      },
+      params: {
+        year
       }
     })
 
