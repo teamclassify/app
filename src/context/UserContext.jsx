@@ -67,7 +67,11 @@ export default function UserProvider ({ children }) {
   const isNotUser = () => {
     if (!user) return false
 
-    return user?.roles?.includes('admin') || user?.roles?.includes('soporte_tecnico') || user?.roles?.includes('vigilante');
+    return (
+      user?.roles?.includes('admin') ||
+      user?.roles?.includes('soporte_tecnico') ||
+      user?.roles?.includes('vigilante')
+    )
   }
 
   const logout = async () => {

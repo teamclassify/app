@@ -114,13 +114,16 @@ function Schedule (
         return data.map((event) => {
           return {
             id: event.id,
-            title: isNotUser() ? event.nombre : '',
+            title: isNotUser()
+              ? event.tipo.toUpperCase() + ' - ' + event.nombre
+              : '',
             ...convertDateRoom(
               event.tipo === 'prestamo' ? new Date(event.fecha) : currentDate,
               event.dia,
               event.hora_inicio,
               event.hora_fin
             ),
+            backgroundColor: 'red',
             cantidad_personas: event.cantidad_personas,
             razon: event.razon,
             cod_asignatura: event.cod_asignatura,
