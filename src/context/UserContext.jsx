@@ -64,6 +64,12 @@ export default function UserProvider ({ children }) {
     })
   }
 
+  const isNotUser = () => {
+    if (!user) return false
+
+    return user?.roles?.includes('admin') || user?.roles?.includes('soporte_tecnico') || user?.roles?.includes('vigilante');
+  }
+
   const logout = async () => {
     setLoading(true)
 
@@ -168,7 +174,8 @@ export default function UserProvider ({ children }) {
       logout,
       loading,
       registerWithEmail,
-      loginWithEmail
+      loginWithEmail,
+      isNotUser
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

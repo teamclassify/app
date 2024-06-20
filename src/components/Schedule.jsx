@@ -34,7 +34,7 @@ function Schedule (
     isClickable: false
   }
 ) {
-  const { user } = useUser()
+  const { user, isNotUser } = useUser()
   const toast = useToast()
   const queryClient = useQueryClient()
 
@@ -81,6 +81,8 @@ function Schedule (
   )
 
   const handleSelectEvent = (event) => {
+    if (!isNotUser()) return
+
     setCurrentEvent(event)
     onOpen()
   }
@@ -112,7 +114,7 @@ function Schedule (
         return data.map((event) => {
           return {
             id: event.id,
-            title: event.nombre,
+            title: isNotUser() ? event.nombre : '',
             ...convertDateRoom(
               event.tipo === 'prestamo' ? new Date(event.fecha) : currentDate,
               event.dia,
