@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react'
+import { Badge, Flex } from '@chakra-ui/react'
 import { useState } from 'react'
 import { FaRegBuilding } from 'react-icons/fa'
 import { MdOutlineDoorBack } from 'react-icons/md'
@@ -57,6 +57,18 @@ function Room () {
               building={currentBuilding}
               handleChange={handleChangeRoom}
             />
+          </Flex>
+
+          <Flex
+            alignItems="center"
+            gap={2}
+            bg="white"
+            px={4}
+            py={2.5}
+            rounded="md"
+          >
+            <Badge colorScheme={'blue'}>Clase</Badge>
+            <Badge colorScheme={'green'}>Préstamo</Badge>
           </Flex>
         </Flex>
 

@@ -1,0 +1,27 @@
+.rbc-event {
+  font-size: 14px;
+  padding: 0.5rem;
+}
+
+.rbc-timeslot-group {
+  min-height: 80px;
+}
+
+.rbc-event .rbc-event-label {
+  display: none;
+}
+
+.rbc-event:active,
+.rbc-event:focus {
+  border: none;
+  outline: none;
+}
+
+.rbc-event[title~="CLASE"] {
+  /*border: none;*/
+}
+
+.rbc-event[title~="PRESTAMO"] {
+  background-color: mediumseagreen;
+  border: none;
+}
