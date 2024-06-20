@@ -34,7 +34,7 @@ function LoansIndicators () {
           )
         : (
         <>
-          <Box bg={'yellow.400'} p={4} rounded={'md'} color={'white'}>
+          <Box bg={'yellow.500'} p={4} rounded={'md'} color={'white'}>
             <Icon as={FaBuilding} fontSize={'xx-large'} mb={2} />
             <Text fontSize={'lg'} fontWeight={'bold'}>
               Prestamos solicitados
