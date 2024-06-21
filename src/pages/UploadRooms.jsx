@@ -164,7 +164,11 @@ export default function UploadRooms () {
             Cargar salas
           </Heading>
 
-          <AspectRatio maxW="800px" minH={{ base: 'calc(50vh - 100px)', md: 'calc(100vh - 200px)' }} ratio={16 / 8}>
+          <AspectRatio
+            maxW="800px"
+            minH={{ base: 'calc(50vh - 100px)', md: 'calc(100vh - 200px)' }}
+            ratio={16 / 8}
+          >
             <Box
               id="uploadDocument"
               bgColor="white"
@@ -265,22 +269,22 @@ export default function UploadRooms () {
               Ver formato
             </Button>
             <Modal
-            title="Formato del archivo"
-            isOpen={isModalOpen}
-            onClose={closeModal}
-            width={'60%'}
-          >
-            <Table variant="simple" size='sm'>
-              <Thead>
-                <Tr>
-                  <Th>Edificio</Th>
-                  <Th>Sala</Th>
-                  <Th>Capacidad</Th>
-                  <Th>Cantidad_Computadores</Th>
-                </Tr>
-              </Thead>
-            </Table>
-          </Modal>
+              title="Formato del archivo"
+              isOpen={isModalOpen}
+              onClose={closeModal}
+              width={'60%'}
+            >
+              <Table variant="simple" size="sm">
+                <Thead>
+                  <Tr>
+                    <Th>Edificio</Th>
+                    <Th>Sala</Th>
+                    <Th>Capacidad</Th>
+                    <Th>Cantidad_Computadores</Th>
+                  </Tr>
+                </Thead>
+              </Table>
+            </Modal>
           </Box>
         </Box>
         <Box w="100%" margin="0 8px">
