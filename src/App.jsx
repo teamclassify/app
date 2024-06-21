@@ -17,8 +17,12 @@ import RegisterPage from './pages/Register'
 import UsersPage from './pages/users'
 import RoomResourcesPage from './pages/room-resources'
 import StatisticsPage from './pages/statistics'
+import useUser from './hooks/useUser.js'
 
 function App () {
+  const { isOnlyVigilant } = useUser()
+  const isVigilant = isOnlyVigilant()
+
   return (
     <>
       <Switch>
@@ -26,7 +30,7 @@ function App () {
         <Route component={LoginPage} path="/login" />
         <Route component={LoginUserPage} path="/login-super-user" />
         <Route component={RegisterPage} path="/registrarse" />
-        <Route component={UserPage} path="/home" />
+        <Route component={isVigilant ? RoomPage : UserPage} path="/home" />
         <Route component={UploadSchedule} path="/subir-horarios" />
         <Route component={UploadRooms} path="/subir-salas" />
         <Route component={BuildingsPage} path="/edificios" />

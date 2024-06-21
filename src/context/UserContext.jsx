@@ -74,6 +74,16 @@ export default function UserProvider ({ children }) {
     )
   }
 
+  const isOnlyVigilant = () => {
+    if (!user) return false
+
+    return (
+      user?.roles?.includes('vigilante') &&
+      !user?.roles?.includes('admin') &&
+      !user?.roles?.includes('soporte_tecnico')
+    )
+  }
+
   const logout = async () => {
     setLoading(true)
 
@@ -179,7 +189,8 @@ export default function UserProvider ({ children }) {
       loading,
       registerWithEmail,
       loginWithEmail,
-      isNotUser
+      isNotUser,
+      isOnlyVigilant
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
