@@ -20,6 +20,7 @@ import { useState } from 'react'
 import { useMutation } from 'react-query'
 
 import Wrapper from '../components/Wrapper'
+import UploadExcelMessage from '../components/UploadExcelMessage'
 import useUser from '../hooks/useUser'
 import UploadService from '../services/api/UploadService'
 import NotAuth from './NotAuth'
@@ -249,6 +250,7 @@ export default function UploadRooms () {
               </Box>
             </Box>
           </AspectRatio>
+          <UploadExcelMessage />
         </Box>
         <Box w="100%" margin="0 8px">
           <Heading as="h2" size="md" noOfLines={1} p="20px 0px">
