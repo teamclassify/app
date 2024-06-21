@@ -155,7 +155,7 @@ export default function UploadRooms () {
             Cargar salas
           </Heading>
 
-          <AspectRatio maxW="800px" ratio={16 / 8}>
+          <AspectRatio maxW="800px" minH={{ base: 'calc(50vh - 100px)', md: 'calc(100vh - 200px)' }} ratio={16 / 8}>
             <Box
               id="uploadDocument"
               bgColor="white"
