@@ -7,19 +7,24 @@ import {
   AspectRatio,
   Box,
   Button,
-  Card,
-  CardBody,
+  Image,
   Heading,
   Input,
   Stack,
   Text,
-  useToast
+  useToast,
+  Table,
+  Thead,
+  Tr,
+  Th
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { useMutation } from 'react-query'
 
 import Wrapper from '../components/Wrapper'
+import UploadExcelMessage from '../components/UploadExcelMessage'
+import Modal from '../components/Modal'
 import useUser from '../hooks/useUser'
 import UploadService from '../services/api/UploadService'
 import NotAuth from './NotAuth'
@@ -29,6 +34,11 @@ export default function UploadRooms () {
 
   const [file, setFile] = useState()
   const [fileName, setFileName] = useState()
+
+  const [isModalOpen, setModalOpen] = useState(false)
+
+  const openModal = () => setModalOpen(true)
+  const closeModal = () => setModalOpen(false)
 
   const toast = useToast()
 
@@ -154,7 +164,11 @@ export default function UploadRooms () {
             Cargar salas
           </Heading>
 
-          <AspectRatio maxW="800px" ratio={16 / 8}>
+          <AspectRatio
+            maxW="800px"
+            minH={{ base: 'calc(50vh - 100px)', md: 'calc(100vh - 200px)' }}
+            ratio={16 / 8}
+          >
             <Box
               id="uploadDocument"
               bgColor="white"
@@ -249,23 +263,50 @@ export default function UploadRooms () {
               </Box>
             </Box>
           </AspectRatio>
+          <UploadExcelMessage />
+          <Box display="flex" justifyContent="center">
+            <Button size="sm" onClick={openModal} isLoading={isLoading}>
+              Ver formato
+            </Button>
+            <Modal
+              title="Formato del archivo"
+              isOpen={isModalOpen}
+              onClose={closeModal}
+              width={'60%'}
+            >
+              <Table variant="simple" size="sm">
+                <Thead>
+                  <Tr>
+                    <Th>Edificio</Th>
+                    <Th>Sala</Th>
+                    <Th>Capacidad</Th>
+                    <Th>Cantidad_Computadores</Th>
+                  </Tr>
+                </Thead>
+              </Table>
+            </Modal>
+          </Box>
         </Box>
         <Box w="100%" margin="0 8px">
-          <Heading as="h2" size="md" noOfLines={1} p="20px 0px">
+          <Heading as="h2" size="md" noOfLines={1} mb={4}>
             Archivo subido
           </Heading>
           {fileName && (
             <>
-              <Card>
-                <CardBody
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Text>{fileName}</Text>
-                  <CheckIcon color="green" />
-                </CardBody>
-              </Card>
+              <Box
+                borderColor="gray.300"
+                borderStyle="dashed"
+                borderWidth="2px"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                bg="#DDE8E3"
+                flexDir="column"
+                minH={{ base: 'calc(50vh - 100px)', md: 'calc(100vh - 200px)' }}
+              >
+                <Image src="src/assets/img/excel.png" w="20%" />
+                <Text p={3}>{fileName}</Text>
+              </Box>
             </>
           )}
         </Box>
