@@ -18,6 +18,8 @@ import UsersPage from './pages/users'
 import RoomResourcesPage from './pages/room-resources'
 import StatisticsPage from './pages/statistics'
 import useUser from './hooks/useUser.js'
+import AnomaliesPage from './pages/anomalies/index.jsx'
+import ReportAnomaliePage from './pages/report-anomalie/index.jsx'
 
 function App () {
   const { isOnlyVigilant } = useUser()
@@ -43,6 +45,8 @@ function App () {
         <Route component={LoansPage} path="/prestamos" />
         <Route component={UsersPage} path="/usuarios" />
         <Route component={StatisticsPage} path="/estadisticas" />
+        <Route component={AnomaliesPage} path="/anomalias" />
+        <Route component={ReportAnomaliePage} path="/anomalias/nueva/:id" />
         <Route component={ErrorPage} path="/:rest*" />
       </Switch>
     </>
