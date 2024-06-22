@@ -5,7 +5,7 @@ import { FaCloudUploadAlt } from 'react-icons/fa'
 import { FaBuilding, FaComputer } from 'react-icons/fa6'
 import { GrSchedule } from 'react-icons/gr'
 import { IoPersonSharp } from 'react-icons/io5'
-import { MdLibraryAdd } from 'react-icons/md'
+import { MdLibraryAdd, MdSmsFailed } from 'react-icons/md'
 import { RiLogoutBoxLine } from 'react-icons/ri'
 import { TbBuildingArch } from 'react-icons/tb'
 import { Link } from 'wouter'
@@ -129,7 +129,7 @@ function DrawerForm () {
           >
             <MdLibraryAdd size="13px" color="white" />
             <Heading as="h1" size="sl" color="white" py={2}>
-              Pedir préstamo
+              Solicitar préstamo
             </Heading>
           </Button>
 
@@ -193,6 +193,21 @@ function DrawerForm () {
                   <FaComputer size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
                     Préstamos
+                  </Heading>
+                </Button>
+
+                <Button
+                  gap={2}
+                  w="full"
+                  as={Link}
+                  href="/anomalias"
+                  bg="transparent"
+                  colorScheme="red"
+                  justifyContent="start"
+                >
+                  <MdSmsFailed size="13px" color="white" />
+                  <Heading as="h1" size="sl" color="white" py={2}>
+                    Anomalías
                   </Heading>
                 </Button>
 

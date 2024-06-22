@@ -9,4 +9,11 @@ function convertHour12h (hours) {
   return `${hora12H} ${amPm}`
 }
 
-export { convertHour12h }
+function isMayorDate (fecha1, fecha2) {
+  const fecha1Milisegundos = fecha1.getTime()
+  const fecha2Milisegundos = fecha2.getTime()
+
+  return fecha1Milisegundos >= fecha2Milisegundos
+}
+
+export { convertHour12h, isMayorDate }
