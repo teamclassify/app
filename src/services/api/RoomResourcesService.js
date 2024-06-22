@@ -2,10 +2,12 @@ import axios from 'axios'
 import { URL, handleAxiosError } from '.'
 import { getToken } from './Auth'
 
-async function getAll (query = null) {
+async function getAll (query = null, id) {
+  if (id === null) return
+
   try {
     const res = await axios({
-      url: `${URL}/sala-recursos${query ? `?${query}` : ''}`,
+      url: `${URL}/recursos/sala/${id}`,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

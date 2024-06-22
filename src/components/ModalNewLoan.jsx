@@ -73,7 +73,7 @@ function ModalNewLoan ({ data, isOpen, onClose }) {
       email: user.email
     })
   }
-
+  
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} title="Nuevo préstamo">
@@ -135,6 +135,7 @@ function ModalNewLoan ({ data, isOpen, onClose }) {
           </FormControl>
 
           <RoomResourcesInput
+            roomId={data?.currentRoom?.id}
             resources={resources}
             setResources={setResources}
           />
