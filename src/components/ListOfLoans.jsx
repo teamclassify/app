@@ -22,6 +22,7 @@ import LoansService from '@/services/api/LoansService'
 import Loan from './Loan'
 import React, { useState } from 'react'
 import ModalEditLoan from '../pages/user-home/ModalEditLoan.jsx'
+import ModalFeedback from '../pages/user-home/ModalFeedback.jsx'
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdDelete } from 'react-icons/md'
 import Pagination from './Pagination.jsx'
@@ -32,6 +33,7 @@ function ListOfLoans () {
   const toast = useToast()
   const modalEdit = useDisclosure()
   const modalCancel = useDisclosure()
+  const modalFeedback = useDisclosure()
 
   const [currentLoan, setCurrentLoan] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
@@ -86,6 +88,11 @@ function ListOfLoans () {
     modalCancel.onOpen()
   }
 
+  const handleOpenFeedback = (loan) => {
+    setCurrentLoan(loan)
+    modalFeedback.onOpen()
+  }
+
   const handleConfirmCancel = () => {
     if (currentLoan) mutate(currentLoan.id)
   }
@@ -97,6 +104,12 @@ function ListOfLoans () {
           <ModalEditLoan
             isOpen={modalEdit.isOpen}
             onClose={modalEdit.onClose}
+            currentLoan={currentLoan}
+          />
+
+          <ModalFeedback
+            isOpen={modalFeedback.isOpen}
+            onClose={modalFeedback.onClose}
             currentLoan={currentLoan}
           />
 
@@ -171,6 +184,7 @@ function ListOfLoans () {
                       endHour={loan.hora_fin}
                       handleOpenEdit={handleOpenEdit}
                       handleOpenCancel={handleOpenCancel}
+                      handleOpenFeedback={handleOpenFeedback}
                     />
                   </>
                 ))}

@@ -14,6 +14,7 @@ import { useLocation } from 'wouter'
 import { SlOptionsVertical } from 'react-icons/sl'
 import { GiCancel } from 'react-icons/gi'
 import { MdEdit } from 'react-icons/md'
+import { VscFeedback } from 'react-icons/vsc'
 
 import { convertHour12h } from '../utils/date'
 
@@ -34,7 +35,8 @@ function Loan ({
   startHour,
   endHour,
   handleOpenEdit,
-  handleOpenCancel
+  handleOpenCancel,
+  handleOpenFeedback
 }) {
   const [, setLocation] = useLocation()
 
@@ -108,6 +110,16 @@ function Loan ({
                   >
                     Cancelar
                   </MenuItem>
+                )}
+
+                {loan.estado === 'APROBADO' && (
+                  <MenuItem
+                    icon={<VscFeedback />}
+                    onClick={() => handleOpenFeedback(loan)}
+                  >
+                    Cuéntanos tu experiencia
+                  </MenuItem>
+
                 )}
               </MenuList>
             </Menu>
