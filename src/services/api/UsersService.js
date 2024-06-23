@@ -65,10 +65,33 @@ async function update (id, data) {
   }
 }
 
+async function updateInfo ({ tipo }) {
+  if (!tipo) return
+
+  try {
+    const token = await getToken()
+
+    const res = await axios({
+      url: `${URL}/usuarios/me`,
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      data: { tipo }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 const UsersService = {
   getAll,
   updateRols,
-  update
+  update,
+  updateInfo
 }
 
 export default UsersService

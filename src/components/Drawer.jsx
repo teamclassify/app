@@ -94,6 +94,7 @@ function DrawerForm () {
               bg="transparent"
               colorScheme="red"
               justifyContent="start"
+              isDisabled={user?.estado !== 'ACTIVO'}
             >
               <IoPersonSharp size="13px" color="white" />
 
@@ -111,6 +112,7 @@ function DrawerForm () {
               bg="transparent"
               colorScheme="red"
               justifyContent="start"
+              isDisabled={user?.estado !== 'ACTIVO'}
             >
               <GrSchedule size="13px" color="white" />
 
@@ -129,6 +131,7 @@ function DrawerForm () {
             bg="transparent"
             colorScheme="red"
             justifyContent="start"
+            isDisabled={user?.estado !== 'ACTIVO'}
           >
             <MdLibraryAdd size="13px" color="white" />
             <Heading as="h1" size="sl" color="white" py={2}>
@@ -154,6 +157,7 @@ function DrawerForm () {
                 bg="transparent"
                 colorScheme="red"
                 justifyContent="start"
+                isDisabled={user?.estado !== 'ACTIVO'}
               >
                 <TbBuildingArch size="13px" color="white" />
                 <Heading as="h1" size="sl" color="white" py={2}>
@@ -176,6 +180,7 @@ function DrawerForm () {
                 bg="transparent"
                 colorScheme="red"
                 justifyContent="start"
+                isDisabled={user?.estado !== 'ACTIVO'}
               >
                 <FaComputer size="13px" color="white" />
                 <Heading as="h1" size="sl" color="white" py={2}>
@@ -196,6 +201,7 @@ function DrawerForm () {
               bg="transparent"
               colorScheme="red"
               justifyContent="start"
+              isDisabled={user?.estado !== 'ACTIVO'}
             >
               <IoMdStats size="13px" color="white" />
               <Heading as="h1" size="sl" color="white" py={2}>
@@ -218,6 +224,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO'}
                 >
                   <MdSmsFailed size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
@@ -234,6 +241,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO'}
                 >
                   <FaCloudUploadAlt size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
@@ -251,6 +259,7 @@ function DrawerForm () {
                     bg="transparent"
                     colorScheme="red"
                     justifyContent="start"
+                    isDisabled={user?.estado !== 'ACTIVO'}
                   >
                     <FaCloudUploadAlt size="13px" color="white" />
                     <Heading as="h1" size="sl" color="white" py={2}>
@@ -268,6 +277,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO'}
                 >
                   <FaBuilding size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
@@ -284,6 +294,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO'}
                 >
                   <TbBuildingArch size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
@@ -300,6 +311,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO'}
                 >
                   <TbBuildingArch size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>

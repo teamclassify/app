@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Badge,
   Box,
   Button,
   Flex,
@@ -23,6 +24,7 @@ function AnomalieItem ({
   usuario_nombre,
   usuario_photo,
   usuario_correo,
+  usuario_tipo,
   createdAt,
   updatedAt,
   filterDescription,
@@ -107,6 +109,10 @@ function AnomalieItem ({
           <Box>
             <Text fontSize="sm">{usuario_nombre}</Text>
             <Text fontSize="sm">{usuario_correo}</Text>
+
+            <Badge size="sm" colorScheme={'blue'}>
+              {usuario_tipo}
+            </Badge>
           </Box>
         </Flex>
       </Box>

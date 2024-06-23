@@ -2,7 +2,8 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup
+  signInWithPopup,
+  sendEmailVerification
 } from 'firebase/auth'
 import { auth, providerGoogle } from '../../config/firebase'
 
@@ -81,6 +82,8 @@ const signUpWithEmailAndPassword = async (email, password) => {
     .then((user) => {
       const token = null
 
+      sendEmailVerification(auth.currentUser)
+
       return {
         msg: 'User register successfully',
         data: { token, user },
@@ -123,9 +126,29 @@ const signInWithEmail = async (email, password) => {
     })
 }
 
+const verifyEmail = () => {
+  if (!auth.currentUser) return
+
+  return sendEmailVerification(auth.currentUser).then(() => {
+    return {
+      msg: 'Correo enviado correctamente',
+      data: {},
+      status: 200
+    }
+  })
+    .catch((error) => {
+      return {
+        msg: 'Error al enviar el correo de verificación',
+        error: error.message,
+        status: 404
+      }
+    })
+}
+
 export {
   logoutUser,
   signInGoogle,
   signUpWithEmailAndPassword,
-  signInWithEmail
+  signInWithEmail,
+  verifyEmail
 }

@@ -70,6 +70,7 @@ function ListOfAnomalies (
                     usuario_nombre={anomalie.usuario_nombre}
                     usuario_correo={anomalie.usuario_correo}
                     usuario_photo={anomalie.usuario_photo}
+                    usuario_tipo={anomalie.usuario_tipo}
                     createdAt={anomalie.createdAt}
                     updatedAt={anomalie.updatedAt}
                     filterState={filterState}
