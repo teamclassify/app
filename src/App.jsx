@@ -16,6 +16,7 @@ import LoansPage from './pages/loans'
 import RegisterPage from './pages/Register'
 import UsersPage from './pages/users'
 import RoomResourcesPage from './pages/room-resources'
+import ResourcesPage from './pages/resources'
 import StatisticsPage from './pages/statistics'
 import useUser from './hooks/useUser.js'
 import AnomaliesPage from './pages/anomalies/index.jsx'
@@ -39,7 +40,8 @@ function App () {
         <Route component={RoomPage} path="/horario" />
         <Route component={RoomPage} path="/horario/:id" />
         <Route component={RoomsPage} path="/salas" />
-        <Route component={RoomResourcesPage} path="/salas/recursos" />
+        <Route component={ResourcesPage} path="/salas/recursos" />
+        <Route component={RoomResourcesPage} path="/salas/recursos/:id" />
         <Route component={LoanPage} path="/nuevo-prestamo" />
         <Route component={LoanSuccessPage} path="/prestamo-solicitado/:id" />
         <Route component={LoansPage} path="/prestamos" />

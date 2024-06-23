@@ -12,9 +12,9 @@ import { useQuery } from 'react-query'
 
 import RoomResourcesService from '../services/api/RoomResourcesService'
 
-function RoomResourcesInput ({ resources, setResources }) {
-  const { isLoading, data } = useQuery('room-resources', () =>
-    RoomResourcesService.getAll('activo=true')
+function RoomResourcesInput ({ roomId, resources, setResources }) {
+  const { isLoading, data } = useQuery(['room-resources', roomId], () =>
+    RoomResourcesService.getAllByRoom('activo=true', roomId)
   )
 
   if (!isLoading && data.error) {

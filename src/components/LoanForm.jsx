@@ -21,7 +21,7 @@ import {
 import { useState } from 'react'
 import { FaBuilding, FaSearch } from 'react-icons/fa'
 import { useMutation } from 'react-query'
-import { IoPeople } from 'react-icons/io5'
+import { IoPeople, IoWarning } from 'react-icons/io5'
 import { RiComputerLine } from 'react-icons/ri'
 
 import RoomsService from '@/services/api/RoomsService'
@@ -265,6 +265,13 @@ function MyLoans () {
                         )
                       })}
                   </Grid>
+
+                  {!mutationAvailableRooms.data?.success && (
+                    <Center h={'calc(100% - 100px)'} flexDir={'column'}>
+                      <IoWarning size={'50px'} />
+                      <Text mt={6}>{mutationAvailableRooms.data?.message}</Text>
+                    </Center>
+                  )}
                 </>
                   )}
             </>

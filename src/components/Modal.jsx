@@ -16,7 +16,9 @@ function Modal ({ title, isOpen, onClose, children, width }) {
           {title}
         </ModalHeader>
         <ModalCloseButton color="white" />
-        <ModalBody overflow="auto" pt={6}>{children}</ModalBody>
+        <ModalBody overflow="auto" pt={6}>
+          {children}
+        </ModalBody>
       </ModalContent>
     </ModalChakra>
   )

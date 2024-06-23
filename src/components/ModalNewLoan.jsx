@@ -135,6 +135,7 @@ function ModalNewLoan ({ data, isOpen, onClose }) {
           </FormControl>
 
           <RoomResourcesInput
+            roomId={data?.currentRoom?.id}
             resources={resources}
             setResources={setResources}
           />

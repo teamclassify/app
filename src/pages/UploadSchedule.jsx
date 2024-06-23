@@ -270,7 +270,7 @@ export default function UploadSchedule () {
             onClose={closeModal}
             width={'90%'}
           >
-            <Table variant="simple" size='sm'>
+            <Table variant="simple" size="sm">
               <Thead>
                 <Tr>
                   <Th>Codigo materia</Th>

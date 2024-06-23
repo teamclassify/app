@@ -1,9 +1,7 @@
 import { Box, Button, Flex, Heading } from '@chakra-ui/react'
 import { IoMdAdd } from 'react-icons/io'
 
-import SelectBuildings from './SelectBuildings'
-
-function Header ({ handleOpenModal, currentBuilding, setCurrentBuilding }) {
+function Header ({ handleOpenModal }) {
   return (
     <Box>
       <Flex
@@ -14,7 +12,7 @@ function Header ({ handleOpenModal, currentBuilding, setCurrentBuilding }) {
       >
         <Flex alignItems="center" gap={2}>
           <Heading as="h2" size="md">
-            Salas
+            Recursos
           </Heading>
         </Flex>
 
@@ -26,18 +24,6 @@ function Header ({ handleOpenModal, currentBuilding, setCurrentBuilding }) {
         >
           Nuevo
         </Button>
-      </Flex>
-
-      <Flex
-        p={4}
-        borderBottomWidth={1}
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <SelectBuildings
-          currentBuilding={currentBuilding}
-          setCurrentBuilding={setCurrentBuilding}
-        />
       </Flex>
     </Box>
   )

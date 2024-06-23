@@ -6,10 +6,20 @@ import NotAuth from '../NotAuth'
 import Header from './Header'
 import ListOfResources from './ListOfResources'
 import ModalNewResource from './ModalNewResource'
+import { useParams } from 'wouter'
+import { useEffect, useState } from 'react'
 
 function RoomResources () {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { user, loading } = useUser()
+  const params = useParams()
+  const id = params?.id
+
+  const [currentRoom, setCurrentRoom] = useState(null)
+
+  useEffect(() => {
+    setCurrentRoom(id)
+  }, [id])
 
   if (!loading && !user) {
     return <NotAuth />
@@ -27,9 +37,19 @@ function RoomResources () {
   return (
     <Wrapper>
       <Box bg="white" rounded="md" borderWidth={1}>
-        <ModalNewResource isOpen={isOpen} onClose={onClose} />
-        <Header handleOpenModal={onOpen} />
-        <ListOfResources />
+        <ModalNewResource
+          isOpen={isOpen}
+          onClose={onClose}
+          roomId={currentRoom}
+        />
+        <Header
+          handleOpenModal={onOpen}
+          currentRoom={currentRoom}
+          setCurrentRoom={setCurrentRoom}
+        />
+        {currentRoom && (
+          <ListOfResources roomId={currentRoom} onOpenModalNew={onOpen} />
+        )}
       </Box>
     </Wrapper>
   )
