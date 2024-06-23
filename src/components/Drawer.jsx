@@ -259,7 +259,9 @@ function DrawerForm () {
                     bg="transparent"
                     colorScheme="red"
                     justifyContent="start"
-                    isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
+                    isDisabled={
+                      user?.estado !== 'ACTIVO' || !user?.emailVerified
+                    }
                   >
                     <FaCloudUploadAlt size="13px" color="white" />
                     <Heading as="h1" size="sl" color="white" py={2}>

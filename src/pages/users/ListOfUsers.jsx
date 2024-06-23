@@ -136,6 +136,11 @@ function ListOfUsers (
                     <Flex alignItems={'center'} gap={2}>
                       <Text fontWeight="bold">{user.nombre}</Text>
                       <Badge colorScheme={'blue'}>{user.tipo}</Badge>
+                      <Badge
+                        colorScheme={user.estado === 'ACTIVO' ? 'green' : 'red'}
+                      >
+                        {user.estado}
+                      </Badge>
                     </Flex>
 
                     <Text mb={2}>{user.correo}</Text>
