@@ -158,7 +158,7 @@ function ListOfLoans () {
                 templateColumns="repeat(auto-fill, minmax(12rem, 1fr))"
               >
                 {data.data.map((loan) => (
-                  <>
+                  <Box key={loan.id}>
                     <Loan
                       key={loan.id}
                       id={loan.id}
@@ -172,7 +172,7 @@ function ListOfLoans () {
                       handleOpenEdit={handleOpenEdit}
                       handleOpenCancel={handleOpenCancel}
                     />
-                  </>
+                  </Box>
                 ))}
               </Grid>
 
