@@ -105,6 +105,7 @@ function ListOfLoans (
                     }}
                     filterState={filterState}
                     filterReason={filterReason}
+                    page={currentPage}
                     currentPage={currentPage}
                     handleCancel={handleCancel}
                   />

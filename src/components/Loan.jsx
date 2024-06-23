@@ -7,7 +7,7 @@ import {
   Menu,
   MenuButton,
   MenuItem,
-  MenuList,
+  MenuList
 } from '@chakra-ui/react'
 import { FaDoorClosed, FaDoorOpen, FaInfo } from 'react-icons/fa'
 import { useLocation } from 'wouter'
