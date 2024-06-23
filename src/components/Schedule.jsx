@@ -139,7 +139,8 @@ function Schedule (
             usuario_codigo: event.usuario_codigo,
             cod_docente: event.cod_docente,
             tipo: event.tipo,
-            asistencia: event.asistencia
+            asistencia: event.asistencia,
+            prestamo_tipo: event.prestamo_tipo
           }
         })
       })
