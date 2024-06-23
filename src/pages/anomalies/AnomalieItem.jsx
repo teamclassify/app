@@ -1,5 +1,6 @@
 import {
-  Avatar, Badge,
+  Avatar,
+  Badge,
   Box,
   Button,
   Flex,

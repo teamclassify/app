@@ -121,7 +121,9 @@ export default function UserProvider ({ children }) {
         email: response.data.correo,
         uid: response.data.id,
         codigo: response.data.codigo,
-        roles: response.data.roles
+        roles: response.data.roles,
+        estado: response.data.estado,
+        tipo: response.data.tipo
       })
     } else setUser(null)
   }
@@ -132,6 +134,11 @@ export default function UserProvider ({ children }) {
     // firebase auth
     const unsuscribeStateChanged = auth.onAuthStateChanged(async (user) => {
       if (user) {
+        // if (!user?.emailVerified) {
+        //   setLocation('/verificar-email')
+        //   return
+        // }
+
         const userInfo = {
           email: user.email,
           uid: user.uid,
@@ -141,7 +148,10 @@ export default function UserProvider ({ children }) {
               : formatEmail(user.email || ''),
           photo: user.photoURL || '',
           roles: [],
-          codigo: ''
+          codigo: '',
+          estado: 'INACTIVO',
+          tipo: 'ESTUDIANTE',
+          emailVerified: user.emailVerified
         }
 
         const token = await user.getIdToken(true)

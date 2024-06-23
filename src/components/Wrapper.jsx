@@ -1,10 +1,15 @@
 import {
   Box,
   Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
   Center,
   Divider,
   Grid,
   Heading,
+  Input,
   Select,
   Spinner,
   Text,
@@ -18,12 +23,15 @@ import { MdOutlineBlock } from 'react-icons/md'
 import { useMutation } from 'react-query'
 import UsersService from '../services/api/UsersService.js'
 import { useEffect, useState } from 'react'
+import { verifyEmail } from '../services/firebase/AuthService.js'
 
 function Wrapper ({ children }) {
   const { user, loading } = useUser()
   const toast = useToast()
 
   const [valueType, setValueType] = useState('')
+  const [valueEmail, setValueEmail] = useState('')
+  const [isLoadingSendEmail, setIsLoadingSendEmail] = useState(false)
 
   const { isLoading, mutate } = useMutation((data) => {
     const promise = UsersService.updateInfo(data)
@@ -45,8 +53,37 @@ function Wrapper ({ children }) {
     })
   }
 
+  const handleVerifyEmail = (e) => {
+    e.preventDefault()
+
+    setIsLoadingSendEmail(true)
+    verifyEmail()
+      .then(() => {
+        toast({
+          title: 'Correo enviado',
+          description: 'Revisa tu correo y verificate',
+          status: 'success',
+          duration: 5000,
+          isClosable: true
+        })
+      })
+      .catch((err) => {
+        toast({
+          title: 'Error al enviar el correo',
+          description: err.msg,
+          status: 'error',
+          duration: 5000,
+          isClosable: true
+        })
+      })
+      .finally(() => {
+        setIsLoadingSendEmail(false)
+      })
+  }
+
   useEffect(() => {
     setValueType(user?.tipo)
+    setValueEmail(user?.email)
   }, [user])
 
   if (loading) {
@@ -65,63 +102,109 @@ function Wrapper ({ children }) {
             )
           : (
           <>
-            {user?.estado === 'ACTIVO'
+            {user?.emailVerified
               ? (
-              <Box mt={0}>{children}</Box>
+              <>
+                {user?.estado === 'ACTIVO'
+                  ? (
+                  <Box mt={0}>{children}</Box>
+                    )
+                  : (
+                  <Center flexDir={'column'} minH={'calc(100vh - 100px)'}>
+                    <MdOutlineBlock size={50} />
+                    <Heading my={2} as={'h2'} size={'md'}>
+                      Tu usuario no está activo.
+                    </Heading>
+                    <Box maxW={'md'}>
+                      <Text mb={2} textAlign={'center'}>
+                        Cuando los administradores activen tu usuario, te
+                        enviaremos una notificación por correo electrónico.
+                      </Text>
+
+                      <Divider my={4} borderColor={'gray.300'} />
+
+                      {isLoading
+                        ? (
+                        <Center>
+                          <Spinner />
+                        </Center>
+                          )
+                        : (
+                        <form onSubmit={handleSubmit}>
+                          <Text mb={2} textAlign={'center'}>
+                            Mientras puedes definir que tipo de usuario eres
+                          </Text>
+
+                          <Box mx={'auto'} maxW={'xs'}>
+                            <Select
+                              mb={2}
+                              bg={'white'}
+                              name={'tipo'}
+                              value={valueType}
+                              onChange={(e) => setValueType(e.target.value)}
+                            >
+                              <option value={'ESTUDIANTE'}>Estudiante</option>
+                              <option value={'DOCENTE'}>Docente</option>
+                              <option value={'ADMINISTRATIVO'}>
+                                Administrativo
+                              </option>
+                            </Select>
+
+                            <Button
+                              w={'full'}
+                              size={'sm'}
+                              type={'submit'}
+                              colorScheme={'primary'}
+                            >
+                              Guardar
+                            </Button>
+                          </Box>
+                        </form>
+                          )}
+                    </Box>
+                  </Center>
+                    )}
+              </>
                 )
               : (
               <Center flexDir={'column'} minH={'calc(100vh - 100px)'}>
-                <MdOutlineBlock size={50} />
-                <Heading my={2} as={'h2'} size={'md'}>
-                  Tu usuario no está activo.
-                </Heading>
-                <Box maxW={'md'}>
-                  <Text mb={2} textAlign={'center'}>
-                    Cuando los administradores activen tu usuario, te enviaremos
-                    una notificación por correo electrónico.
-                  </Text>
+                <form onSubmit={handleVerifyEmail}>
+                  <Card w={'sm'}>
+                    <CardHeader pb={0}>
+                      <Heading as={'h2'} size={'md'}>
+                        Verificar tu correo
+                      </Heading>
+                    </CardHeader>
 
-                  <Divider my={4} borderColor={'gray.300'} />
-
-                  {isLoading
-                    ? (
-                      <Center>
-                        <Spinner />
-                      </Center>
-                      )
-                    : (
-                    <form onSubmit={handleSubmit}>
-                      <Text mb={2} textAlign={'center'}>
-                        Mientras puedes definir que tipo de usuario eres
+                    <CardBody pb={0}>
+                      <Text mb={4}>
+                        Te enviaremos un correo para verificar tu cuenta al
+                        siguiente correo.
                       </Text>
 
-                      <Box mx={'auto'} maxW={'xs'}>
-                        <Select
-                          mb={2}
-                          bg={'white'}
-                          name={'tipo'}
-                          value={valueType}
-                          onChange={(e) => setValueType(e.target.value)}
-                        >
-                          <option value={'ESTUDIANTE'}>Estudiante</option>
-                          <option value={'DOCENTE'}>Docente</option>
-                          <option value={'ADMINISTRATIVO'}>
-                            Administrativo
-                          </option>
-                        </Select>
+                      <Input
+                        isRequired
+                        type={'email'}
+                        value={valueEmail}
+                        isDisabled={isLoadingSendEmail}
+                        placeholder={'Correo electronico...'}
+                        onChange={(e) => setValueEmail(e.target.value)}
+                      />
+                    </CardBody>
 
-                        <Button
-                          w={'full'}
-                          size={'sm'}
-                          type={'submit'}
-                          colorScheme={'primary'}
-                        >
-                          Guardar
-                        </Button>
-                      </Box>
-                    </form>
-                      )}
-                </Box>
+                    <CardFooter>
+                      <Button
+                        w={'full'}
+                        type={'submit'}
+                        colorScheme={'primary'}
+                        isLoading={isLoadingSendEmail}
+                        isDisabled={isLoadingSendEmail}
+                      >
+                        Enviar
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </form>
               </Center>
                 )}
           </>

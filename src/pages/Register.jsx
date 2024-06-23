@@ -11,7 +11,7 @@ import {
   Text,
   useToast
 } from '@chakra-ui/react'
-import { Link } from 'wouter'
+import { Link, useLocation } from 'wouter'
 
 import LogoUFPS from '../components/Logos/LogoUFPS'
 import useUser from '../hooks/useUser'
@@ -19,6 +19,7 @@ import useUser from '../hooks/useUser'
 function Register () {
   const { loading, registerWithEmail } = useUser()
   const toast = useToast()
+  const [, setLocation] = useLocation()
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -38,7 +39,6 @@ function Register () {
     }
 
     registerWithEmail(email, password).then((res) => {
-      console.log(res)
       if (res.status === 200) {
         toast({
           title: 'Registro exitoso',
@@ -47,6 +47,8 @@ function Register () {
           duration: 3000,
           isClosable: true
         })
+
+        setLocation('/usuario-registrado')
       } else {
         toast({
           title: 'Error al registrarse',

@@ -21,6 +21,8 @@ import StatisticsPage from './pages/statistics'
 import useUser from './hooks/useUser.js'
 import AnomaliesPage from './pages/anomalies/index.jsx'
 import ReportAnomaliePage from './pages/report-anomalie/index.jsx'
+import VerifyEmailPage from './pages/verify-email'
+import UserRegisteredPage from './pages/verify-email/UserRegistered'
 
 function App () {
   const { isOnlyVigilant } = useUser()
@@ -31,6 +33,8 @@ function App () {
       <Switch>
         <Route component={HomePage} path="/" />
         <Route component={LoginPage} path="/login" />
+        <Route component={VerifyEmailPage} path="/verificar-email" />
+        <Route component={UserRegisteredPage} path="/usuario-registrado" />
         <Route component={LoginUserPage} path="/login-super-user" />
         <Route component={RegisterPage} path="/registrarse" />
         <Route component={isVigilant ? RoomPage : UserPage} path="/home" />
