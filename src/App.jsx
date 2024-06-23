@@ -23,6 +23,7 @@ import AnomaliesPage from './pages/anomalies/index.jsx'
 import ReportAnomaliePage from './pages/report-anomalie/index.jsx'
 import VerifyEmailPage from './pages/verify-email'
 import UserRegisteredPage from './pages/verify-email/UserRegistered'
+import UploadRoomResources from './pages/UploadRoomResources.jsx'
 
 function App () {
   const { isOnlyVigilant } = useUser()
@@ -40,6 +41,7 @@ function App () {
         <Route component={isVigilant ? RoomPage : UserPage} path="/home" />
         <Route component={UploadSchedule} path="/subir-horarios" />
         <Route component={UploadRooms} path="/subir-salas" />
+        <Route component={UploadRoomResources} path="/subir-recursos" />
         <Route component={BuildingsPage} path="/edificios" />
         <Route component={RoomPage} path="/horario" />
         <Route component={RoomPage} path="/horario/:id" />
