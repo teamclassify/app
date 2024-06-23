@@ -6,6 +6,7 @@ import { useState } from 'react'
 import LoansService from '@/services/api/LoansService'
 import LoanItem from './LoanItem'
 import ModalCancelLoan from './ModalCancelLoan.jsx'
+import ModalInfo from './ModalInfo.jsx'
 import Pagination from '../../components/Pagination.jsx'
 
 function ListOfLoans (
@@ -15,6 +16,7 @@ function ListOfLoans (
   }
 ) {
   const modalCancel = useDisclosure()
+  const modalInfo = useDisclosure()
   const [currentLoan, setCurrentLoan] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -52,6 +54,11 @@ function ListOfLoans (
   const handleCancel = (loan) => {
     setCurrentLoan(loan)
     modalCancel.onOpen()
+  }
+
+  const handleInfo = (loan) => {
+    setCurrentLoan(loan)
+    modalInfo.onOpen()
   }
 
   return (
@@ -105,6 +112,7 @@ function ListOfLoans (
                     filterReason={filterReason}
                     currentPage={currentPage}
                     handleCancel={handleCancel}
+                    handleInfo={handleInfo}
                   />
                 ))}
               </Grid>
@@ -118,6 +126,14 @@ function ListOfLoans (
           )}
         </>
           )}
+          <ModalInfo
+          isOpen={modalInfo.isOpen}
+          onClose={modalInfo.onClose}
+          currentLoan={currentLoan}
+          filterState={filterState}
+          filterReason={filterReason}
+          currentPage={currentPage}
+        />
     </Grid>
   )
 }

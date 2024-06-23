@@ -94,7 +94,7 @@ function ModalCancelLoan ({
               onClick={handleSubmit}
               isDisabled={isLoading}
             >
-              Cancelar
+              Cancelar Prestamo
             </Button>
           </ModalFooter>
         </VStack>

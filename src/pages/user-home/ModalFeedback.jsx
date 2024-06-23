@@ -11,10 +11,12 @@ import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 
 import Modal from '@/components/Modal'
+import Rating from '../../components/Rating'
 import LoansService from '@/services/api/LoansService'
 
-function ModalEditLoan ({ currentLoan, isOpen, onClose }) {
+function ModalFeedback ({ currentLoan, isOpen, onClose }) {
   const [feedback, setFeedback] = useState(1)
+  const [rating, setRating] = useState()
 
   const queryClient = useQueryClient()
   const toast = useToast()
@@ -43,21 +45,29 @@ function ModalEditLoan ({ currentLoan, isOpen, onClose }) {
     mutate({
       id: currentLoan.id,
       data: {
+        puntaje: rating,
         retroalimentacion: feedback
       }
     })
   }
 
   useEffect(() => {
-    setFeedback(currentLoan.feedback)
-  }, [currentLoan.feedback])
+    setRating(currentLoan.puntaje)
+    setFeedback(currentLoan.retroalimentacion)
+  }, [currentLoan.puntaje, currentLoan.retroalimentacion])
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} title="Editar préstamo">
+      <Modal isOpen={isOpen} onClose={onClose} title="Cuéntanos tu experiencia">
         <VStack alignItems="stretch">
           <FormControl>
-            <FormLabel>Ayúdanos a mejorar compartiendo tu experiencia</FormLabel>
+            <FormLabel>¡Califica tu experiencia!</FormLabel>
+          </FormControl>
+            <Rating onRatingChange={setRating}/>
+          <FormControl>
+            <FormLabel onChange={(evt) => setRating(evt.target.value)}>
+              ¿Cual es la razón principal de tu calificación?
+            </FormLabel>
             <Textarea
               placeholder="..."
               onChange={(evt) => setFeedback(evt.target.value)}
@@ -80,4 +90,4 @@ function ModalEditLoan ({ currentLoan, isOpen, onClose }) {
   )
 }
 
-export default ModalEditLoan
+export default ModalFeedback

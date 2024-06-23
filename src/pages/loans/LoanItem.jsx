@@ -34,7 +34,8 @@ function LoanItem ({
   filterReason,
   filterState,
   page,
-  handleCancel
+  handleCancel,
+  handleInfo
 }) {
   const queryClient = useQueryClient()
   const toast = useToast()
@@ -106,7 +107,6 @@ function LoanItem ({
         <Flex justifyContent={'space-between'}>
           <Flex gap={4}>
             <MdOutlineRateReview size={24} />
-
             <Box>
               <Flex gap={2}>
                 <Heading
@@ -171,56 +171,54 @@ function LoanItem ({
       </Box>
 
       {state !== 'CANCELADO' && state !== 'REALIZADO' && (
-        <Flex
-          py={2}
-          px={4}
-          gap={2}
-          borderTopWidth={1}
-          justifyContent="end"
-          borderColor="gray.200"
-        >
-          {(user.roles.includes('admin') ||
-            user.roles.includes('soporte_tecnico')) &&
-            (state === 'PREAPROBADO' || state === 'PENDIENTE') && (
-              <Button
-                size="sm"
-                colorScheme="yellow"
-                leftIcon={<FaCheck />}
-                onClick={handleClickPreabrobar}
-              >
-                {state === 'PREAPROBADO'
-                  ? 'Quitar Pre-aprobado'
-                  : 'Pre-aprobar'}
-              </Button>
-          )}
+        <Flex justifyContent="space-between" py={2} px={4} borderTopWidth={1}>
+          <Button size="sm" colorScheme="blue" onClick={() => handleInfo(loan)}>
+            Info
+          </Button>
+          <Flex gap={2} justifyContent="end" borderColor="gray.200">
+            {(user.roles.includes('admin') ||
+              user.roles.includes('soporte_tecnico')) &&
+              (state === 'PREAPROBADO' || state === 'PENDIENTE') && (
+                <Button
+                  size="sm"
+                  colorScheme="yellow"
+                  leftIcon={<FaCheck />}
+                  onClick={handleClickPreabrobar}
+                >
+                  {state === 'PREAPROBADO'
+                    ? 'Quitar Pre-aprobado'
+                    : 'Pre-aprobar'}
+                </Button>
+            )}
 
-          {user.roles.includes('admin') && (
-            <>
-              <Button
-                size="sm"
-                colorScheme="green"
-                leftIcon={<FaCheck />}
-                onClick={handleClickAprobar}
-                isDisabled={state !== 'PREAPROBADO'}
-                title={
-                  state !== 'PREAPROBADO'
-                    ? 'Debe estar pre-aprobado para poder ser aceptado'
-                    : ''
-                }
-              >
-                Aceptar
-              </Button>
+            {user.roles.includes('admin') && (
+              <>
+                <Button
+                  size="sm"
+                  colorScheme="green"
+                  leftIcon={<FaCheck />}
+                  onClick={handleClickAprobar}
+                  isDisabled={state !== 'PREAPROBADO'}
+                  title={
+                    state !== 'PREAPROBADO'
+                      ? 'Debe estar pre-aprobado para poder ser aceptado'
+                      : ''
+                  }
+                >
+                  Aceptar
+                </Button>
 
-              <Button
-                size="sm"
-                colorScheme="primary"
-                leftIcon={<TiCancel />}
-                onClick={() => handleCancel(loan)}
-              >
-                Cancelar
-              </Button>
-            </>
-          )}
+                <Button
+                  size="sm"
+                  colorScheme="primary"
+                  leftIcon={<TiCancel />}
+                  onClick={() => handleCancel(loan)}
+                >
+                  Cancelar
+                </Button>
+              </>
+            )}
+          </Flex>
         </Flex>
       )}
     </Box>
