@@ -14,7 +14,7 @@ import RoomResourcesService from '../services/api/RoomResourcesService'
 
 function RoomResourcesInput ({ roomId, resources, setResources }) {
   const { isLoading, data } = useQuery(['room-resources', roomId], () =>
-    RoomResourcesService.getAll('activo=true', roomId)
+    RoomResourcesService.getAllByRoom('activo=true', roomId)
   )
 
   if (!isLoading && data.error) {

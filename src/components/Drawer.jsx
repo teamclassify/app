@@ -88,6 +88,7 @@ function DrawerForm () {
 
           <Link href="/home">
             <Button
+              size={'sm'}
               gap={2}
               w="full"
               bg="transparent"
@@ -104,6 +105,7 @@ function DrawerForm () {
 
           <Link href="/horario">
             <Button
+              size={'sm'}
               gap={2}
               w="full"
               bg="transparent"
@@ -119,6 +121,7 @@ function DrawerForm () {
           </Link>
 
           <Button
+            size={'sm'}
             gap={2}
             w="full"
             as={Link}
@@ -143,6 +146,7 @@ function DrawerForm () {
           {user && user?.roles && user?.roles.includes('superadmin') && (
             <>
               <Button
+                size={'sm'}
                 gap={2}
                 w="full"
                 as={Link}
@@ -159,8 +163,32 @@ function DrawerForm () {
             </>
           )}
 
+          {user &&
+            user?.roles &&
+            (user?.roles.includes('admin') ||
+              user?.roles.includes('soporte_tecnico')) && (
+              <Button
+                size={'sm'}
+                gap={2}
+                w="full"
+                as={Link}
+                href="/prestamos"
+                bg="transparent"
+                colorScheme="red"
+                justifyContent="start"
+              >
+                <FaComputer size="13px" color="white" />
+                <Heading as="h1" size="sl" color="white" py={2}>
+                  Préstamos
+                </Heading>
+              </Button>
+          )}
+
+          <Divider my={4} borderColor="primary.400" borderWidth={1} />
+
           {user && user?.roles && user?.roles.includes('admin') && (
             <Button
+              size={'sm'}
               gap={2}
               w="full"
               as={Link}
@@ -182,21 +210,7 @@ function DrawerForm () {
               user?.roles.includes('soporte_tecnico')) && (
               <>
                 <Button
-                  gap={2}
-                  w="full"
-                  as={Link}
-                  href="/prestamos"
-                  bg="transparent"
-                  colorScheme="red"
-                  justifyContent="start"
-                >
-                  <FaComputer size="13px" color="white" />
-                  <Heading as="h1" size="sl" color="white" py={2}>
-                    Préstamos
-                  </Heading>
-                </Button>
-
-                <Button
+                  size={'sm'}
                   gap={2}
                   w="full"
                   as={Link}
@@ -212,6 +226,7 @@ function DrawerForm () {
                 </Button>
 
                 <Button
+                  size={'sm'}
                   gap={2}
                   w="full"
                   as={Link}
@@ -228,6 +243,7 @@ function DrawerForm () {
 
                 {user?.roles.includes('admin') && (
                   <Button
+                    size={'sm'}
                     gap={2}
                     w="full"
                     as={Link}
@@ -244,6 +260,7 @@ function DrawerForm () {
                 )}
 
                 <Button
+                  size={'sm'}
                   gap={2}
                   w="full"
                   as={Link}
@@ -259,6 +276,7 @@ function DrawerForm () {
                 </Button>
 
                 <Button
+                  size={'sm'}
                   gap={2}
                   w="full"
                   as={Link}
@@ -270,6 +288,22 @@ function DrawerForm () {
                   <TbBuildingArch size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
                     Salas
+                  </Heading>
+                </Button>
+
+                <Button
+                  size={'sm'}
+                  gap={2}
+                  w="full"
+                  as={Link}
+                  href="/salas/recursos"
+                  bg="transparent"
+                  colorScheme="red"
+                  justifyContent="start"
+                >
+                  <TbBuildingArch size="13px" color="white" />
+                  <Heading as="h1" size="sl" color="white" py={2}>
+                    Recursos
                   </Heading>
                 </Button>
               </>
@@ -296,6 +330,7 @@ function DrawerForm () {
           {user
             ? (
             <Button
+              size={'sm'}
               w="full"
               onClick={logout}
               bg="transparent"
@@ -308,6 +343,7 @@ function DrawerForm () {
               )
             : (
             <Button
+              size={'sm'}
               gap={2}
               w="full"
               as={Link}

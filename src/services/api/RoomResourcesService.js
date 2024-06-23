@@ -2,7 +2,23 @@ import axios from 'axios'
 import { URL, handleAxiosError } from '.'
 import { getToken } from './Auth'
 
-async function getAll (query = null, id) {
+async function getAll (query = null) {
+  try {
+    const res = await axios({
+      url: `${URL}/recursos`,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
+async function getAllByRoom (query = null, id) {
   if (id === null) return
 
   try {
@@ -25,7 +41,7 @@ async function getById (id) {
 
   try {
     const res = await axios({
-      url: `${URL}/sala-recursos/${id}`,
+      url: `${URL}/recursos/${id}`,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -38,14 +54,14 @@ async function getById (id) {
   }
 }
 
-async function update (id, data) {
-  if (!id) return
+async function update (data) {
+  if (!data) return
 
   try {
     const token = await getToken()
 
     const res = await axios({
-      url: `${URL}/sala-recursos/${id}`,
+      url: `${URL}/recursos/${data.id}`,
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -65,7 +81,7 @@ async function create (data) {
     const token = await getToken()
 
     const res = await axios({
-      url: `${URL}/sala-recursos`,
+      url: `${URL}/recursos`,
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -87,7 +103,7 @@ async function remove (id) {
     const token = await getToken()
 
     const res = await axios({
-      url: `${URL}/sala-recursos/${id}`,
+      url: `${URL}/recursos/${id}`,
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -101,12 +117,57 @@ async function remove (id) {
   }
 }
 
+async function assignResource (data) {
+  try {
+    const token = await getToken()
+
+    const res = await axios({
+      url: `${URL}/recursos/sala`,
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      data
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
+async function unassignResource (id) {
+  try {
+    const token = await getToken()
+
+    const res = await axios({
+      url: `${URL}/recursos/sala`,
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      data: {
+        id
+      }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 const RoomResourcesService = {
   getAll,
+  getAllByRoom,
   getById,
   update,
   create,
-  remove
+  remove,
+  assignResource,
+  unassignResource
 }
 
 export default RoomResourcesService
