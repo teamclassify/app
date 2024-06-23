@@ -7,7 +7,7 @@ import {
   Menu,
   MenuButton,
   MenuItem,
-  MenuList
+  MenuList,
 } from '@chakra-ui/react'
 import { FaDoorClosed, FaDoorOpen, FaInfo } from 'react-icons/fa'
 import { useLocation } from 'wouter'
@@ -142,13 +142,28 @@ function Loan ({
             {building} - {loanroom}
           </Heading>
 
-          <Flex w="full" gap={1}>
-            <Badge colorScheme={BADGE_COLOR[loan.estado]}>{date}</Badge>
-
-            <Badge colorScheme={BADGE_COLOR[loan.estado]}>
-              {convertHour12h(startHour)} - {convertHour12h(endHour)}
-            </Badge>
-          </Flex>
+          {loan.tipo === 'UNICO'
+            ? (
+            <Flex flexDir={'column'} textAlign={'left'} w={'auto'}>
+              <Badge mb={1} colorScheme={BADGE_COLOR[loan.estado]}>
+                {date}
+              </Badge>
+              <Badge colorScheme={BADGE_COLOR[loan.estado]}>
+                {convertHour12h(startHour)} a {convertHour12h(endHour)}
+              </Badge>
+            </Flex>
+              )
+            : (
+            <>
+              {loan?.dias?.split(',').map((dia, index) => (
+                <Badge mb={1} key={dia} colorScheme={BADGE_COLOR[loan.estado]}>
+                  {dia.toUpperCase()} -{' '}
+                  {convertHour12h(loan?.horas_inicio?.split(',')[index])} a{' '}
+                  {convertHour12h(loan?.horas_fin?.split(',')[index])}
+                </Badge>
+              ))}
+            </>
+              )}
         </Box>
       </Box>
     </>

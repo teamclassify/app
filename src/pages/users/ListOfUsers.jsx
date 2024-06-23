@@ -140,7 +140,9 @@ function ListOfUsers (
 
                     <Text mb={2}>{user.correo}</Text>
 
-                    <Text mb={1} fontSize={'sm'} fontWeight={'bold'}>Roles asignados:</Text>
+                    <Text mb={1} fontSize={'sm'} fontWeight={'bold'}>
+                      Roles asignados:
+                    </Text>
 
                     <Flex>
                       {user.rol.split(',').map((role) => (

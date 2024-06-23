@@ -133,8 +133,24 @@ function LoanItem ({
               </Flex>
 
               <Text mt={1} fontSize="sm">
-                {date} de {convertHour12h(hour.start)} a{' '}
-                {convertHour12h(hour.end)}
+                {loan.tipo === 'UNICO'
+                  ? (
+                  <>
+                    {date} de {convertHour12h(hour.start)} a{' '}
+                    {convertHour12h(hour.end)}
+                  </>
+                    )
+                  : (
+                  <>
+                    {loan?.dias?.split(',').map((dia, index) => (
+                      <p key={dia}>
+                        {dia.toUpperCase()} -{' '}
+                        {convertHour12h(loan?.horas_inicio?.split(',')[index])}{' '}
+                        a {convertHour12h(loan?.horas_fin?.split(',')[index])}
+                      </p>
+                    ))}
+                  </>
+                    )}
               </Text>
 
               <Text fontSize="sm" color="gray.500" my={2}>
