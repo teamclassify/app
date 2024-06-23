@@ -143,6 +143,31 @@ async function getAllAvailable (date, startHour, endHour) {
   }
 }
 
+async function getAllAvailableRange (startDate, endDate, days) {
+  console.log('llega')
+  try {
+    const token = await getToken()
+
+    const res = await axios({
+      url: `${URL}/salas/disponibles-rango`,
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      data: {
+        dias: days,
+        fecha_inicio: startDate,
+        fecha_fin: endDate
+      }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 const RoomsService = {
   getAll,
   getById,
@@ -150,7 +175,8 @@ const RoomsService = {
   update,
   create,
   remove,
-  getAllAvailable
+  getAllAvailable,
+  getAllAvailableRange
 }
 
 export default RoomsService

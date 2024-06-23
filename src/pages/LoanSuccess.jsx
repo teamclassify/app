@@ -67,9 +67,28 @@ function LoanSuccess () {
 
               <Card bg="white" border="2px solid #D9D9D9" shadow="none">
                 <CardBody p={3}>
-                  <Text>
-                    {data.fecha}, {convertHour12h(data.hora_inicio)} -{' '}
-                    {convertHour12h(data.hora_fin)}
+                  <Text mt={1} fontSize="sm">
+                    {data.tipo === 'UNICO'
+                      ? (
+                      <>
+                        {data.fecha} de {convertHour12h(data.hora_inicio)} a{' '}
+                        {convertHour12h(data.hora_fin)}
+                      </>
+                        )
+                      : (
+                      <>
+                        {data?.dias?.split(',').map((dia, index) => (
+                          <p key={dia}>
+                            {dia.toUpperCase()} -{' '}
+                            {convertHour12h(
+                              data?.horas_inicio?.split(',')[index]
+                            )}{' '}
+                            a{' '}
+                            {convertHour12h(data?.horas_fin?.split(',')[index])}
+                          </p>
+                        ))}
+                      </>
+                        )}
                   </Text>
                 </CardBody>
               </Card>

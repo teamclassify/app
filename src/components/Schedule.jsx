@@ -118,7 +118,9 @@ function Schedule (
               ? event.tipo.toUpperCase() + ' - ' + event.nombre
               : '',
             ...convertDateRoom(
-              event.tipo === 'prestamo' ? new Date(event.fecha) : currentDate,
+              event.tipo === 'prestamo' && event.prestamo_tipo === 'UNICO'
+                ? new Date(event.fecha)
+                : currentDate,
               event.dia,
               event.hora_inicio,
               event.hora_fin
@@ -223,7 +225,8 @@ function Schedule (
                 )
               : (
               <>
-                {currentEvent.usuario_id &&
+                {currentEvent.prestamo_tipo === 'UNICO' &&
+                  currentEvent.usuario_id &&
                   (user?.roles.includes('vigilante') ||
                     user?.roles.includes('admin')) && (
                     <Box pb={4}>
