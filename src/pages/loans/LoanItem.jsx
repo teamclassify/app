@@ -21,6 +21,7 @@ import LoansService from '../../services/api/LoansService.js'
 function LoanItem ({
   id,
   state,
+  type,
   loan,
   date,
   loanroom,
@@ -125,6 +126,10 @@ function LoanItem ({
                 <Badge size="sm" colorScheme={BADGE_COLOR[state]}>
                   {state}
                 </Badge>
+
+                <Badge size="sm" colorScheme={'blue'}>
+                  {type}
+                </Badge>
               </Flex>
 
               <Text mt={1} fontSize="sm">
@@ -154,6 +159,9 @@ function LoanItem ({
 
           <Box textAlign="right">
             <Avatar src={userLoan.photo} mb={2} />
+
+            <Text fontSize="sm">{userLoan.name}</Text>
+
             <Text
               fontSize="sm"
               title="Ver perfil"
@@ -162,10 +170,10 @@ function LoanItem ({
                 color: 'primary.400'
               }}
             >
-              <Link href={`/usuarios/${userLoan.username}`}>
-                @{userLoan.username}
-              </Link>
+              {userLoan.email}
             </Text>
+
+            <Badge colorScheme={'blue'}>{userLoan.role}</Badge>
           </Box>
         </Flex>
       </Box>
