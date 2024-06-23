@@ -280,7 +280,7 @@ export default function UploadSchedule () {
               <Thead>
                 <Tr>
                   <Th>Nombre</Th>
-                  <Th>Descripcion</Th>
+                  <Th>Descripción</Th>
                   <Th>Edificio</Th>
                   <Th>Sala</Th>
                 </Tr>
