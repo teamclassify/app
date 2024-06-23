@@ -26,8 +26,6 @@ function Login () {
     const email = e.target[0].value
     const password = e.target[1].value
 
-    console.log(email, password)
-
     loginWithEmail(email, password).then((res) => {
       if (res.status === 200) {
         toast({
