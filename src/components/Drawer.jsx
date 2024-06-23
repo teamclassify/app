@@ -94,7 +94,7 @@ function DrawerForm () {
               bg="transparent"
               colorScheme="red"
               justifyContent="start"
-              isDisabled={user?.estado !== 'ACTIVO'}
+              isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
             >
               <IoPersonSharp size="13px" color="white" />
 
@@ -112,7 +112,7 @@ function DrawerForm () {
               bg="transparent"
               colorScheme="red"
               justifyContent="start"
-              isDisabled={user?.estado !== 'ACTIVO'}
+              isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
             >
               <GrSchedule size="13px" color="white" />
 
@@ -131,7 +131,7 @@ function DrawerForm () {
             bg="transparent"
             colorScheme="red"
             justifyContent="start"
-            isDisabled={user?.estado !== 'ACTIVO'}
+            isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
           >
             <MdLibraryAdd size="13px" color="white" />
             <Heading as="h1" size="sl" color="white" py={2}>
@@ -157,7 +157,7 @@ function DrawerForm () {
                 bg="transparent"
                 colorScheme="red"
                 justifyContent="start"
-                isDisabled={user?.estado !== 'ACTIVO'}
+                isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
               >
                 <TbBuildingArch size="13px" color="white" />
                 <Heading as="h1" size="sl" color="white" py={2}>
@@ -180,7 +180,7 @@ function DrawerForm () {
                 bg="transparent"
                 colorScheme="red"
                 justifyContent="start"
-                isDisabled={user?.estado !== 'ACTIVO'}
+                isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
               >
                 <FaComputer size="13px" color="white" />
                 <Heading as="h1" size="sl" color="white" py={2}>
@@ -201,7 +201,7 @@ function DrawerForm () {
               bg="transparent"
               colorScheme="red"
               justifyContent="start"
-              isDisabled={user?.estado !== 'ACTIVO'}
+              isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
             >
               <IoMdStats size="13px" color="white" />
               <Heading as="h1" size="sl" color="white" py={2}>
@@ -224,7 +224,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
-                  isDisabled={user?.estado !== 'ACTIVO'}
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
                 >
                   <MdSmsFailed size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
@@ -241,7 +241,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
-                  isDisabled={user?.estado !== 'ACTIVO'}
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
                 >
                   <FaCloudUploadAlt size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
@@ -259,7 +259,9 @@ function DrawerForm () {
                     bg="transparent"
                     colorScheme="red"
                     justifyContent="start"
-                    isDisabled={user?.estado !== 'ACTIVO'}
+                    isDisabled={
+                      user?.estado !== 'ACTIVO' || !user?.emailVerified
+                    }
                   >
                     <FaCloudUploadAlt size="13px" color="white" />
                     <Heading as="h1" size="sl" color="white" py={2}>
@@ -277,7 +279,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
-                  isDisabled={user?.estado !== 'ACTIVO'}
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
                 >
                   <FaBuilding size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
@@ -294,7 +296,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
-                  isDisabled={user?.estado !== 'ACTIVO'}
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
                 >
                   <TbBuildingArch size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
@@ -311,7 +313,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
-                  isDisabled={user?.estado !== 'ACTIVO'}
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
                 >
                   <TbBuildingArch size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
