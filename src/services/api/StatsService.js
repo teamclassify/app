@@ -65,10 +65,33 @@ async function getUsers () {
   }
 }
 
+async function getFeedback (year = null) {
+  const token = await getToken()
+
+  try {
+    const res = await axios({
+      url: `${URL}/estadisticas/feedback`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      params: {
+        year
+      }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 const StatsService = {
   getAllLoans,
   getLoansByMonths,
-  getUsers
+  getUsers,
+  getFeedback
 }
 
 export default StatsService
