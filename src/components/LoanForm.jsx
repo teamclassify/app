@@ -4,7 +4,7 @@ import {
   AlertIcon,
   Box,
   Button,
-  Center,
+  Center, Checkbox,
   Flex,
   FormControl,
   FormLabel,
@@ -31,7 +31,7 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { FaBuilding, FaSearch } from 'react-icons/fa'
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { IoPeople, IoTrash, IoWarning } from 'react-icons/io5'
 import { RiComputerLine } from 'react-icons/ri'
 
@@ -40,6 +40,7 @@ import { convertHour12h } from '../utils/date.js'
 import ModalNewLoan from './ModalNewLoan.jsx'
 import { MdOutlineModeEdit } from 'react-icons/md'
 import Modal from './Modal.jsx'
+import RoomResourcesService from '../services/api/RoomResourcesService.js'
 
 const AVAILABLE_HOURS = [
   6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
@@ -60,6 +61,10 @@ function MyLoans () {
   const [days, setDays] = useState([])
   const [startDate, setStartDate] = useState(new Date('1-1-2024'))
   const [endDate, setEndDate] = useState(new Date('6-29-2024'))
+
+  const uniqueResourcesQuery = useQuery(['unique-resources'], () =>
+    RoomResourcesService.getAllUniques()
+  )
 
   const mutationAvailableRooms = useMutation((data) => {
     return loanType === 'UNICO'
@@ -347,6 +352,24 @@ function MyLoans () {
                 </TableContainer>
               </>
             )}
+
+            {
+              uniqueResourcesQuery?.isLoading
+                ? <Spinner />
+                : <>
+                  {
+                    uniqueResourcesQuery?.data && <>
+                      <Heading as={'h4'} size={'sm'}>Filtrar por recursos:</Heading>
+
+                      {
+                        uniqueResourcesQuery?.data?.data?.map(el => {
+                          return <Checkbox key={el.id} size={'sm'}>{el.nombre}</Checkbox>
+                        })
+                      }
+                    </>
+                  }
+                </>
+            }
 
             <Button
               size="sm"

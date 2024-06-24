@@ -18,6 +18,22 @@ async function getAll (query = null) {
   }
 }
 
+async function getAllUniques (query = null) {
+  try {
+    const res = await axios({
+      url: `${URL}/recursos/uniques`,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 async function getAllByRoom (query = null, id) {
   if (id === null) return
 
@@ -167,7 +183,8 @@ const RoomResourcesService = {
   create,
   remove,
   assignResource,
-  unassignResource
+  unassignResource,
+  getAllUniques
 }
 
 export default RoomResourcesService
