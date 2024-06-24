@@ -4,7 +4,7 @@ import {
   AlertIcon,
   Box,
   Button,
-  Center, Checkbox,
+  Center,
   Flex,
   FormControl,
   FormLabel,
@@ -62,10 +62,6 @@ function MyLoans () {
   const [startDate, setStartDate] = useState(new Date('1-1-2024'))
   const [endDate, setEndDate] = useState(new Date('6-29-2024'))
 
-  const uniqueResourcesQuery = useQuery(['unique-resources'], () =>
-    RoomResourcesService.getAllUniques()
-  )
-
   const mutationAvailableRooms = useMutation((data) => {
     return loanType === 'UNICO'
       ? RoomsService.getAllAvailable(data.date, data.startHour, data.endHour)
@@ -109,6 +105,8 @@ function MyLoans () {
       setError('La hora de inicio debe ser menor que la hora fin.')
     } else if (endHour === startHour) {
       setError('La duracion minima de un evento es de 1 hora.')
+    } else if (loanType === 'SEMESTRAL' && days.length <= 0) {
+      setError('Se debe seleccionar minimo un dia de la semana.')
     } else {
       setError(null)
 
@@ -333,13 +331,6 @@ function MyLoans () {
                                 size="sm"
                                 iconSpacing={0}
                                 variant="ghost"
-                                // onClick={() => handleUpdate({ id, name })}
-                                leftIcon={<MdOutlineModeEdit />}
-                              />
-                              <Button
-                                size="sm"
-                                iconSpacing={0}
-                                variant="ghost"
                                 onClick={() => handleRemoveDay(day.dia)}
                                 leftIcon={<IoTrash />}
                               />
@@ -352,24 +343,6 @@ function MyLoans () {
                 </TableContainer>
               </>
             )}
-
-            {
-              uniqueResourcesQuery?.isLoading
-                ? <Spinner />
-                : <>
-                  {
-                    uniqueResourcesQuery?.data && <>
-                      <Heading as={'h4'} size={'sm'}>Filtrar por recursos:</Heading>
-
-                      {
-                        uniqueResourcesQuery?.data?.data?.map(el => {
-                          return <Checkbox key={el.id} size={'sm'}>{el.nombre}</Checkbox>
-                        })
-                      }
-                    </>
-                  }
-                </>
-            }
 
             <Button
               size="sm"

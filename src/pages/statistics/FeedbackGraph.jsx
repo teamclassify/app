@@ -41,7 +41,6 @@ function FeedbackGraph () {
   const [year, setYear] = useState(2024)
   const [valueRadio, setValueRadio] = useState('total')
 
-
   const { isLoading, isRefetching } = useQuery(
     ['stats', 'feedback', year],
     () => {
@@ -86,7 +85,6 @@ function FeedbackGraph () {
     }
   )
 
-
   useEffect(() => {
     if (valueRadio === 'total') setYear('total')
     else setYear(new Date().getFullYear())
@@ -96,63 +94,63 @@ function FeedbackGraph () {
     <Box w={'full'} bg={'white'} rounded={'md'}>
       {isLoading
         ? (
-          <Skeleton height={'250px'} />
-        )
+        <Skeleton height={'250px'} />
+          )
         : (
-          <Box p={4}>
-            <Flex alignItems={'center'} gap={2} mb={2}>
-              <RadioGroup onChange={setValueRadio} value={valueRadio}>
-                <Stack direction="row">
-                  <Radio value="total">Total</Radio>
-                  <Radio value="year">Año</Radio>
-                </Stack>
-              </RadioGroup>
+        <Box p={4}>
+          <Flex alignItems={'center'} gap={2} mb={2}>
+            <RadioGroup onChange={setValueRadio} value={valueRadio}>
+              <Stack direction="row">
+                <Radio value="total">Total</Radio>
+                <Radio value="year">Año</Radio>
+              </Stack>
+            </RadioGroup>
 
-              {valueRadio === 'year' && (
-                <NumberInput
-                  size={'xs'}
-                  min={2024}
-                  value={year}
-                  maxW={'100px'}
-                  onChange={(val) => setYear(parseInt(val))}
-                >
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              )}
-            </Flex>
-            
-            {isRefetching
-              ? (
-                <Center minH={'200px'}>
-                  <Spinner />
-                </Center>
+            {valueRadio === 'year' && (
+              <NumberInput
+                size={'xs'}
+                min={2024}
+                value={year}
+                maxW={'100px'}
+                onChange={(val) => setYear(parseInt(val))}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            )}
+          </Flex>
+
+          {isRefetching
+            ? (
+            <Center minH={'200px'}>
+              <Spinner />
+            </Center>
               )
-              : (
-                <Bar
-                  data={{
-                    labels: ['total'],
-                    datasets: data
-                  }}
-                  options={{
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'top'
-                      },
-                      title: {
-                        display: true,
-                        text: 'Satisfacción de los usuarios - ' + year
-                      }
-                    }
-                  }}
-                />
+            : (
+            <Bar
+              data={{
+                labels: ['total'],
+                datasets: data
+              }}
+              options={{
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: 'top'
+                  },
+                  title: {
+                    display: true,
+                    text: 'Satisfacción de los usuarios - ' + year
+                  }
+                }
+              }}
+            />
               )}
-          </Box>
-        )}
+        </Box>
+          )}
     </Box>
   )
 }

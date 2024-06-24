@@ -76,7 +76,7 @@ function LoanItem ({
       }
     }
   )
-  
+
   const handleClickAprobar = () => {
     if (state === 'PENDIENTE') {
       mutate({

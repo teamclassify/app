@@ -1,7 +1,6 @@
 import {
   Alert,
   AlertTitle,
-  Checkbox,
   FormControl,
   FormLabel,
   Spinner,
@@ -35,7 +34,7 @@ function RoomResourcesInput ({ roomId, resources, setResources }) {
 
   return (
     <FormControl>
-      <FormLabel>Recursos</FormLabel>
+      <FormLabel>Recursos disponibles de la sala</FormLabel>
 
       {isLoading
         ? (
@@ -47,22 +46,22 @@ function RoomResourcesInput ({ roomId, resources, setResources }) {
             ? (
                 data?.data?.map((resource) => {
                   return (
-                <Checkbox
+                <Text
                   key={resource.id}
                   colorScheme="green"
-                  defaultChecked={resources.includes(resource.nombre)}
-                  onChange={(evt) => {
-                    if (evt.target.checked) {
-                      setResources([...resources, resource.nombre])
-                    } else {
-                      setResources(
-                        resources.filter((r) => r !== resource.nombre)
-                      )
-                    }
-                  }}
+                  // defaultChecked={resources.includes(resource.nombre)}
+                  // onChange={(evt) => {
+                  //   if (evt.target.checked) {
+                  //     setResources([...resources, resource.nombre])
+                  //   } else {
+                  //     setResources(
+                  //       resources.filter((r) => r !== resource.nombre)
+                  //     )
+                  //   }
+                  // }}
                 >
                   {resource.nombre}
-                </Checkbox>
+                </Text>
                   )
                 })
               )
