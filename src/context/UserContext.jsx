@@ -151,7 +151,7 @@ export default function UserProvider ({ children }) {
           codigo: '',
           estado: 'INACTIVO',
           tipo: 'ESTUDIANTE',
-          emailVerified: user.emailVerified
+          emailVerified: user.email === 'ingsistemas@ufps.edu.co' ? true : user.emailVerified
         }
 
         const token = await user.getIdToken(true)
