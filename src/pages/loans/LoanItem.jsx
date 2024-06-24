@@ -76,20 +76,9 @@ function LoanItem ({
       }
     }
   )
-
-  const handleClickPreabrobar = () => {
-    if (state === 'PREAPROBADO' || state === 'PENDIENTE') {
-      mutate({
-        id,
-        data: {
-          estado: state === 'PREAPROBADO' ? 'PENDIENTE' : 'PREAPROBADO'
-        }
-      })
-    }
-  }
-
+  
   const handleClickAprobar = () => {
-    if (state === 'PREAPROBADO') {
+    if (state === 'PENDIENTE') {
       mutate({
         id,
         data: {
@@ -203,21 +192,6 @@ function LoanItem ({
           justifyContent="end"
           borderColor="gray.200"
         >
-          {(user.roles.includes('admin') ||
-            user.roles.includes('soporte_tecnico')) &&
-            (state === 'PREAPROBADO' || state === 'PENDIENTE') && (
-              <Button
-                size="sm"
-                colorScheme="yellow"
-                leftIcon={<FaCheck />}
-                onClick={handleClickPreabrobar}
-              >
-                {state === 'PREAPROBADO'
-                  ? 'Quitar Pre-aprobado'
-                  : 'Pre-aprobar'}
-              </Button>
-          )}
-
           {user.roles.includes('admin') && (
             <>
               <Button
@@ -225,12 +199,7 @@ function LoanItem ({
                 colorScheme="green"
                 leftIcon={<FaCheck />}
                 onClick={handleClickAprobar}
-                isDisabled={state !== 'PREAPROBADO'}
-                title={
-                  state !== 'PREAPROBADO'
-                    ? 'Debe estar pre-aprobado para poder ser aceptado'
-                    : ''
-                }
+                isDisabled={state === 'APROBADO'}
               >
                 Aceptar
               </Button>
