@@ -196,7 +196,7 @@ function LoanItem ({
                   size="sm"
                   colorScheme="yellow"
                   leftIcon={<FaCheck />}
-                  onClick={handleClickPreabrobar}
+                  onClick={handleClickAprobar}
                 >
                   {state === 'PREAPROBADO'
                     ? 'Quitar Pre-aprobado'
