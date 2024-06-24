@@ -173,7 +173,7 @@ function LoanItem ({
       {state !== 'CANCELADO' && state !== 'REALIZADO' && (
         <Flex justifyContent="space-between" py={2} px={4} borderTopWidth={1}>
           <Button size="sm" colorScheme="blue" onClick={() => handleInfo(loan)}>
-            Info
+            Feedback
           </Button>
           <Flex gap={2} justifyContent="end" borderColor="gray.200">
             {(user.roles.includes('admin') ||

@@ -6,7 +6,7 @@ import { useState } from 'react'
 import LoansService from '@/services/api/LoansService'
 import LoanItem from './LoanItem'
 import ModalCancelLoan from './ModalCancelLoan.jsx'
-import ModalInfo from './ModalInfo.jsx'
+import ModalFeedbackAdmin from './ModalFeedbackAdmin.jsx'
 import Pagination from '../../components/Pagination.jsx'
 
 function ListOfLoans (
@@ -126,7 +126,7 @@ function ListOfLoans (
           )}
         </>
           )}
-          <ModalInfo
+          <ModalFeedbackAdmin
           isOpen={modalInfo.isOpen}
           onClose={modalInfo.onClose}
           currentLoan={currentLoan}
