@@ -44,9 +44,31 @@ async function uploadRooms (file) {
   }
 }
 
+async function uploadRoomResources (file) {
+  const formData = new FormData()
+  formData.append('file', file)
+
+  try {
+    const token = await getToken()
+    const res = await axios({
+      url: `${URL}/files/upload/recursos `,
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      },
+      data: formData
+    })
+    return res.data
+  } catch (error) {
+    return handleAxiosError(error)
+  }
+}
+
 const UploadService = {
   uploadSchedule,
-  uploadRooms
+  uploadRooms,
+  uploadRoomResources
 }
 
 export default UploadService

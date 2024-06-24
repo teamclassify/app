@@ -2,7 +2,7 @@ import { HamburgerIcon } from '@chakra-ui/icons'
 import { Box, Button, Divider, Heading } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
 import { FaCloudUploadAlt } from 'react-icons/fa'
-import { FaBuilding, FaComputer } from 'react-icons/fa6'
+import { FaBuilding, FaComputer, FaVideo } from 'react-icons/fa6'
 import { GrSchedule } from 'react-icons/gr'
 import { IoPersonSharp } from 'react-icons/io5'
 import { MdLibraryAdd, MdSmsFailed } from 'react-icons/md'
@@ -246,6 +246,23 @@ function DrawerForm () {
                   <FaCloudUploadAlt size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
                     Subir salas
+                  </Heading>
+                </Button>
+
+                <Button
+                  size={'sm'}
+                  gap={2}
+                  w="full"
+                  as={Link}
+                  href="/subir-recursos"
+                  bg="transparent"
+                  colorScheme="red"
+                  justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
+                >
+                  <FaVideo size="13px" color="white" />
+                  <Heading as="h1" size="sl" color="white" py={2}>
+                    Subir Recursos
                   </Heading>
                 </Button>
 
