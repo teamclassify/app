@@ -58,7 +58,7 @@ function DrawerForm () {
       />
 
       <Box
-        p={4}
+        p={2}
         zIndex={9}
         maxW="250px"
         minH="100vh"
@@ -84,7 +84,7 @@ function DrawerForm () {
             <UserPic />
           </Box>
 
-          {user && <Divider mb={4} borderColor="primary.400" borderWidth={1} />}
+          {user && <Divider mb={2} borderColor="primary.400" borderWidth={1} />}
 
           <Link href="/home">
             <Button
@@ -143,7 +143,7 @@ function DrawerForm () {
             (user?.roles.includes('superadmin') ||
               user?.roles.includes('admin') ||
               user?.roles.includes('soporte_tecnico')) && (
-              <Divider my={4} borderColor="primary.400" borderWidth={1} />
+              <Divider my={2} borderColor="primary.400" borderWidth={1} />
           )}
 
           {user && user?.roles && user?.roles.includes('superadmin') && (
