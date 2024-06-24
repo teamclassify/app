@@ -21,6 +21,7 @@ import LoansService from '../../services/api/LoansService.js'
 function LoanItem ({
   id,
   state,
+  type,
   loan,
   date,
   loanroom,
@@ -77,19 +78,8 @@ function LoanItem ({
     }
   )
 
-  const handleClickPreabrobar = () => {
-    if (state === 'PREAPROBADO' || state === 'PENDIENTE') {
-      mutate({
-        id,
-        data: {
-          estado: state === 'PREAPROBADO' ? 'PENDIENTE' : 'PREAPROBADO'
-        }
-      })
-    }
-  }
-
   const handleClickAprobar = () => {
-    if (state === 'PREAPROBADO') {
+    if (state === 'PENDIENTE') {
       mutate({
         id,
         data: {
@@ -125,11 +115,31 @@ function LoanItem ({
                 <Badge size="sm" colorScheme={BADGE_COLOR[state]}>
                   {state}
                 </Badge>
+
+                <Badge size="sm" colorScheme={'blue'}>
+                  {type}
+                </Badge>
               </Flex>
 
               <Text mt={1} fontSize="sm">
-                {date} de {convertHour12h(hour.start)} a{' '}
-                {convertHour12h(hour.end)}
+                {loan.tipo === 'UNICO'
+                  ? (
+                  <>
+                    {date} de {convertHour12h(hour.start)} a{' '}
+                    {convertHour12h(hour.end)}
+                  </>
+                    )
+                  : (
+                  <>
+                    {loan?.dias?.split(',').map((dia, index) => (
+                      <p key={dia}>
+                        {dia.toUpperCase()} -{' '}
+                        {convertHour12h(loan?.horas_inicio?.split(',')[index])}{' '}
+                        a {convertHour12h(loan?.horas_fin?.split(',')[index])}
+                      </p>
+                    ))}
+                  </>
+                    )}
               </Text>
 
               <Text fontSize="sm" color="gray.500" my={2}>
@@ -154,6 +164,9 @@ function LoanItem ({
 
           <Box textAlign="right">
             <Avatar src={userLoan.photo} mb={2} />
+
+            <Text fontSize="sm">{userLoan.name}</Text>
+
             <Text
               fontSize="sm"
               title="Ver perfil"
@@ -162,10 +175,10 @@ function LoanItem ({
                 color: 'primary.400'
               }}
             >
-              <Link href={`/usuarios/${userLoan.username}`}>
-                @{userLoan.username}
-              </Link>
+              {userLoan.email}
             </Text>
+
+            <Badge colorScheme={'blue'}>{userLoan.role}</Badge>
           </Box>
         </Flex>
       </Box>

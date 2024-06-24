@@ -16,7 +16,8 @@ import {
   Table,
   Thead,
   Tr,
-  Th
+  Th,
+  Badge
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
@@ -29,7 +30,7 @@ import useUser from '../hooks/useUser'
 import UploadService from '../services/api/UploadService'
 import NotAuth from './NotAuth'
 
-export default function UploadRooms () {
+export default function UploadSchedule () {
   const { user, loading } = useUser()
 
   const [file, setFile] = useState()
@@ -50,7 +51,7 @@ export default function UploadRooms () {
   }
 
   const { data, mutate, isLoading } = useMutation((file) => {
-    const promise = UploadService.uploadRooms(file)
+    const promise = UploadService.uploadRoomResources(file)
     toast.promise(promise, {
       success: { title: 'Archivo subido' },
       error: { title: 'Error al subir el archivo' },
@@ -161,7 +162,7 @@ export default function UploadRooms () {
       <Box display={{ base: 'block', lg: 'flex' }} flexDir="row" gap={4}>
         <Box w="100%">
           <Heading as="h2" size="md" noOfLines={1} mb={4}>
-            Cargar salas
+            Cargar Recursos
           </Heading>
 
           <AspectRatio
@@ -268,24 +269,27 @@ export default function UploadRooms () {
             <Button size="sm" onClick={openModal} isLoading={isLoading}>
               Ver formato
             </Button>
-            <Modal
-              title="Formato del archivo"
-              isOpen={isModalOpen}
-              onClose={closeModal}
-              width={'60%'}
-            >
-              <Table variant="simple" size="sm">
-                <Thead>
-                  <Tr>
-                    <Th>Edificio</Th>
-                    <Th>Sala</Th>
-                    <Th>Capacidad</Th>
-                    <Th>Cantidad_Computadores</Th>
-                  </Tr>
-                </Thead>
-              </Table>
-            </Modal>
           </Box>
+          <Modal
+            title="Formato del archivo"
+            isOpen={isModalOpen}
+            onClose={closeModal}
+            width={'90%'}
+          >
+            <Table variant="simple" size="sm">
+              <Thead>
+                <Tr>
+                  <Th>Nombre</Th>
+                  <Th>Descripción</Th>
+                  <Th>Edificio</Th>
+                  <Th>Sala</Th>
+                </Tr>
+              </Thead>
+            </Table>
+            <Stack direction="row" p={5}>
+              <Badge colorScheme="purple">Si hay un recurso que no ha sido asignado a ninguna sala ni edificio, se coloca: -</Badge>
+            </Stack>
+          </Modal>
         </Box>
         <Box w="100%" margin="0 8px">
           <Heading as="h2" size="md" noOfLines={1} mb={4}>
@@ -311,7 +315,7 @@ export default function UploadRooms () {
           )}
         </Box>
       </Box>
-      <Box display="flex" justifyContent="flex-end" p={4}>
+      <Box display="flex" justifyContent="flex-end" paddingRight={4}>
         <Button
           size="sm"
           colorScheme="primary"

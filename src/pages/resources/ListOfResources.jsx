@@ -13,15 +13,15 @@ import {
   useToast
 } from '@chakra-ui/react'
 import { useState } from 'react'
-import { IoMdAdd } from 'react-icons/io'
+import { IoMdTrash } from 'react-icons/io'
+import { MdEdit } from 'react-icons/md'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
 import ConfirmDialog from '../../components/ConfirmDialog'
 import ModalEditResource from './ModalEditResource'
 import RoomResourcesService from '../../services/api/RoomResourcesService.js'
-import { GiCancel } from 'react-icons/gi'
 
-function ListOfResources ({ roomId, onOpenModalNew }) {
+function ListOfResources () {
   const [currentResource, setCurrentResource] = useState({
     id: 0,
     nombre: '',
@@ -29,33 +29,38 @@ function ListOfResources ({ roomId, onOpenModalNew }) {
     activo: '',
     img: ''
   })
-  const { isOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const diclosureDelete = useDisclosure()
   const queryClient = useQueryClient()
   const toast = useToast()
 
-  const { isLoading, data } = useQuery(['room-resources', roomId], () =>
-    RoomResourcesService.getAllByRoom(null, roomId)
+  const { isLoading, data } = useQuery(['room-resources-all'], () =>
+    RoomResourcesService.getAll()
   )
 
   const { mutate } = useMutation(
     (id) => {
-      const promise = RoomResourcesService.unassignResource(id)
+      const promise = RoomResourcesService.remove(id)
 
       toast.promise(promise, {
-        success: { title: 'Recurso de la sala eliminado' },
-        error: { title: 'Error al eliminar el recurso de la sala' },
-        loading: { title: 'Eliminando el recurso de la sala...' }
+        success: { title: 'Recurso eliminado.' },
+        error: { title: 'Error al eliminar el recurso.' },
+        loading: { title: 'Eliminando el recurso...' }
       })
 
       return promise
     },
     {
       onSuccess: () => {
-        queryClient.fetchQuery(['room-resources', roomId])
+        queryClient.fetchQuery(['room-resources-all'])
       }
     }
   )
+
+  const handleUpdate = (data) => {
+    setCurrentResource(data)
+    onOpen()
+  }
 
   const handleConfirmDelete = () => {
     if (!currentResource) return
@@ -76,7 +81,7 @@ function ListOfResources ({ roomId, onOpenModalNew }) {
   if (!isLoading && !data) {
     return (
       <Alert status="info">
-        <AlertTitle>No existen recursos de salas por el momento.</AlertTitle>
+        <AlertTitle>No existen recursos por el momento.</AlertTitle>
       </Alert>
     )
   }
@@ -90,7 +95,7 @@ function ListOfResources ({ roomId, onOpenModalNew }) {
       />
 
       <ConfirmDialog
-        title="Eliminar recurso de la sala"
+        title="Eliminar recurso"
         isOpen={diclosureDelete.isOpen}
         onClose={diclosureDelete.onClose}
         onConfirm={handleConfirmDelete}
@@ -104,32 +109,19 @@ function ListOfResources ({ roomId, onOpenModalNew }) {
           )
         : (
         <>
-          {data && (
+          {data && data.data && data.data.length > 0
+            ? (
             <Grid
               w="full"
               bg="white"
               rounded="md"
               templateColumns="repeat(auto-fill, minmax(15rem, 1fr))"
             >
-              <Flex
-                p={4}
-                gap={8}
-                w="full"
-                minH={'130px'}
-                alignItems="center"
-                borderRightWidth={1}
-                borderBottomWidth={1}
-                cursor={'pointer'}
-                justifyContent={'center'}
-                onClick={onOpenModalNew}
-              >
-                <IoMdAdd size={40} color={'#444'} />
-              </Flex>
-
-              {data?.data?.map((resource) => (
+              {data.data.map((resource) => (
                 <Flex
                   p={4}
-                  gap={8}
+                  gap={2}
+                  minH={'150px'}
                   w="full"
                   key={resource.id}
                   alignItems="start"
@@ -153,13 +145,22 @@ function ListOfResources ({ roomId, onOpenModalNew }) {
                     </Text>
                   </Box>
 
-                  <Flex flexDir="row" gap={1}>
+                  <Flex flexDir="column" gap={1}>
+                    <Button
+                      size="xs"
+                      iconSpacing={0}
+                      variant="outline"
+                      colorScheme="green"
+                      leftIcon={<MdEdit />}
+                      onClick={() => handleUpdate(resource)}
+                    />
+
                     <Button
                       size="xs"
                       iconSpacing={0}
                       variant="outline"
                       colorScheme="red"
-                      leftIcon={<GiCancel />}
+                      leftIcon={<IoMdTrash />}
                       onClick={() => {
                         diclosureDelete.onOpen()
                         setCurrentResource(resource)
@@ -169,7 +170,12 @@ function ListOfResources ({ roomId, onOpenModalNew }) {
                 </Flex>
               ))}
             </Grid>
-          )}
+              )
+            : (
+            <Alert>
+              <AlertTitle>No existen recursos por el momento.</AlertTitle>
+            </Alert>
+              )}
         </>
           )}
     </Box>

@@ -18,6 +18,7 @@ import { useMutation, useQueryClient } from 'react-query'
 
 import Modal from '@/components/Modal'
 import RoomsService from '@/services/api/RoomsService'
+import { Link } from 'wouter'
 
 function ModalEditRoom ({ currentRoom, isOpen, onClose }) {
   const [name, setName] = useState(currentRoom?.nombre || '')
@@ -118,6 +119,10 @@ function ModalEditRoom ({ currentRoom, isOpen, onClose }) {
               </NumberInput>
             </FormControl>
           </Flex>
+
+          <Button mt={2} as={Link} to={`/salas/recursos/${currentRoom.id}`}>
+            Editar recursos
+          </Button>
 
           <ModalFooter px={0}>
             <Button

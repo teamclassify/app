@@ -90,6 +90,7 @@ function ListOfLoans (
                     key={loan.id}
                     id={loan.id}
                     loan={loan}
+                    type={loan.tipo}
                     state={loan.estado}
                     date={loan.fecha}
                     loanroom={loan.sala}
@@ -106,10 +107,12 @@ function ListOfLoans (
                       name: loan.usuario_nombre,
                       email: loan.usuario_correo,
                       photo: loan.usuario_photo,
-                      username: loan.usuario_username
+                      username: loan.usuario_username,
+                      role: loan.usuario_tipo
                     }}
                     filterState={filterState}
                     filterReason={filterReason}
+                    page={currentPage}
                     currentPage={currentPage}
                     handleCancel={handleCancel}
                     handleInfo={handleInfo}

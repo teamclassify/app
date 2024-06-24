@@ -1,103 +1,68 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  ModalFooter,
-  VStack,
-  useToast
-} from '@chakra-ui/react'
+import { Button, useToast } from '@chakra-ui/react'
 import { useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 
 import Modal from '@/components/Modal'
-import RoomResourcesService from '@/services/api/RoomResourcesService'
+import ListAvailableResources from './ListAvailableResources.jsx'
+import RoomResourcesService from '../../services/api/RoomResourcesService.js'
 
-function ModalNewResource ({ isOpen, onClose }) {
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [img, setImg] = useState('')
+function ModalNewResource ({ isOpen, onClose, roomId }) {
+  const [resourceSelected, setResourceSelected] = useState('')
 
   const queryClient = useQueryClient()
   const toast = useToast()
 
-  const { isLoading, mutate } = useMutation(
-    (newResource) => {
-      const promise = RoomResourcesService.create(newResource)
+  const assignResourceMutation = useMutation(
+    (data) => {
+      const promise = RoomResourcesService.assignResource(data)
 
       toast.promise(promise, {
-        success: { title: 'Recurso de sala creado' },
-        error: { title: 'Error al crear el recurso de la sala' },
-        loading: { title: 'Creando el recurso de la sala' }
+        success: { title: 'Recurso asignado a la sala' },
+        error: { title: 'Error al asignar el recurso a la sala' },
+        loading: { title: 'Asignando el recurso a la sala...' }
       })
 
       return promise
     },
     {
       onSuccess: () => {
-        setName('')
-        setDescription('')
-        setImg('')
-        onClose()
+        queryClient.fetchQuery(['room-resources', roomId])
 
-        queryClient.fetchQuery(['room-resources'])
+        onClose()
       }
     }
   )
 
-  const handleSubmit = () => {
-    if (!name) {
-      toast({
-        title: 'Error',
-        description: 'Debes colocar un nombre al recurso.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true
-      })
-
+  const handleAssignResource = () => {
+    if (!resourceSelected || resourceSelected === 'null' || roomId === null) {
       return
     }
 
-    mutate({
-      img,
-      nombre: name,
-      descripcion: description
+    assignResourceMutation.mutate({
+      sala_id: roomId,
+      recurso_id: resourceSelected
     })
   }
 
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} title="Nuevo recurso de salas">
-        <VStack alignItems="stretch">
-          <FormControl>
-            <FormLabel>Nombre</FormLabel>
-            <Input
-              value={name}
-              placeholder="Nombre"
-              onChange={(evt) => setName(evt.target.value)}
-            />
-          </FormControl>
+        <ListAvailableResources
+          value={resourceSelected}
+          onChange={setResourceSelected}
+        />
 
-          <FormControl>
-            <FormLabel>Descripcion</FormLabel>
-            <Input
-              value={description}
-              placeholder="Descripcion"
-              onChange={(evt) => setDescription(evt.target.value)}
-            />
-          </FormControl>
-
-          <ModalFooter px={0}>
-            <Button
-              size="sm"
-              colorScheme="primary"
-              onClick={handleSubmit}
-              isDisabled={isLoading}
-            >
-              Guardar
-            </Button>
-          </ModalFooter>
-        </VStack>
+        <Button
+          my={2}
+          size="sm"
+          w={'full'}
+          colorScheme="primary"
+          onClick={handleAssignResource}
+          isLoading={assignResourceMutation.isLoading}
+          isDisabled={assignResourceMutation.isLoading}
+        >
+          Asignar a la sala
+        </Button>
       </Modal>
     </>
   )

@@ -13,10 +13,10 @@ import { FaDoorClosed, FaDoorOpen, FaInfo } from 'react-icons/fa'
 import { useLocation } from 'wouter'
 import { SlOptionsVertical } from 'react-icons/sl'
 import { GiCancel } from 'react-icons/gi'
-import { MdEdit } from 'react-icons/md'
+import { MdEdit, MdSmsFailed } from 'react-icons/md'
 import { VscFeedback } from 'react-icons/vsc'
 
-import { convertHour12h } from '../utils/date'
+import { convertHour12h, isMayorDate } from '../utils/date'
 
 const BADGE_COLOR = {
   PENDIENTE: 'yellow',
@@ -57,6 +57,10 @@ function Loan ({
     setLocation(`/prestamo-solicitado/${id}`)
   }
 
+  const handleShowAnomalie = () => {
+    setLocation(`/anomalias/nueva/${id}`)
+  }
+
   return (
     <>
       <Box
@@ -93,6 +97,19 @@ function Loan ({
                 <MenuItem icon={<FaInfo />} onClick={() => handleShowInfo(id)}>
                   Información
                 </MenuItem>
+
+                {loan.estado === 'APROBADO' &&
+                  isMayorDate(
+                    new Date(),
+                    new Date(`${date} ${endHour}:00:00`)
+                  ) && (
+                    <MenuItem
+                      icon={<MdSmsFailed />}
+                      onClick={() => handleShowAnomalie(id)}
+                    >
+                      Reportar anomalía
+                    </MenuItem>
+                )}
 
                 {loan.estado !== 'CANCELADO' && loan.estado !== 'APROBADO' && (
                   <MenuItem
@@ -137,13 +154,28 @@ function Loan ({
             {building} - {loanroom}
           </Heading>
 
-          <Flex w="full" gap={1}>
-            <Badge colorScheme={BADGE_COLOR[loan.estado]}>{date}</Badge>
-
-            <Badge colorScheme={BADGE_COLOR[loan.estado]}>
-              {convertHour12h(startHour)} - {convertHour12h(endHour)}
-            </Badge>
-          </Flex>
+          {loan.tipo === 'UNICO'
+            ? (
+            <Flex flexDir={'column'} textAlign={'left'} w={'auto'}>
+              <Badge mb={1} colorScheme={BADGE_COLOR[loan.estado]}>
+                {date}
+              </Badge>
+              <Badge colorScheme={BADGE_COLOR[loan.estado]}>
+                {convertHour12h(startHour)} a {convertHour12h(endHour)}
+              </Badge>
+            </Flex>
+              )
+            : (
+            <>
+              {loan?.dias?.split(',').map((dia, index) => (
+                <Badge mb={1} key={dia} colorScheme={BADGE_COLOR[loan.estado]}>
+                  {dia.toUpperCase()} -{' '}
+                  {convertHour12h(loan?.horas_inicio?.split(',')[index])} a{' '}
+                  {convertHour12h(loan?.horas_fin?.split(',')[index])}
+                </Badge>
+              ))}
+            </>
+              )}
         </Box>
       </Box>
     </>

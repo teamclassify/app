@@ -2,10 +2,10 @@ import { HamburgerIcon } from '@chakra-ui/icons'
 import { Box, Button, Divider, Heading } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
 import { FaCloudUploadAlt } from 'react-icons/fa'
-import { FaBuilding, FaComputer } from 'react-icons/fa6'
+import { FaBuilding, FaComputer, FaVideo } from 'react-icons/fa6'
 import { GrSchedule } from 'react-icons/gr'
 import { IoPersonSharp } from 'react-icons/io5'
-import { MdLibraryAdd } from 'react-icons/md'
+import { MdLibraryAdd, MdSmsFailed } from 'react-icons/md'
 import { RiLogoutBoxLine } from 'react-icons/ri'
 import { TbBuildingArch } from 'react-icons/tb'
 import { Link } from 'wouter'
@@ -88,11 +88,13 @@ function DrawerForm () {
 
           <Link href="/home">
             <Button
+              size={'sm'}
               gap={2}
               w="full"
               bg="transparent"
               colorScheme="red"
               justifyContent="start"
+              isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
             >
               <IoPersonSharp size="13px" color="white" />
 
@@ -104,11 +106,13 @@ function DrawerForm () {
 
           <Link href="/horario">
             <Button
+              size={'sm'}
               gap={2}
               w="full"
               bg="transparent"
               colorScheme="red"
               justifyContent="start"
+              isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
             >
               <GrSchedule size="13px" color="white" />
 
@@ -119,6 +123,7 @@ function DrawerForm () {
           </Link>
 
           <Button
+            size={'sm'}
             gap={2}
             w="full"
             as={Link}
@@ -126,10 +131,11 @@ function DrawerForm () {
             bg="transparent"
             colorScheme="red"
             justifyContent="start"
+            isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
           >
             <MdLibraryAdd size="13px" color="white" />
             <Heading as="h1" size="sl" color="white" py={2}>
-              Pedir préstamo
+              Solicitar préstamo
             </Heading>
           </Button>
 
@@ -143,6 +149,7 @@ function DrawerForm () {
           {user && user?.roles && user?.roles.includes('superadmin') && (
             <>
               <Button
+                size={'sm'}
                 gap={2}
                 w="full"
                 as={Link}
@@ -150,6 +157,7 @@ function DrawerForm () {
                 bg="transparent"
                 colorScheme="red"
                 justifyContent="start"
+                isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
               >
                 <TbBuildingArch size="13px" color="white" />
                 <Heading as="h1" size="sl" color="white" py={2}>
@@ -159,8 +167,33 @@ function DrawerForm () {
             </>
           )}
 
+          {user &&
+            user?.roles &&
+            (user?.roles.includes('admin') ||
+              user?.roles.includes('soporte_tecnico')) && (
+              <Button
+                size={'sm'}
+                gap={2}
+                w="full"
+                as={Link}
+                href="/prestamos"
+                bg="transparent"
+                colorScheme="red"
+                justifyContent="start"
+                isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
+              >
+                <FaComputer size="13px" color="white" />
+                <Heading as="h1" size="sl" color="white" py={2}>
+                  Préstamos
+                </Heading>
+              </Button>
+          )}
+
+          <Divider my={4} borderColor="primary.400" borderWidth={1} />
+
           {user && user?.roles && user?.roles.includes('admin') && (
             <Button
+              size={'sm'}
               gap={2}
               w="full"
               as={Link}
@@ -168,6 +201,7 @@ function DrawerForm () {
               bg="transparent"
               colorScheme="red"
               justifyContent="start"
+              isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
             >
               <IoMdStats size="13px" color="white" />
               <Heading as="h1" size="sl" color="white" py={2}>
@@ -182,21 +216,24 @@ function DrawerForm () {
               user?.roles.includes('soporte_tecnico')) && (
               <>
                 <Button
+                  size={'sm'}
                   gap={2}
                   w="full"
                   as={Link}
-                  href="/prestamos"
+                  href="/anomalias"
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
                 >
-                  <FaComputer size="13px" color="white" />
+                  <MdSmsFailed size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
-                    Préstamos
+                    Anomalías
                   </Heading>
                 </Button>
 
                 <Button
+                  size={'sm'}
                   gap={2}
                   w="full"
                   as={Link}
@@ -204,6 +241,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
                 >
                   <FaCloudUploadAlt size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
@@ -211,8 +249,26 @@ function DrawerForm () {
                   </Heading>
                 </Button>
 
+                <Button
+                  size={'sm'}
+                  gap={2}
+                  w="full"
+                  as={Link}
+                  href="/subir-recursos"
+                  bg="transparent"
+                  colorScheme="red"
+                  justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
+                >
+                  <FaVideo size="13px" color="white" />
+                  <Heading as="h1" size="sl" color="white" py={2}>
+                    Subir Recursos
+                  </Heading>
+                </Button>
+
                 {user?.roles.includes('admin') && (
                   <Button
+                    size={'sm'}
                     gap={2}
                     w="full"
                     as={Link}
@@ -220,6 +276,9 @@ function DrawerForm () {
                     bg="transparent"
                     colorScheme="red"
                     justifyContent="start"
+                    isDisabled={
+                      user?.estado !== 'ACTIVO' || !user?.emailVerified
+                    }
                   >
                     <FaCloudUploadAlt size="13px" color="white" />
                     <Heading as="h1" size="sl" color="white" py={2}>
@@ -229,6 +288,7 @@ function DrawerForm () {
                 )}
 
                 <Button
+                  size={'sm'}
                   gap={2}
                   w="full"
                   as={Link}
@@ -236,6 +296,7 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
                 >
                   <FaBuilding size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
@@ -244,6 +305,7 @@ function DrawerForm () {
                 </Button>
 
                 <Button
+                  size={'sm'}
                   gap={2}
                   w="full"
                   as={Link}
@@ -251,10 +313,28 @@ function DrawerForm () {
                   bg="transparent"
                   colorScheme="red"
                   justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
                 >
                   <TbBuildingArch size="13px" color="white" />
                   <Heading as="h1" size="sl" color="white" py={2}>
                     Salas
+                  </Heading>
+                </Button>
+
+                <Button
+                  size={'sm'}
+                  gap={2}
+                  w="full"
+                  as={Link}
+                  href="/salas/recursos"
+                  bg="transparent"
+                  colorScheme="red"
+                  justifyContent="start"
+                  isDisabled={user?.estado !== 'ACTIVO' || !user?.emailVerified}
+                >
+                  <TbBuildingArch size="13px" color="white" />
+                  <Heading as="h1" size="sl" color="white" py={2}>
+                    Recursos
                   </Heading>
                 </Button>
               </>
@@ -281,6 +361,7 @@ function DrawerForm () {
           {user
             ? (
             <Button
+              size={'sm'}
               w="full"
               onClick={logout}
               bg="transparent"
@@ -293,6 +374,7 @@ function DrawerForm () {
               )
             : (
             <Button
+              size={'sm'}
               gap={2}
               w="full"
               as={Link}
