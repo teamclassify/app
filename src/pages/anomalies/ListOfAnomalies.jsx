@@ -67,10 +67,10 @@ function ListOfAnomalies (
                     estado={anomalie.estado}
                     edificio={anomalie.edificio}
                     descripcion={anomalie.descripcion}
-                    usuario_nombre={anomalie.usuario_nombre}
-                    usuario_correo={anomalie.usuario_correo}
-                    usuario_photo={anomalie.usuario_photo}
-                    usuario_tipo={anomalie.usuario_tipo}
+                    usuarioNombre={anomalie.usuario_nombre}
+                    usuarioCorreo={anomalie.usuario_correo}
+                    usuarioPhoto={anomalie.usuario_photo}
+                    usuarioTipo={anomalie.usuario_tipo}
                     createdAt={anomalie.createdAt}
                     updatedAt={anomalie.updatedAt}
                     filterState={filterState}
