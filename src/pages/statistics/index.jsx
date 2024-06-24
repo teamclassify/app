@@ -10,6 +10,7 @@ import Indicators from './Indicators.jsx'
 import UsersGraph from './UsersGraph.jsx'
 import UsersProvider from './UsersContext'
 import LoansProvider from './LoansContext.jsx'
+import FeedbackGraph from './FeedbackGraph.jsx'
 
 function Statistics () {
   const [, setLocation] = useLocation()
@@ -50,6 +51,14 @@ function Statistics () {
             <Grid w={'full'} gap={4} templateColumns="repeat(2, 1fr)">
               <LoansGraph />
               <LoansGraphMonths />
+            </Grid>
+
+            <Heading mt={6} mb={2} as={'h3'} size={'sm'}>
+              Nivel de satisfacción de lo usuarios
+            </Heading>
+
+            <Grid w={'full'} gap={4} templateColumns="repeat(2, 1fr)">
+              <FeedbackGraph />
             </Grid>
           </Box>
         </LoansProvider>

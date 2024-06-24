@@ -31,7 +31,7 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { FaBuilding, FaSearch } from 'react-icons/fa'
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { IoPeople, IoTrash, IoWarning } from 'react-icons/io5'
 import { RiComputerLine } from 'react-icons/ri'
 
@@ -40,6 +40,7 @@ import { convertHour12h } from '../utils/date.js'
 import ModalNewLoan from './ModalNewLoan.jsx'
 import { MdOutlineModeEdit } from 'react-icons/md'
 import Modal from './Modal.jsx'
+import RoomResourcesService from '../services/api/RoomResourcesService.js'
 
 const AVAILABLE_HOURS = [
   6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
@@ -104,6 +105,8 @@ function MyLoans () {
       setError('La hora de inicio debe ser menor que la hora fin.')
     } else if (endHour === startHour) {
       setError('La duracion minima de un evento es de 1 hora.')
+    } else if (loanType === 'SEMESTRAL' && days.length <= 0) {
+      setError('Se debe seleccionar minimo un dia de la semana.')
     } else {
       setError(null)
 
@@ -324,13 +327,6 @@ function MyLoans () {
                           </Td>
                           <Td>
                             <Flex>
-                              <Button
-                                size="sm"
-                                iconSpacing={0}
-                                variant="ghost"
-                                // onClick={() => handleUpdate({ id, name })}
-                                leftIcon={<MdOutlineModeEdit />}
-                              />
                               <Button
                                 size="sm"
                                 iconSpacing={0}
