@@ -1,6 +1,6 @@
 import { Button, Stack } from '@chakra-ui/react'
 
-function Rating ({ onRatingChange }) {
+function Rating ({ stars, onRatingChange }) {
   const handleButtonClick = (value) => {
     // console.log(`Button clicked: ${value}`)
     onRatingChange(value)
@@ -16,7 +16,7 @@ function Rating ({ onRatingChange }) {
           }}
           colorScheme="red"
           borderRadius="100%"
-          variant="outline"
+          variant={stars === 1 ? 'solid' : 'outline'}
           onClick={() => handleButtonClick(1)}
         >
           1
@@ -24,7 +24,7 @@ function Rating ({ onRatingChange }) {
         <Button
           colorScheme="red"
           borderRadius="100%"
-          variant="outline"
+          variant={stars === 2 ? 'solid' : 'outline'}
           onClick={() => handleButtonClick(2)}
         >
           2
@@ -32,7 +32,7 @@ function Rating ({ onRatingChange }) {
         <Button
           colorScheme="red"
           borderRadius="100%"
-          variant="outline"
+          variant={stars === 3 ? 'solid' : 'outline'}
           onClick={() => handleButtonClick(3)}
         >
           3
@@ -40,7 +40,7 @@ function Rating ({ onRatingChange }) {
         <Button
           colorScheme="red"
           borderRadius="100%"
-          variant="outline"
+          variant={stars === 4 ? 'solid' : 'outline'}
           onClick={() => handleButtonClick(4)}
         >
           4

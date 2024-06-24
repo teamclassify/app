@@ -136,7 +136,6 @@ function Loan ({
                   >
                     Cuéntanos tu experiencia
                   </MenuItem>
-
                 )}
               </MenuList>
             </Menu>

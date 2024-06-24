@@ -36,16 +36,13 @@ function RoomResourcesInput ({ roomId, resources, setResources }) {
     <FormControl>
       <FormLabel>Recursos disponibles de la sala</FormLabel>
 
-      {isLoading
-        ? (
+      {isLoading ? (
         <Spinner />
-          )
-        : (
+      ) : (
         <Stack spacing={5} direction="row">
-          {data && data?.data?.length > 0
-            ? (
-                data?.data?.map((resource) => {
-                  return (
+          {data && data?.data?.length > 0 ? (
+            data?.data?.map((resource) => {
+              return (
                 <Text
                   key={resource.id}
                   colorScheme="green"
@@ -62,14 +59,13 @@ function RoomResourcesInput ({ roomId, resources, setResources }) {
                 >
                   {resource.nombre}
                 </Text>
-                  )
-                })
               )
-            : (
+            })
+          ) : (
             <Text>No existen recursos de salas.</Text>
-              )}
-        </Stack>
           )}
+        </Stack>
+      )}
     </FormControl>
   )
 }

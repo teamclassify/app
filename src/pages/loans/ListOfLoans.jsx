@@ -129,14 +129,14 @@ function ListOfLoans (
           )}
         </>
           )}
-          <ModalFeedbackAdmin
-          isOpen={modalInfo.isOpen}
-          onClose={modalInfo.onClose}
-          currentLoan={currentLoan}
-          filterState={filterState}
-          filterReason={filterReason}
-          currentPage={currentPage}
-        />
+      <ModalFeedbackAdmin
+        isOpen={modalInfo.isOpen}
+        onClose={modalInfo.onClose}
+        currentLoan={currentLoan}
+        filterState={filterState}
+        filterReason={filterReason}
+        currentPage={currentPage}
+      />
     </Grid>
   )
 }

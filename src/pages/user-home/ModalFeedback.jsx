@@ -8,46 +8,44 @@ import {
   Textarea
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation } from 'react-query'
 
 import Modal from '@/components/Modal'
 import Rating from '../../components/Rating'
-import LoansService from '@/services/api/LoansService'
+import FeedbackService from '../../services/api/FeedbackService.js'
 
 function ModalFeedback ({ currentLoan, isOpen, onClose }) {
   const [feedback, setFeedback] = useState(1)
   const [rating, setRating] = useState()
 
-  const queryClient = useQueryClient()
   const toast = useToast()
 
   const { isLoading, mutate } = useMutation(
     (data) => {
-      const promise = LoansService.update(data.id, data.data)
+      const promise = FeedbackService.create(data)
 
       toast.promise(promise, {
         success: { title: 'Retroalomentación guardada' },
         error: { title: 'Error al guardar retroalimentación' },
-        loading: { title: 'Actualizando' }
+        loading: { title: 'Creando...' }
       })
 
       return promise
     },
     {
       onSuccess: () => {
-        queryClient.fetchQuery(['my-loans'])
         onClose()
       }
     }
   )
 
   const handleSubmit = () => {
+    if (!currentLoan) return
+
     mutate({
-      id: currentLoan.id,
-      data: {
-        puntaje: rating,
-        retroalimentacion: feedback
-      }
+      prestamo_id: currentLoan?.id,
+      valoracion: rating,
+      comentario: feedback
     })
   }
 
@@ -63,7 +61,7 @@ function ModalFeedback ({ currentLoan, isOpen, onClose }) {
           <FormControl>
             <FormLabel>¡Califica tu experiencia!</FormLabel>
           </FormControl>
-            <Rating onRatingChange={setRating}/>
+          <Rating onRatingChange={setRating} />
           <FormControl>
             <FormLabel onChange={(evt) => setRating(evt.target.value)}>
               ¿Cual es la razón principal de tu calificación?
@@ -80,6 +78,7 @@ function ModalFeedback ({ currentLoan, isOpen, onClose }) {
               colorScheme="primary"
               onClick={handleSubmit}
               isDisabled={isLoading}
+              isLoading={isLoading}
             >
               Guardar
             </Button>
