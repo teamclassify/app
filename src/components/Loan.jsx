@@ -98,11 +98,7 @@ function Loan ({
                   Información
                 </MenuItem>
 
-                {loan.estado === 'APROBADO' &&
-                  isMayorDate(
-                    new Date(),
-                    new Date(`${date} ${endHour}:00:00`)
-                  ) && (
+                {loan.estado === 'APROBADO' && (
                     <MenuItem
                       icon={<MdSmsFailed />}
                       onClick={() => handleShowAnomalie(id)}
