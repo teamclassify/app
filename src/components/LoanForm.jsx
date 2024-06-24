@@ -31,16 +31,14 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { FaBuilding, FaSearch } from 'react-icons/fa'
-import { useMutation, useQuery } from 'react-query'
+import { useMutation } from 'react-query'
 import { IoPeople, IoTrash, IoWarning } from 'react-icons/io5'
 import { RiComputerLine } from 'react-icons/ri'
 
 import RoomsService from '@/services/api/RoomsService'
 import { convertHour12h } from '../utils/date.js'
 import ModalNewLoan from './ModalNewLoan.jsx'
-import { MdOutlineModeEdit } from 'react-icons/md'
 import Modal from './Modal.jsx'
-import RoomResourcesService from '../services/api/RoomResourcesService.js'
 
 const AVAILABLE_HOURS = [
   6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
@@ -59,8 +57,8 @@ function MyLoans () {
   const [endHour, setEndHour] = useState(8)
   const [date, setDate] = useState('')
   const [days, setDays] = useState([])
-  const [startDate, setStartDate] = useState(new Date('1-1-2024'))
-  const [endDate, setEndDate] = useState(new Date('6-29-2024'))
+  const [startDate] = useState(new Date('1-1-2024'))
+  const [endDate] = useState(new Date('6-29-2024'))
 
   const mutationAvailableRooms = useMutation((data) => {
     return loanType === 'UNICO'

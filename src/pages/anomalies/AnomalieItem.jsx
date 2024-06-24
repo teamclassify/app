@@ -21,10 +21,10 @@ function AnomalieItem ({
   sala,
   estado,
   edificio,
-  usuario_nombre,
-  usuario_photo,
-  usuario_correo,
-  usuario_tipo,
+  usuarioNombre,
+  usuarioPhoto,
+  usuarioCorreo,
+  usuarioTipo,
   createdAt,
   updatedAt,
   filterDescription,
@@ -105,13 +105,13 @@ function AnomalieItem ({
         </Text>
 
         <Flex gap={4}>
-          <Avatar src={usuario_photo} mb={2} />
+          <Avatar src={usuarioPhoto} mb={2} />
           <Box>
-            <Text fontSize="sm">{usuario_nombre}</Text>
-            <Text fontSize="sm">{usuario_correo}</Text>
+            <Text fontSize="sm">{usuarioNombre}</Text>
+            <Text fontSize="sm">{usuarioCorreo}</Text>
 
             <Badge size="sm" colorScheme={'blue'}>
-              {usuario_tipo}
+              {usuarioTipo}
             </Badge>
           </Box>
         </Flex>

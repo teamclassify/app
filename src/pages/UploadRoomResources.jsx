@@ -287,7 +287,10 @@ export default function UploadSchedule () {
               </Thead>
             </Table>
             <Stack direction="row" p={5}>
-              <Badge colorScheme="purple">Si hay un recurso que no ha sido asignado a ninguna sala ni edificio, se coloca: -</Badge>
+              <Badge colorScheme="purple">
+                Si hay un recurso que no ha sido asignado a ninguna sala ni
+                edificio, se coloca: -
+              </Badge>
             </Stack>
           </Modal>
         </Box>

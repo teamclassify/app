@@ -35,7 +35,8 @@ function LoanItem ({
   filterReason,
   filterState,
   page,
-  handleCancel
+  handleCancel,
+  handleInfo
 }) {
   const queryClient = useQueryClient()
   const toast = useToast()
@@ -96,7 +97,6 @@ function LoanItem ({
         <Flex justifyContent={'space-between'}>
           <Flex gap={4}>
             <MdOutlineRateReview size={24} />
-
             <Box>
               <Flex gap={2}>
                 <Heading
@@ -184,36 +184,45 @@ function LoanItem ({
       </Box>
 
       {state !== 'CANCELADO' && state !== 'REALIZADO' && (
-        <Flex
-          py={2}
-          px={4}
-          gap={2}
-          borderTopWidth={1}
-          justifyContent="end"
-          borderColor="gray.200"
-        >
-          {user.roles.includes('admin') && (
-            <>
-              <Button
-                size="sm"
-                colorScheme="green"
-                leftIcon={<FaCheck />}
-                onClick={handleClickAprobar}
-                isDisabled={state === 'APROBADO'}
-              >
-                Aceptar
-              </Button>
+        <Flex justifyContent="space-between" py={2} px={4} borderTopWidth={1}>
+          {loan.estado === 'APROBADO'
+            ? (
+            <Button
+              size="sm"
+              colorScheme="blue"
+              onClick={() => handleInfo(loan)}
+            >
+              Feedback
+            </Button>
+              )
+            : (
+            <p></p>
+              )}
 
-              <Button
-                size="sm"
-                colorScheme="primary"
-                leftIcon={<TiCancel />}
-                onClick={() => handleCancel(loan)}
-              >
-                Cancelar
-              </Button>
-            </>
-          )}
+          <Flex gap={2} justifyContent="end" borderColor="gray.200">
+            {user.roles.includes('admin') && (
+              <>
+                <Button
+                  size="sm"
+                  colorScheme="green"
+                  leftIcon={<FaCheck />}
+                  onClick={handleClickAprobar}
+                  isDisabled={state === 'APROBADO'}
+                >
+                  Aceptar
+                </Button>
+
+                <Button
+                  size="sm"
+                  colorScheme="primary"
+                  leftIcon={<TiCancel />}
+                  onClick={() => handleCancel(loan)}
+                >
+                  Cancelar
+                </Button>
+              </>
+            )}
+          </Flex>
         </Flex>
       )}
     </Box>
